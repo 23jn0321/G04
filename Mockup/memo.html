@@ -1,1 +1,21 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+
+
+
+<script 
+    src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+</script>
+   <script>
+    function basicSample(){
+        swal({
+            text:'グループを作成しますか？\n\nグループ名：資格勉強の集い\nグループ上限人数：５',
+            button:'作成',
+            })
+            .then(() => {
+            window.location.href = "genreSelect.html";
+          
+        });
+    }
+   </Script>
+   <button onClick="basicSample()" id="CreateBotton">作成</button>
