@@ -69,3 +69,7 @@ div p{
     position: relative;
     left: 900px;
 }
+
+html,body {
+    overflow: hidden;
+  }

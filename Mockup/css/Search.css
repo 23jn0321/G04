@@ -1,24 +1,34 @@
 ul{
-    width: 3000px;
+    max-width: 1800px;
     padding-left:0;
     border: solid 1px;
     position: relative;
-    left: 100px;
-    top: 350px;
-    position: fixed;
+    left: 50px;
+    position: relative;
+    top: 200px;
 }
 li{
-    max-width: 3000px;
+    max-width: 1800px;
     list-style: none;
     border:solid 1px;
     padding-top: 10px;
     padding-bottom: 10px;
     margin: 10px;
     text-align: center;
-    top: 50px;
-    
+    position: relative;
+    top: 0px;
+}
+#searchResult{
+    list-style: none;
+    border: solid 1px;
+    padding: 11px 10px 11px 10px;
+    font-size: medium;
+
+    position: relative;
+    top: 204px;
+    left: 50px;
 }
 
-html,body {
-    overflow: hidden;
-  }
+#returnGenreSelect{
+    padding: 10px 10px 10px 10px;
+}
