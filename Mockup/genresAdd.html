@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ページタイトル</title>
+  <link rel="stylesheet" href="css/genresAdd.css">
+  <style>
+    /* 通報閲覧ボタンを縦長にする */
+    .button-container{
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .twp-button {
+      width: 250px;  /* 横幅 */
+      height: 450px;  /* 高さ */
+      font-size: 18px; /* フォントサイズ */
+      padding: 10px;
+    }
+
+    .small-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, auto); /* 2列 */
+      gap: 10px; /* ボタン間の隙間 */
+    }
+
+    /* 他のボタンを大きくする */
+    button {
+      font-size: 18px;
+      padding: 95px 220px; /* ボタンの大きさ */
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="home.html">
+    <img src="jecMatching/Jec.jpg" width="450px" alt="Jec Logo">
+  </a>
+  <hr>
+</header>
+
+  <div class="button-container">
+    <button class="twp-button">通報閲覧</button>
+
+
+    <!-- 通報閲覧ボタンの右側に配置する縦2横2のボタン -->
+    <div class="small-buttons">
+      <button>ジャンルの追加</button>
+      <button>中ジャンルの追加</button>
+      <button>中ジャンルの統合</button>
+      <button>凍結者管理</button>
+    </div>
+  </div>
+
+</body>
+</html>
