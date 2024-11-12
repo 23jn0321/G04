@@ -1,5 +1,5 @@
 ul{
-    width: 2000px;
+    width: 3000px;
     padding-left:0;
     border: solid 1px;
     position: relative;
@@ -8,7 +8,7 @@ ul{
     position: fixed;
 }
 li{
-    max-width: 2000px;
+    max-width: 3000px;
     list-style: none;
     border:solid 1px;
     padding-top: 10px;
