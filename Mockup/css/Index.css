@@ -1,0 +1,13 @@
+#name{
+    position: relative;
+    left: 150px;
+    width: 500px;
+    height: 30px;
+}
+
+#edit{
+    position: relative;
+    left: 200px;    
+    width: 80px;
+    height: 35px;
+}
