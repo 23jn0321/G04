@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ジャンル追加画面</title>
+  <link rel="stylesheet" href="css/freezeUser.css">
+</head>
+<body>
+
+<header>
+  <a href="home.html">
+    <img src="jecMatching/Jec.jpg" width="450px" alt="Jec Logo">
+  </a>
+  <hr>
+</header>
+
+<script>
+    // 凍結ユーザー情報を変数に格納
+    var freezeUserName = "ユーザー名例";
+    var freezeReason = "凍結理由例";
+    var freezeDate = "2024年11月12日";
+    
+    // テキストボックスに表示する内容を更新
+    document.addEventListener('DOMContentLoaded', function() {
+        for (let i = 1; i <= 10; i++) {
+            let freezeUserInfo = document.getElementById('freezeUserInfo' + i);
+            freezeUserInfo.value = `凍結ユーザー: ${freezeUserName} 凍結理由: ${freezeReason} 凍結日: ${freezeDate}`;
+        }
+    });
+</script>
+
+<table>
+    <!-- テキストボックスのidをユニークに設定 -->
+    <tr>
+        <td><input type="text" id="freezeUserInfo1" name="freezeUserInfo1" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo2" name="freezeUserInfo2" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo3" name="freezeUserInfo3" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo4" name="freezeUserInfo4" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo5" name="freezeUserInfo5" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo6" name="freezeUserInfo6" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo7" name="freezeUserInfo7" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo8" name="freezeUserInfo8" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo9" name="freezeUserInfo9" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="freezeUserInfo10" name="freezeUserInfo10" disabled></td>
+        <td><button>凍結解除</button></td>
+    </tr>
+</table>
+
+</body>
+</html>
