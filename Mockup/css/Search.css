@@ -5,7 +5,7 @@ ul{
     position: relative;
     left: 50px;
     position: relative;
-    top: 190px;
+    top: 80px;
 }
 li{
     max-width: 1800px;
@@ -25,14 +25,14 @@ li{
     font-size: medium;
 
     position: relative;
-    top: 204px;
+    top:94px;
     left: 50px;
 }
 
 #returnGenreSelect{
     padding: 10px 10px 10px 10px;
     position: relative;
-    top: 204px;
+    top: 94px;
     left: 100px;
 }
 
@@ -43,6 +43,9 @@ li{
     gap: 0 8px;
     list-style-type: none;
     padding: 0;
+    position: relative;
+    left: 430px;
+    top: 160px;
 }
 
 .pagination-1 a {
