@@ -99,16 +99,19 @@ html,body {
   }
 
 #groupCreate{
-    padding: 10px 10px 10px 10px;
+    padding: 13px 10px 12px 10px;
     position: relative;
     left: 48px;
+    bottom: 653px;
+    left: 600px;
 }
 
 #Search{
+    padding: 15px 20px 15px 20px;
     position: relative;
-    padding: 10px 40px 10px 40px;
-    left: 1000px;
-    bottom: 300px;
+    bottom: 200px;
+    left: 1750px;
+    
 
     position: fixed;
 }
