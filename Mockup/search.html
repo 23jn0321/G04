@@ -2,14 +2,16 @@
 <html>
   <meta charset="utf-8">
   <header>
+<!-- CSS適応 -->
     <link rel="stylesheet" href="CSSUser/Header.css">
     <link rel="stylesheet" href="CSSUser/Search.css">
     <body>
+<!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
       <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px"></a>
       <input type="text" id="name" placeholder="ニックネームを入力してください" readonly>
       <a href="edit.html"><input type="button" value="編集" id="edit"></a>
       <hr>
-
+<!-- ページ数表示 -->
       <ol class="pagination-1">
         <li class="prev"><a href="#"><</a></li>
         <li><a href="#">1</a></li>
@@ -21,6 +23,8 @@
     </ol>
 
   </header> 
+
+<!-- 検索結果表示 -->
   <a id="searchResult">検索結果</a>
   <a href="genreSelect.html"><input type="submit" value="ジャンル選択に戻る" id="returnGenreSelect"></a>
   <ul>

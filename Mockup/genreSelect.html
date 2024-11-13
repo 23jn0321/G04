@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="CSSUser/GenreSelect.css">
     <body>
 
-<!-- ロゴ表示 -->
+<!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
       <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px"></a>
       <input type="text" id="name" placeholder="ニックネームを入力してください" readonly>
       <a href="edit.html"><input type="button" value="編集" id="edit"></a>
@@ -31,6 +31,7 @@
 <!-- ジャンル選択 -->
     <div class="genreSelect">
         <details class="accordion-004">
+<!-- ゲームジャンル -->
             <summary>ゲーム</summary>
             <label for="checkbox1"><input type="checkbox" id="checkbox1">すべて選択</label>
             <label for="checkbox2"><input type="checkbox" id="checkbox2">FPS</label>
@@ -40,6 +41,7 @@
             <label for="checkbox6"><input type="checkbox" id="checkbox6">カードゲーム</label>   
         </details>
         <details class="accordion-004">
+<!-- 音楽ジャンル -->
             <summary>音楽</summary>
             <label for="checkbox7"><input type="checkbox" id="checkbox7">すべて選択</label>
             <label for="checkbox8"><input type="checkbox" id="checkbox8">邦ロック</label>
@@ -48,6 +50,7 @@
             <label for="checkbox11"><input type="checkbox" id="checkbox11">ボーカロイド</label>
         </details>
         <details class="accordion-004"> 
+<!-- スポーツジャンル -->
             <summary>スポーツ</summary>
             <label for="checkbox12"><input type="checkbox" id="checkbox12">すべて選択</label>
             <label for="checkbox13"><input type="checkbox" id="checkbox13">サッカー</label>
@@ -60,6 +63,7 @@
             <label for="checkbox20"><input type="checkbox" id="checkbox20">バトミントン</label>
         </details>
         <details class="accordion-004">
+<!-- 音楽ジャンル -->
             <summary>勉強</summary>
             <label for="checkbox21"><input type="checkbox" id="checkbox21">すべて選択</label>
             <label for="checkbox22"><input type="checkbox" id="checkbox22">資格勉強</label>
@@ -68,7 +72,7 @@
         </details>
     </div>
 
-<!-- 検索ボタン -->
+<!-- 検索ボタン 検索結果画面に遷移(search.html) -->
 <a href="search.html"><input type="submit" value="検索" id="Search"></a>
 
 </html>
