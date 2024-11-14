@@ -8,13 +8,14 @@ ul,li,p {
   }
 
   .room {
-	width: 1270px;      /* チャットルームの幅を指定 */
+	width: 1270px;
+    height: 600px;      /* チャットルームの幅を指定 */
 	background: #eee;  /* チャットルームの背景を灰色 */
 	padding: 10px;     /* 余白を10pxキープ */
 
     position: relative;
-    left: 600px;
-    bottom: 500px;
+    left: 580px;
+    bottom: 750px;
 }
 
 .chat {
@@ -23,7 +24,7 @@ ul,li,p {
 }
 
 .chat .mes {
-	max-width: 70%;       /* 短いチャットにも対応させるため、widthではなくmax-widthを指定 */
+	max-width: 56%;       /* 短いチャットにも対応させるため、widthではなくmax-widthを指定 */
 	border-radius: 20px;  /* （あとでも可）角丸を指定 */
 	padding: 0.5em;       /* （あとでも可）メッセージの内側に余白 */
 }
@@ -38,7 +39,7 @@ ul,li,p {
 /* 相手メッセージのCSS */
 .chat.you .mes{
     color: #fff;        /* 文字色を白 */
-    background: #000;   /* 背景を黒 */
+    background: #e80fce;   /* 背景を黒 */
   }
   
   /* 自分メッセージのCSS */
@@ -62,6 +63,7 @@ ul,li,p {
     max-width: 500px;
     padding-left:0;
     border: solid 1px;
+    position: fixed;
     position: relative;
     left: 50px;
 }
@@ -69,10 +71,11 @@ ul,li,p {
     max-width: 500px;
     list-style: none;
     border:solid 1px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 26px;
+    padding-bottom: 26px;
     margin: 10px;
     text-align: center;
+    
     
 }
 
