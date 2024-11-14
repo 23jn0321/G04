@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>サブジャンル追加画面</title>
+    <link rel="stylesheet" href="CSSAdmin/subGenresAdd.css">
+    <script>
+        function addSubGenreField() {
+            // 新しいinput要素を作成
+            var newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.id = "subGenreName";
+            newInput.name = "subGenreName";
+            // 新しいinput要素をフォームに追加
+            var form = document.querySelector("form");
+            form.insertBefore(newInput, form.querySelector("button"));
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <header>
+        <a href="home.html">
+            <img src="jecMatching/Jec.jpg" width="450px" alt="Jec Logo">
+        </a>
+        <hr>
+    </header>
+
+    <div class="dropdown-container">
+        <label for="genreName">大カテゴリー名</label>
+        <select id="genreName">
+            <option>ゲーム</option>
+            <option>音楽</option>
+            <option>スポーツ</option>
+            <option>勉強</option>
+        </select>
+    </div>
+    <form>
+        <label for="subGenreName">中カテゴリー名</label>
+        <input type="text" id="subGenreName" name="subGenreName">
+        <input type="text" id="subGenreName" name="subGenreName">
+        <input type="text" id="subGenreName" name="subGenreName">
+        <input type="text" id="subGenreName" name="subGenreName">
+        <!-- 中ジャンル追加ボタン -->
+        <button type="button" onclick="addSubGenreField()">+中ジャンルを追加</button>
+        <br>
+
+        <button type="submit">ジャンルを追加する</button>
+    </form>
+
+</body>
+
+</html>

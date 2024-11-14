@@ -226,7 +226,17 @@ div p{
 #Exit{
     color: #ff0000;
     position: relative;
-    left: 500px;
-    bottom: 550px;
+    left: 304px;
+    bottom: 540px;
+    padding: 10px 10px 10px 10px;
+
+}
+
+
+
+#editDetail{
+    position: relative;
+    bottom:540px;
+    left: -425px;
     padding: 10px 10px 10px 10px;
 }

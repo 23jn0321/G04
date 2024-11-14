@@ -69,6 +69,45 @@
     <input type="text" class="textbox-1" id="textbox-2" />
 </label>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="./jquery-3.6.0.min.js"></script>
+
+
+<!-- グループ詳細更新ボタン ??に遷移(??.html) -->
+<input type="submit" id="editDetail" value="編集内容を確定する">
+
+<script>
+  $("#editDetail").click(function(){
+    Swal.fire({
+      text: '編集内容を確定しますか？',
+      showCancelButton: true,
+      confirmButtonText: 'OK'
+    }).then((result) => {
+      if (result.value) {
+          window.location.href='.html'
+      }
+    });
+  });
+  </script>
+
 <!-- 退出ボタン ??に遷移(??.html) -->
-<a href=".html"><input type="submit" id="Exit" value="グループを退出する"></a>
+<input type="submit" id="Exit" value="グループを退出する">
+
+<script>
+  $("#Exit").click(function(){
+    Swal.fire({
+      text: '"資格勉強の集い"を削除しますか？',
+      showCancelButton: true,
+      confirmButtonText: 'OK'
+    }).then((result) => {
+      if (result.value) {
+          window.location.href='.html'
+      }
+    });
+  });
+  </script>
+
+
 </html>
