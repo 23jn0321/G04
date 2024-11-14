@@ -119,9 +119,10 @@ body {
 
 #groupJoin {
     position: relative;
-    top: 715px;
-    left:785px;
-
+    top: 720px;
+    left: 745px;
+    width: 80px;
+    height: 45px;
 
 
 
@@ -131,9 +132,10 @@ body {
 
 #back {
     position: relative;
-    top: 715px;
-    left: 50px;
-
+    top: 720px;
+    left: 14px;
+    width: 80px;
+    height: 45px;
 
 
 }
