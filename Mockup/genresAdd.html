@@ -5,8 +5,19 @@
   <meta charset="utf-8">
   <title>ジャンル追加画面</title>
   <link rel="stylesheet" href="CSSAdmin/genresAdd.css">
-
 </head>
+<script>
+  function addSubGenreField() {
+    // 新しいinput要素を作成
+    var newInput = document.createElement("input");
+    newInput.type = "text";
+    newInput.id = "subGenreName";
+    newInput.name = "subGenreName";
+    // 新しいinput要素をフォームに追加
+    var form = document.querySelector("form");
+    form.insertBefore(newInput, form.querySelector("button"));
+  }
+</script>
 
 <body>
 
@@ -26,9 +37,11 @@
     <input type="text" id="subGenreName" name="subGenreName">
     <input type="text" id="subGenreName" name="subGenreName">
     <input type="text" id="subGenreName" name="subGenreName">
-    <button>+中ジャンルを追加</button>
+    <!-- 中ジャンル追加ボタン -->
+    <button type="button" onclick="addSubGenreField()">+中ジャンルを追加</button>
     <br>
-    <button>ジャンルを追加する</button>
+
+    <button type="submit">ジャンルを追加する</button>
   </form>
 
 </body>
