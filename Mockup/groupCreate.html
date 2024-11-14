@@ -59,6 +59,55 @@
     <input type="text" class="textbox-1" id="textbox-2" />
 </label>
 
+
+
+
+
+
+
+
+<input type="button" id="btn07" value="aaa">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8">
+$("#btn07").click(function(){
+    Swal.fire({
+      text: 'グループを作成しますか？\n\nグループ名：資格勉強の集い\nグループ上限人数：５',
+      showCancelButton: true,
+      confirmButtonText: '作成'
+    });
+  });
+</script>
+
+
+
+
+
+<script 
+    src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+</script>
+   <script>
+    function basicSample(){
+        swal({
+            text:'グループを作成しますか？\n\nグループ名：資格勉強の集い\nグループ上限人数：５',
+            button:true,
+            })
+            .then(() => {
+            window.location.href = "genreSelect.html";
+          
+        });
+    }
+   </Script>
+   <button onClick="basicSample()" id="CreateBotton">作成</button>
+
+
+
+
+
+
+
+
+
+
 <div class="modal-2__wrap">
     <input type="radio" id="modal-2__open" class="modal-2__open-input" name="modal-2__trigger"/>
     <label for="modal-2__open" class="modal-2__open-label">作成</label>
