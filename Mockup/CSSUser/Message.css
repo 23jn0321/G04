@@ -1,0 +1,173 @@
+ul,li,p {
+    margin: 0;
+    padding: 0;
+    
+  }
+  ul,li {
+    list-style: none;
+  }
+
+  .room {
+	width: 1270px;
+    height: 600px;      /* チャットルームの幅を指定 */
+	background: #eee;  /* チャットルームの背景を灰色 */
+	padding: 10px;     /* 余白を10pxキープ */
+
+    position: relative;
+    left: 580px;
+    bottom: 750px;
+}
+
+.chat {
+	display: flex;        /* 要素を横並び */
+	margin-bottom: 10px;  /* チャット同士に隙間を作る */
+}
+
+.chat .mes {
+	max-width: 56%;       /* 短いチャットにも対応させるため、widthではなくmax-widthを指定 */
+	border-radius: 20px;  /* （あとでも可）角丸を指定 */
+	padding: 0.5em;       /* （あとでも可）メッセージの内側に余白 */
+}
+
+.chat .status {
+	color: #aaa;          /* 文字色を灰色に指定 */
+	font-size: 11px;      /* 文字サイズは小さめ */
+	align-self: flex-end; /* この要素は下寄せ */
+	margin: 0 5px;        /* 左右に隙間を作る（ちょっと楽してます）*/
+}
+
+/* 相手メッセージのCSS */
+.chat.you .mes{
+    color: #fff;        /* 文字色を白 */
+    background: #e80fce;   /* 背景を黒 */
+  }
+  
+  /* 自分メッセージのCSS */
+  .chat.me {
+    flex-direction: row-reverse;  /* 左右の並び順を逆順にする */
+  }
+  
+  .chat.me .mes{
+    background: #fff200;          /* 背景色を緑 */
+  }
+  
+  .chat .status {
+    text-align: right;            /* 右寄せにする */
+  }
+
+
+  #group{
+    outline-color: black;
+}
+.group ul{
+    max-width: 500px;
+    padding-left:0;
+    border: solid 1px;
+    position: fixed;
+    position: relative;
+    left: 50px;
+}
+.group li{
+    max-width: 500px;
+    list-style: none;
+    border:solid 1px;
+    padding-top: 26px;
+    padding-bottom: 26px;
+    margin: 10px;
+    text-align: center;
+    
+    
+}
+
+#groupEdit{
+    padding: 13px 10px 12px 10px;
+    position: relative;
+    left: 401px;
+}
+#group{
+    padding: 10px 10px 10px 10px;
+    border: solid 1px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+    left: 50px;
+}
+
+#message{
+    font-size: 20px;
+    width: 1150px;
+    height: 60px;
+    position: relative;
+    left: 580px;
+    bottom: 740px;
+}
+
+
+
+
+
+
+/* From Uiverse.io by eirikvold */ 
+button {
+    font-family: inherit;
+    font-size: 18px;
+    background: linear-gradient(to bottom, #4dc7d9 0%,#66a6ff 100%);
+    color: white;
+    padding: 0.8em 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    position: relative;
+    left: 1750px;
+    bottom: 800px;
+  }
+  
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  button:active {
+    transform: scale(0.95);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  button span {
+    display: block;
+    margin-left: 0.4em;
+    transition: all 0.3s;
+  }
+  
+  button svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+    transition: all 0.3s;
+  }
+  
+  button .svg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-right: 0.5em;
+    transition: all 0.3s;
+  }
+  
+  button:hover .svg-wrapper {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  button:hover svg {
+    transform: rotate(45deg);
+  }
+  
+  
+  
