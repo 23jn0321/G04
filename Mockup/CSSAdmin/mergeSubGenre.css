@@ -1,0 +1,74 @@
+/* 大ジャンル名ラベルと入力フォームのスタイル */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    /* 縦方向に並べる */
+    align-items: center;
+    /* 横方向に中央揃え */
+    margin: 20px 0;
+    /* 上下の間隔 */
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 80%;
+    /* フォームの幅を調整 */
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    /* 下の余白 */
+    border: 1px solid #ccc;
+    /* 境界線 */
+    border-radius: 4px;
+    /* 角を丸く */
+}
+
+/* プルダウンと矢印の横並び */
+.margeGenre {
+    display: flex;
+    justify-content: center;
+    /* 横方向に中央揃え */
+    align-items: center;
+    /* 垂直方向に中央揃え */
+    width: 100%;
+    margin: 20px 0;
+    /* 上下の余白 */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.genreSelect {
+    width: 45%;
+    /* プルダウンメニューの幅を調整 */
+    padding: 5px;
+    font-size: 16px;
+}
+
+.arrow {
+    font-size: 24px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 15px;
+    /* 矢印の前後に余白を追加 */
+}
+
+/* ボタンのスタイル */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
