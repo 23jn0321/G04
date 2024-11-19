@@ -1,6 +1,6 @@
 ul,
 li,
-p {
+label {
   margin: 0;
   padding: 0;
 
@@ -22,7 +22,7 @@ li {
 
   position: relative;
   left: 580px;
-  bottom: 750px;
+  bottom: 900px;
 }
 
 .chat {
@@ -58,6 +58,13 @@ li {
   /* 文字色を白 */
   background: #e80fce;
   /* 背景を黒 */
+  cursor: pointer;
+}
+
+.chat.you .mes:hover {
+  background-color: #fff;
+  color: #2589d0;
+  outline: 1px solid #2589d0;
 }
 
 /* 自分メッセージのCSS */
@@ -68,7 +75,14 @@ li {
 
 .chat.me .mes {
   background: #fff200;
-  /* 背景色を緑 */
+  /* 背景色 */
+  cursor: pointer;
+}
+
+.chat.me .mes:hover {
+  background-color: #fff;
+  color: #2589d0;
+  outline: 1px solid #2589d0;
 }
 
 .chat .status {
@@ -130,15 +144,21 @@ li {
   padding: 5px 10px 5px 10px;
   position: relative;
   left: 1765px;
-  bottom: 1534px;
+  bottom: 1734px;
 
+}
+
+.secret{
+display: none;
+position: relative;
+left: 1000px;
 }
 
 
 
 
 /* From Uiverse.io by eirikvold */
-button {
+#submit {
   font-family: inherit;
   font-size: 18px;
   background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
@@ -156,30 +176,30 @@ button {
   bottom: 800px;
 }
 
-button:hover {
+#submit:hover {
   transform: translateY(-3px);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-button:active {
+#submit:active {
   transform: scale(0.95);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-button span {
+#submit span {
   display: block;
   margin-left: 0.4em;
   transition: all 0.3s;
 }
 
-button svg {
+#submit svg {
   width: 18px;
   height: 18px;
   fill: white;
   transition: all 0.3s;
 }
 
-button .svg-wrapper {
+#submit .svg-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,10 +211,10 @@ button .svg-wrapper {
   transition: all 0.3s;
 }
 
-button:hover .svg-wrapper {
+#submit:hover .svg-wrapper {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-button:hover svg {
+#submit:hover svg {
   transform: rotate(45deg);
 }
