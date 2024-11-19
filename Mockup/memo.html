@@ -1,30 +1,40 @@
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-
-
-
-
-<script 
-    src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
-</script>
-   <script>
-    function basicSample(){
-        swal({
-            text:'グループを作成しますか？\n\nグループ名：資格勉強の集い\nグループ上限人数：５',
-            button:'作成',
-            })
-            .then(() => {
-            window.location.href = "genreSelect.html";
-          
-        });
-    }
-   </Script>
-   <button onClick="basicSample()" id="CreateBotton">作成</button>
-
-
-
-   <input type="submit" id="btn07" value="aaa">
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-<script src="js/test.js"></script>
-<input type="submit" id="btn07" value="aaaaa">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <link rel="stylesheet" href="CSSUser/memo.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レスポンシブテーブルの例</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="test-container">
+    <table class="test-table">
+      <thead>
+        <tr>
+          <th class="test-header">ヘッダー1</th>
+          <th class="test-header">ヘッダー2</th>
+          <th class="test-header">ヘッダー3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="test-cell">データ1</td>
+          <td class="test-cell">データ2</td>
+          <td class="test-cell">データ3</td>
+        </tr>
+        <tr>
+          <td class="test-cell">データ4</td>
+          <td class="test-cell">データ5</td>
+          <td class="test-cell">データ6</td>
+        </tr>
+        <tr>
+          <td class="test-cell">データ7</td>
+          <td class="test-cell">データ8</td>
+          <td class="test-cell">データ9</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
