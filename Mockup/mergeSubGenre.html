@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>中ジャンル統合</title>
-    <link rel="stylesheet" href="CSSAdmin/genresAdd.css">
+    <link rel="stylesheet" href="CSSAdmin/mergeSubGenre.css">
 </head>
 
 <body>
@@ -22,23 +22,25 @@
             <input type="text" id="genreName" name="genreName">
         </div>
 
-        <label for="subGenreName">統合元中ジャンル 　　　統合先ジャンル</label>
-        <div class="margeGenre">
-            <select name="sourceGenre" class="genreSelect">
-                <option>a</option>
-                <option>b</option>
-                <option>c</option>
-                <option>d</option>
-            </select>
+        <div class="form-group">
+            <label for="subGenreName">統合元ジャンルㅤㅤㅤㅤ統合先ジャンル</label>
+            <div class="merge-genre">
+                <select name="sourceGenre" class="genre-select">
+                    <option>a</option>
+                    <option>b</option>
+                    <option>c</option>
+                    <option>d</option>
+                </select>
 
-            <span class="arrow">➡</span>
+                <span class="arrow">➡</span>
 
-            <select name="targetGenre" class="genreSelect">
-                <option>a</option>
-                <option>b</option>
-                <option>c</option>
-                <option>d</option>
-            </select>
+                <select name="targetGenre" class="genre-select">
+                    <option>a</option>
+                    <option>b</option>
+                    <option>c</option>
+                    <option>d</option>
+                </select>
+            </div>
         </div>
 
         <button type="submit">中ジャンルを統合</button>
