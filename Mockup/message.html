@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <meta charset="utf-8">
@@ -5,7 +6,9 @@
 <!-- CSS適応 -->
     <link rel="stylesheet" href="CSSUser/Header.css">
     <link rel="stylesheet" href="CSSUser/Message.css">
-
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
     
 <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
       <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px"></a>
@@ -26,7 +29,6 @@
   <li><p>テスト期間がち勉強(4/5)<br>最終更新日：10/8<br>ジャンル：勉強 / テスト勉強</p></li>
   <li><p>プログラミング愛好家(3/4)<br>最終更新日：10/3<br>ジャンル：勉強 / プログラミング</p></li>
   <li><p>テスト勉強(4/4)<br>最終更新日：9/30<br>ジャンル：勉強 / テスト勉強</p></li>
-  <li><p>K-POP愛(2/3)<br>最終更新日：9/22<br>ジャンル：音楽 / K-POP</p></li>
   </ul>
  </div>
 </a>
@@ -67,8 +69,8 @@
         
         html: '<br>電子花子<br>高度情報処理科<br><br>勉強が好きです。よろしくお願いします<br><br>',
      
-        confirmButtonText: '通報'
-       
+        confirmButtonText: '通報',
+        showCloseButton : true
       }).then((result) => {
         if (result.value) {
           window.location.href = 'report.html'
@@ -81,6 +83,7 @@
   $("#btn09").click(function () {
     Swal.fire({
       html: '<br>電子太郎<br>情報処理科<br><br>よろしくお願いします<br><br>',
+      showCloseButton : true
     })
   });
 </script>
@@ -101,3 +104,4 @@
     <span>Send</span>
   </button>
   <a href="groupDetailAfter.html"><input type="button" value="グループ詳細" id="groupDetail"></a>
+</html>
