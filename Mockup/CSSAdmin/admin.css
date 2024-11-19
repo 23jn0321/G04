@@ -1,95 +1,154 @@
- /* 通報閲覧ボタンを縦長にする */
- .button-container {
-   display: flex;
-   align-items: flex-start;
-   gap: 10px;
+/* 通報閲覧ボタンを縦長にする */
+.button-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
 
- }
+a.twp-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 250px;
+  /* 横幅 */
+  height: 450px;
+  /* 高さ */
+  font-family: Arial, sans-serif;
+  /* お好みのフォント */
+  font-size: 20px;
+  /* フォントサイズ */
+  font-weight: bold;
+  /* 太字 */
+  background-color: #7ab6c2;
+  /* ライトブルー */
+  color: white;
+  /* 文字色 */
+  border-radius: 6px;
+  /* 角を丸める */
+  text-decoration: none;
+  /* 下線を除去 */
+  position: relative;
+  overflow: hidden;
+  /* 擬似要素がはみ出さないようにする */
+  transition: 0.3s;
+  /* ホバー時のアニメーション */
+}
 
- .twp-button {
-   width: 250px;
-   /* 横幅 */
-   height: 450px;
-   /* 高さ */
-   font-size: 18px;
-   /* フォントサイズ */
-   padding: 10px;
-   background-color: #7ab6c2;
-   /* ライトブルー */
-   color: white;
-   /* 文字色は白 */
-   font-size: 20px;
-   font-weight: bold;
-   line-height: 1.2;
-   text-decoration: none;
-   text-align: center;
-   padding: 1.3em .5em;
-   border: 1px solid transparent;
-   border-radius: 6px;
- }
+a.twp-button span {
+  transform: translate(-3px, -3px);
+  transition: 0.3s;
+  z-index: +1;
+}
 
- .twp-button span {
-   transform: translate(-3px, -3px);
-   transition: 0.3s;
-   z-index: +1;
- }
+a.twp-button::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  transition: 0.3s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 
- .twp-button::after {
-   content: "";
-   width: 100%;
-   height: 100%;
-   border-radius: 6px;
-   transition: 0.3s;
- }
+a.twp-button:hover span {
+  transform: translate(0, 0);
+}
 
- .small-buttons {
-   display: grid;
-   grid-template-columns: repeat(2, auto);
-   /* 2列 */
-   gap: 10px;
-   /* ボタン間の隙間 */
- }
+a.twp-button:hover:after {
+  transform: translate(0, 0);
+}
 
- /* 他のボタンを大きくする */
- button {
-   font-size: 18px;
-   padding: 97px 220px;
-   /* ボタンの大きさ */
-   background-color: #7ab6c2;
-   /* ライトブルー */
-   color: white;
-   /* 文字色は白 */
-   font-size: 20px;
-   font-weight: bold;
-   line-height: 1.2;
-   text-decoration: none;
-   text-align: center;
-   border: 1px solid transparent;
-   border-radius: 6px;
- }
+a.twp-button:hover {
+  background-color: #6299a1;
+  /* ホバー時の背景色 */
+}
 
- button span {
-   transform: translate(-3px, -3px);
-   transition: 0.3s;
-   z-index: +1;
- }
+.small-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  /* 2列 */
+  gap: 10px;
+  /* ボタン間の隙間 */
+}
 
- button ::after {
-   content: "";
-   width: 100%;
-   height: 100%;
-   border-radius: 6px;
-   transition: 0.3s;
+body {
+  background: linear-gradient(to right, #34495e, #2c3e50);
+  /* ダークブルー系のグラデーション */
+  color: #ecf0f1;
+  /* 明るい文字色 */
+}
 
- }
+/* btn_06-2クラスのスタイルを定義 */
+a.btn_06-2 {
+  display: inline-block;
+  /* ブロック要素化 */
+  font-size: 18px;
+  padding: 97px 220px;
+  /* ボタンのサイズを設定 */
+  background-color: #7ab6c2;
+  /* ライトブルー */
+  color: white;
+  color: white;
+  /* テキスト色 */
+  font-weight: bold;
+  line-height: 1.2;
+  text-decoration: none;
+  /* 下線を除去 */
+  text-align: center;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: 0.3s;
+  /* ホバー時のアニメーション */
+  position: relative;
+  overflow: hidden;
+}
 
- button:hover {
-   background-color: #6299a1;
- }
+a.btn_06-2 span {
+  position: relative;
+  display: block;
+  transform: translate(-3px, -3px);
+  transition: 0.3s;
+  z-index: 1;
+}
 
- body {
-   background: linear-gradient(to right, #34495e, #2c3e50);
-   /* ダークブルー系のグラデーション */
-   color: #ecf0f1;
-   /* 明るい文字色 */
- }
+a.btn_06-2::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transform: translate(-3px, -3px);
+  transition: 0.3s;
+}
+
+a.btn_06-2:hover {
+  background-color: #6299a1;
+  /* ホバー時の背景色 */
+}
+
+a.btn_06-2:hover span {
+  transform: translate(0, 0);
+}
+
+a.btn_06-2:hover:after {
+  transform: translate(0, 0);
+}
+
+@media all and (max-width: 1023px) {
+  a.btn_06-2 {
+    font-size: 18px;
+  }
+}
+
+@media all and (max-width: 767px) {
+  a.btn_06-2 {
+    font-size: 16px;
+  }
+}
