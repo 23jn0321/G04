@@ -3,6 +3,7 @@
    display: flex;
    align-items: flex-start;
    gap: 10px;
+
  }
 
  .twp-button {
@@ -13,6 +14,32 @@
    font-size: 18px;
    /* フォントサイズ */
    padding: 10px;
+   background-color: #7ab6c2;
+   /* ライトブルー */
+   color: white;
+   /* 文字色は白 */
+   font-size: 20px;
+   font-weight: bold;
+   line-height: 1.2;
+   text-decoration: none;
+   text-align: center;
+   padding: 1.3em .5em;
+   border: 1px solid transparent;
+   border-radius: 6px;
+ }
+
+ .twp-button span {
+   transform: translate(-3px, -3px);
+   transition: 0.3s;
+   z-index: +1;
+ }
+
+ .twp-button::after {
+   content: "";
+   width: 100%;
+   height: 100%;
+   border-radius: 6px;
+   transition: 0.3s;
  }
 
  .small-buttons {
@@ -26,6 +53,43 @@
  /* 他のボタンを大きくする */
  button {
    font-size: 18px;
-   padding: 95px 220px;
+   padding: 97px 220px;
    /* ボタンの大きさ */
+   background-color: #7ab6c2;
+   /* ライトブルー */
+   color: white;
+   /* 文字色は白 */
+   font-size: 20px;
+   font-weight: bold;
+   line-height: 1.2;
+   text-decoration: none;
+   text-align: center;
+   border: 1px solid transparent;
+   border-radius: 6px;
+ }
+
+ button span {
+   transform: translate(-3px, -3px);
+   transition: 0.3s;
+   z-index: +1;
+ }
+
+ button ::after {
+   content: "";
+   width: 100%;
+   height: 100%;
+   border-radius: 6px;
+   transition: 0.3s;
+
+ }
+
+ button:hover {
+   background-color: #6299a1;
+ }
+
+ body {
+   background: linear-gradient(to right, #34495e, #2c3e50);
+   /* ダークブルー系のグラデーション */
+   color: #ecf0f1;
+   /* 明るい文字色 */
  }
