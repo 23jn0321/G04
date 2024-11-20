@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <header>
 <!-- CSS適応 -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="CSSUser/Header.css">
     <link rel="stylesheet" href="CSSUser/Message.css">
 <head>
@@ -12,11 +12,14 @@
 </head>
     
 <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-      <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px"></a>
-      <input type="text" id="name" placeholder="ニックネームを入力してください" readonly>
-      <a href="edit.html"><input type="button" value="編集" id="edit"></a>
+      <div class="logo">
+        <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px" id="jecIMG"></a>
+        <input type="text" id="name" placeholder="ニックネームを入力してください" readonly>
+        <a href="edit.html"><input type="button" value="編集" id="edit"></a>
+        <hr>
+      </div>
       
-      <hr>
+    
   </header>
   <div>
   <p id="group">所属グループ一覧</p>
@@ -49,7 +52,7 @@
       <div class="drawer__nav__inner">
         <ul class="drawer__nav__menu">
           <li class="drawer__nav__item">
-            <a class="drawer__nav__link" href="#"><ul><li><p>資格勉強の集い(3/5)<br>最終更新日：10/13<br>ジャンル：勉強 / 資格勉強</p></li><ul></a>
+            <a class="drawer__nav__link" href="#"><nobr><p>所属グループ一覧　　<button onclick="location.href='groupEdit.html'">グループ編集</button></p></nobr></a>
           </li>
           <li class="drawer__nav__item">
             <a class="drawer__nav__link" href="#"><ul><li><p>テスト期間がち勉強(4/5)<br>最終更新日：10/8<br>ジャンル：勉強 / テスト勉強</p></li></ul></a>
@@ -61,7 +64,7 @@
             <a class="drawer__nav__link" href="#"><ul><li><p>テスト勉強(4/4)<br>最終更新日：9/30<br>ジャンル：勉強 / テスト勉強</p></li></ul></a>
           </li>
           <li class="drawer__nav__item">
-            <a class="drawer__nav__link" href="#"></a>
+            <a class="drawer__nav__link" href="#"><ul><li><p>資格勉強の集い(3/5)<br>最終更新日：10/13<br>ジャンル：勉強 / 資格勉強</p></li></ul></a>
           </li>
         </ul>
       </div>

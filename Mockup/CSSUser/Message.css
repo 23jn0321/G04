@@ -33,7 +33,7 @@ li {
 
   position: relative;
   left: 580px;
-  bottom: 900px;
+  bottom: 1100px;
 }
 
 .chat {
@@ -159,7 +159,7 @@ li {
   padding: 5px 10px 5px 10px;
   position: relative;
   left: 540px;
-  bottom: 1580px;
+  bottom: 1800px;
 }
 
 .secret{
@@ -189,7 +189,7 @@ left: 1000px;
     width: 100%;
     position: absolute;
     left: 0;
-    top: 180px;
+    bottom: 100px;
     padding: 10px;
   }
 
@@ -197,11 +197,11 @@ left: 1000px;
     width: 70%;
     position: relative;
     left: auto;
-    top: 600px;
+    top: 660px;
   }
   #submit{
     position: relative;
-    bottom: -600px;
+    bottom: -660px;
     left: 20px;
   }
   
@@ -220,7 +220,7 @@ left: 1000px;
     padding: 5px 10px 5px 10px;
     position: absolute;
     left: 2px;
-    bottom: 750px;
+    bottom: 770px;
   }
   
 
@@ -235,7 +235,7 @@ left: 1000px;
 .drawer__button {
   position: relative;
   top: -150px;
-  margin-left: 95%;
+  margin-left: 98%;
   width: 3rem;
   height: 3rem;
   background-color: transparent;
@@ -339,17 +339,17 @@ section:nth-child(even) {
     width: 70%;
     position: relative;
     left: auto;
-    top: 692px;
+    top: 632px;
   }
   #groupDetail {
     padding: 5px 10px 5px 10px;
+    margin-left: 70%;
     position: relative;
-    left: 540px;
-    bottom: 1580px;
+    bottom: 170px;
   }
   #submit{
     position: relative;
-    bottom: -690px;
+    bottom: -630px;
     left: 20px;
   }
   .drawer__button {
@@ -375,5 +375,7 @@ section:nth-child(even) {
     left: 20px;
   }  
 }
+@media (max-height: 700px) {
 
+}
 
