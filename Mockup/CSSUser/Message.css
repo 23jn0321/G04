@@ -249,7 +249,7 @@ left: 1000px;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 2rem;
+  width: 1.6rem;
   height: 2px;
   background-color: black;
   transform: translateX(-50%);
