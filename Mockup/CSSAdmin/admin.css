@@ -152,3 +152,63 @@ a.btn_06-2:hover:after {
     font-size: 16px;
   }
 }
+
+#home {
+  position: absolute;
+  right: 40px;
+  width: 500px;
+  height: 60px;
+  top: 40px;
+  font-family: Arial, sans-serif;
+  /* お好みのフォント */
+  font-size: 20px;
+  /* フォントサイズ */
+  font-weight: bold;
+  /* 太字 */
+  background-color: #858585;
+  /* ライトブルー */
+  color: white;
+  /* 文字色 */
+  border-radius: 6px;
+  /* 角を丸める */
+  text-decoration: none;
+  /* 下線を除去 */
+  overflow: hidden;
+  /* 擬似要素がはみ出さないようにする */
+  transition: 0.3s;
+  /* ホバー時のアニメーション */
+}
+
+#home span {
+  position: relative;
+  display: block;
+  transform: translate(-3px, -3px);
+  transition: 0.3s;
+  z-index: 1;
+}
+
+#home::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transform: translate(-3px, -3px);
+  transition: 0.3s;
+}
+
+#home:hover {
+  background-color: #787878;
+  /* ホバー時の背景色 */
+}
+
+#home:hover span {
+  transform: translate(0, 0);
+}
+
+#home:hover:after {
+  transform: translate(0, 0);
+}
