@@ -77,3 +77,15 @@ label {
     pointer-events: none;
     /* 矢印がクリックされないようにする */
 }
+
+.alert-fixed {
+    position: fixed;
+    bottom: 10px;
+    /* 画面の下から10px */
+    left: 50%;
+    transform: translateX(-50%);
+    /* 水平方向に中央寄せ */
+    z-index: 1050;
+    /* 他の要素より前に表示 */
+    width: auto;
+}
