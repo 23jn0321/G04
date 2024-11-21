@@ -33,7 +33,7 @@ li {
 
   position: relative;
   left: 580px;
-  bottom: 1100px;
+  bottom: 1160px;
 }
 
 .chat {
@@ -152,14 +152,14 @@ li {
   height: 40px;
   position: relative;
   left: 580px;
-  bottom: 890px;
+  bottom: 1150px;
 }
 
 #groupDetail {
   padding: 5px 10px 5px 10px;
   position: relative;
   left: 540px;
-  bottom: 1800px;
+  bottom: 1850px;
 }
 
 .secret{
@@ -172,7 +172,7 @@ left: 1000px;
 #submit {
   padding: 10px 10px 10px 10px;
   position: relative;
-  bottom: 890px;
+  bottom: 1150px;
   left: 600px;
 }
 
