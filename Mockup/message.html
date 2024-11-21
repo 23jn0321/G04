@@ -14,7 +14,7 @@
 <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
       <div class="logo">
         <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px" id="jecIMG"></a>
-        <input type="text" id="name" placeholder="ニックネームを入力してください" readonly>
+        <input type="text" id="name" value="電子太郎 さん" placeholder="ニックネームを入力してください" readonly>
         <a href="edit.html"><input type="button" value="編集" id="edit"></a>
         <hr>
       </div>
@@ -113,7 +113,8 @@
         html: '<br>電子花子<br>高度情報処理科<br><br>勉強が好きです。よろしくお願いします<br><br>',
      
         confirmButtonText: '通報',
-        showCloseButton : true
+        showCloseButton : true,
+        confirmButtonColor : '#990606'
       }).then((result) => {
         if (result.value) {
           window.location.href = 'report.html'
