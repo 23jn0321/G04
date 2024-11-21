@@ -4,7 +4,7 @@
 ul{
     max-width: 500px;
     padding-left:0;
-    border: solid 1px;
+    border: solid 2px;
     position: relative;
     left: 50px;
 }
@@ -13,7 +13,7 @@ li{
     list-style: none;
     border:solid 1px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 1px;
     margin: 10px;
     text-align: center;
     
@@ -22,8 +22,8 @@ li{
 #groupEdit{
     padding: 13px 10px 12px 10px;
     position: relative;
-    left: 181px;
-    bottom: 80px;
+    left: 10px;
+    bottom: 8px;
 }
 #group{
     padding: 10px 10px 10px 10px;
