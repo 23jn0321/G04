@@ -6,13 +6,15 @@
     <title>サブジャンル追加</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSSAdmin/subGenresAdd.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <script>
     let inputCount = 4;
     function addSubGenreField() {
         // 新しいinput要素を作成
         if (inputCount >= 10) {
-            showAlert()
+            showAlert("一度に追加できる中ジャンルは10個までです！");
         }
         else {
             inputCount += 1
@@ -26,11 +28,15 @@
         }
     }
     function showAlert(message) {
+        var existingAlert = document.querySelector(".alert-fixed");
+        if (existingAlert) {
+            existingAlert.remove();
+        }
         // アラート用のdivを作成
         var alertDiv = document.createElement("div");
         alertDiv.className = "alert alert-primary alert-fixed"; // Bootstrapのアラートクラス
         alertDiv.role = "alert"; // アラートとしての役割を設定
-        alertDiv.textContent = "一度に追加できる中ジャンルは10個までです！"; // メッセージを設定
+        alertDiv.textContent = message; // メッセージを設定
 
         // アラートをページに追加（フォームの前に追加）
         document.body.insertBefore(alertDiv, document.body.firstChild);
@@ -39,6 +45,43 @@
         setTimeout(function () {
             alertDiv.style.display = "none";
         }, 3000);
+    }
+    function subGenresAdd(event) {
+        event.preventDefault()
+
+        const genreName = document.getElementById('genreName').value;
+        const subGenreNames = [];
+        const textInputs = document.querySelectorAll('input[type="text"]');
+        const textInputCount = textInputs.length;
+        for (let i = 1; i < (textInputCount - 1); i++) {
+            const subGenre = textInputs[i].value;
+            if (subGenre) {
+                subGenreNames.push(subGenre);
+            }
+        }
+        Swal.fire({
+            html: `<h1>大ジャンル: <b>${genreName}</h1></b><br><h2>中ジャンル: <b>${subGenreNames.join(', ')}</h2></b><br>これで追加しますか？<br>※空文字列の中ジャンルは追加されません`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'OK',
+            reverseButtons: true,
+            icon: 'info'
+        }).then((result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+                // OKボタンが押された時
+                Swal.fire("ジャンルを追加しました", {
+                    icon: "success",
+                });
+                document.querySelector("form").submit(); // ここで実際にフォーム送信を行う
+
+            } else {
+                // キャンセルボタンが押された時
+                Swal.fire("ジャンル追加がキャンセルされました。", {
+                    icon: "info",
+                });
+            }
+        });
     }
 </script>
 
@@ -63,7 +106,7 @@
             <option>勉強</option>
         </select>
     </div>
-    <form>
+    <form onsubmit="subGenresAdd(event)">
         <label for="subGenreName">中ジャンル名</label>
         <input type="text" id="subGenreName1" name="subGenreName1">
         <input type="text" id="subGenreName2" name="subGenreName2">
