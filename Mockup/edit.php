@@ -42,13 +42,13 @@
 <header>
   <!-- CSS適応 -->
   <link rel="stylesheet" href="CSSUser/Header.css">
-  <link rel="stylesheet" href="CSSUser/Home.css">
+  
 </header>
 <?php include "header.php"; ?>
 
     <!-- プロフィール編集 -->
     <form action="" method="POST">
-    <table id=" profileTable" class="box">
+    <table id="profileTable" class="box">
         <tr>
             <th colspan="2">
                 プロフィール編集
@@ -83,7 +83,9 @@
     }).then((result) => {
       if (result.value) {
       
-        <?=  ?>
+        <?php 
+            
+        ?>
         window.location.href = 'home.php'
       }
     });

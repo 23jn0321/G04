@@ -8,7 +8,6 @@ class user
     public int $UserNo; 
     public string  $Comment;    
     public string $UserName;    
-    public string $GakusekiNo;    
     public int $ToketuNo;
     public string $ToketuTxt;
 }
@@ -16,7 +15,7 @@ class user
 class userDAO
 {
     //DBからメールアドレスとパスワードが一致する会員データを取得する
-    public function get_user(string $gakusekiNo, string $data;)
+    public function get_user(string $gakusekiNo, string $data)
     {
         //DBに接続する
         $dbh = DAO::get_db_connect();
@@ -25,7 +24,7 @@ class userDAO
         $sql = "SELECT * FROM GakuseiUser WHERE GakusekiNo = :gakusekiNo";
         
         $Data = $_SESSION['student'];
-        $GakusekiNo = array_column($Data, 'GakusekiNo')
+        $GakusekiNo = array_column($Data, 'GakusekiNo');
 
         $stmt = $dbh->prepare($sql);
 
