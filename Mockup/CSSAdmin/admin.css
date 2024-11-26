@@ -10,13 +10,13 @@ a.twp-button {
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 250px;
+  width: 450px;
   /* 横幅 */
-  height: 450px;
+  height: 720px;
   /* 高さ */
   font-family: Arial, sans-serif;
   /* お好みのフォント */
-  font-size: 20px;
+  font-size: 28px;
   /* フォントサイズ */
   font-weight: bold;
   /* 太字 */
@@ -87,7 +87,7 @@ a.btn_06-2 {
   display: inline-block;
   /* ブロック要素化 */
   font-size: 18px;
-  padding: 97px 220px;
+  padding: 160px 220px;
   /* ボタンのサイズを設定 */
   background-color: #7ab6c2;
   /* ライトブルー */
@@ -104,6 +104,7 @@ a.btn_06-2 {
   /* ホバー時のアニメーション */
   position: relative;
   overflow: hidden;
+  font-size: 28px;
 }
 
 a.btn_06-2 span {
@@ -212,4 +213,11 @@ a.home:hover span {
 
 a.home:hover:after {
   transform: translate(0, 0);
+}
+
+div.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
 }
