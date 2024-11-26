@@ -1,3 +1,15 @@
+<?php
+    require_once 'helpers/studentDAO.php';
+
+    $gakusekiNo = '';
+    $errs = [];
+
+    //セッションの開始
+    session_start();
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
@@ -33,7 +45,7 @@
           type: 'question'
         }).then((result) => {
           if (result.value) {
-            window.location.href = 'home.html'
+            window.location.href = 'home.php'
           }
         });
       });
