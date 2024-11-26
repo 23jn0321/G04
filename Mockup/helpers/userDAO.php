@@ -16,7 +16,7 @@ class user
 class userDAO
 {
     //DBからメールアドレスとパスワードが一致する会員データを取得する
-    public function get_user(string $GakusekiNo, string $Data;)
+    public function get_user(string $gakusekiNo, string $data;)
     {
         //DBに接続する
         $dbh = DAO::get_db_connect();
@@ -40,48 +40,19 @@ class userDAO
         print_r($user);
     }
     
-    public function insert(Member $member)
+    public function update(string $nickName, string $comment)
     {
         $dbh = DAO::get_db_connect();
 
-        $sql = "INSERT INTO Member(email,membername,zipcode,address,tel,password) 
-                VALUES(:email,:membername,:zipcode,:address,:tel,:password)";
+        $sql = "UPDATE INTO GakuseiUser(ProfileComment,Username) 
+                VALUES(:profilecomment,:username)";
 
         $stmt = $dbh->prepare($sql);
 
-        $password = password_hash($member->password, PASSWORD_DEFAULT);
 
-        $stmt->bindValue(":email", $member->email, PDO::PARAM_STR);
-        $stmt->bindValue(":membername", $member->membername, PDO::PARAM_STR);
-        $stmt->bindValue(":zipcode", $member->zipcode, PDO::PARAM_STR);
-        $stmt->bindValue(":address", $member->address, PDO::PARAM_STR);
-        $stmt->bindValue(":tel", $member->tel, PDO::PARAM_STR);
-        $stmt->bindValue(":password", $password, PDO::PARAM_STR);
+        $stmt->bindValue(":profilecomment", $user->profilecomment, PDO::PARAM_STR);
+        $stmt->bindValue(":username", $user->username, PDO::PARAM_STR);
 
         $stmt->execute();
-    }
-
-    public function email_exists(string $email)
-    {
-        //DBに接続する
-        $dbh = DAO::get_db_connect();
-
-        $sql = "SELECT * FROM Member WHERE email = :email";
-
-        $stmt = $dbh->prepare($sql);
-
-        //SQLに変数の値を当てはめる
-        $stmt->bindValue(':email',$email,PDO::PARAM_STR);
-
-        //SQLを実行する
-        $stmt->execute();
-
-        if($stmt->fetch() !== false){
-            return true; //Emailがある  
-        }
-        else{
-            return false; //Emailがない
-        }
     }
 }
-?>

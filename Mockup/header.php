@@ -15,7 +15,7 @@
 <header>
 <a href="home.php"><img src="jecMatching/Jec.jpg" width="450px"></a>
   <input type="text" id="name" value="<??>" placeholder="ニックネームを入力してください" readonly>
-  <a href="edit.html"><input type="button" value="編集" id="edit"></a>
+  <a href="edit.php"><input type="button" value="編集" id="edit"></a>
   <a href="admin.html"><input type="button" value="管理者画面" id="admin"></a>
   <a href="login.php"><input type="button" value="ログイン画面遷移" id="admin"></a>
   <hr>
