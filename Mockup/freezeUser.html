@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="CSSAdmin/freezeUser.css">
 
     <!-- SweetAlertのCDNを読み込む -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
 
     <script>
         // 凍結ユーザー情報を変数に格納
-        var freezeUserName = "ユーザー名例";
+        var freezeUserName = "23jn0310";
         var freezeReason = "凍結理由例";
         var freezeDate = "2024年11月12日";
 
@@ -35,70 +35,75 @@
 
         // 凍結解除ボタンがクリックされた時に呼ばれる関数
         function confirmUnfreeze(userIndex) {
-            swal({
-                text: `本当にユーザー${userIndex}を凍結解除しますか？`,
-                buttons: {
-                    cancel: "キャンセル",
-                    confirm: "OK"
-                }
-            }).then((willUnfreeze) => {
-                if (willUnfreeze) {
+            Swal.fire({
+                html: `本当にユーザー${userIndex}を凍結解除しますか？`,
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                reverseButtons: true,
+                icon: 'info'
+            }).then((result) => {
+                if (result.isConfirmed) {
                     // OKボタンが押された時
-                    document.getElementById('freezeUserInfo' + userIndex).value = "凍結解除済み";
-                    swal("ユーザーの凍結が解除されました。", {
+                    Swal.fire("ユーザー" + userIndex + "の凍結が解除されました。", {
                         icon: "success",
+                    }).then(() => {
+                        document.getElementById('unfreezeButton' + userIndex).disabled = true;
+                        document.getElementById('freezeUserInfo' + userIndex).value = "凍結解除済み";
                     });
+
                 } else {
                     // キャンセルボタンが押された時
-                    swal("凍結解除がキャンセルされました。", {
+                    Swal.fire("凍結解除がキャンセルされました。", {
                         icon: "info",
                     });
                 }
             });
         }
+
+
     </script>
 
     <table>
         <!-- テキストボックスのidをユニークに設定 -->
         <tr>
             <td><input type="text" id="freezeUserInfo1" name="freezeUserInfo1" disabled></td>
-            <td><button onclick="confirmUnfreeze(1)">凍結解除</button></td>
+            <td><button id="unfreezeButton1" onclick="confirmUnfreeze(1)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo2" name="freezeUserInfo2" disabled></td>
-            <td><button onclick="confirmUnfreeze(2)">凍結解除</button></td>
+            <td><button id="unfreezeButton2" onclick="confirmUnfreeze(2)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo3" name="freezeUserInfo3" disabled></td>
-            <td><button onclick="confirmUnfreeze(3)">凍結解除</button></td>
+            <td><button id="unfreezeButton3" onclick="confirmUnfreeze(3)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo4" name="freezeUserInfo4" disabled></td>
-            <td><button onclick="confirmUnfreeze(4)">凍結解除</button></td>
+            <td><button id="unfreezeButton4" onclick="confirmUnfreeze(4)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo5" name="freezeUserInfo5" disabled></td>
-            <td><button onclick="confirmUnfreeze(5)">凍結解除</button></td>
+            <td><button id="unfreezeButton5" onclick="confirmUnfreeze(5)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo6" name="freezeUserInfo6" disabled></td>
-            <td><button onclick="confirmUnfreeze(6)">凍結解除</button></td>
+            <td><button id="unfreezeButton6" onclick="confirmUnfreeze(6)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo7" name="freezeUserInfo7" disabled></td>
-            <td><button onclick="confirmUnfreeze(7)">凍結解除</button></td>
+            <td><button id="unfreezeButton7" onclick="confirmUnfreeze(7)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo8" name="freezeUserInfo8" disabled></td>
-            <td><button onclick="confirmUnfreeze(8)">凍結解除</button></td>
+            <td><button id="unfreezeButton8" onclick="confirmUnfreeze(8)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo9" name="freezeUserInfo9" disabled></td>
-            <td><button onclick="confirmUnfreeze(9)">凍結解除</button></td>
+            <td><button id="unfreezeButton9" onclick="confirmUnfreeze(9)">凍結解除</button></td>
         </tr>
         <tr>
             <td><input type="text" id="freezeUserInfo10" name="freezeUserInfo10" disabled></td>
-            <td><button onclick="confirmUnfreeze(10)">凍結解除</button></td>
+            <td><button id="unfreezeButton10" onclick="confirmUnfreeze(10)">凍結解除</button></td>
         </tr>
     </table>
 
