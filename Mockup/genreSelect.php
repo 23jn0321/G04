@@ -6,14 +6,8 @@
 <!-- CSS適応 -->
         <link rel="stylesheet" href="CSSUser/Header.css">
         <link rel="stylesheet" href="CSSUser/GenreSelect.css">
+        <?php include "header.php"; ?>
  
-
-<!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-        <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px"></a>
-        <input type="text" value="電子太郎 さん" id="name" placeholder="ニックネームを入力してください" readonly>
-        <a href="edit.html"><input type="button" value="編集" id="edit"></a>
-        <hr>
-        </header> 
 
   <div>
     <p id="group">所属グループ一覧</p>

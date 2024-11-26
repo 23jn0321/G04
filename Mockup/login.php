@@ -28,6 +28,7 @@
             //DBから学籍番号・パスワードが一致する会員データを取り出す
             $studentDAO = new StudentDAO();
             $student = $studentDAO->get_member($gakusekiNo,$password);
+            $admin = $studentDAO->get_admin($gakusekiNo,$password);
 
             //会員データを取り出せたとき
             if($student !== false){
@@ -40,6 +41,12 @@
                 //index.phpに移動
                 header('Location: home.php');
                 exit;
+            }else if($admin !== false){
+                session_regenerate_id(true);
+
+
+                $_SESSION['admin'] = $admin;
+                header('Location: admin.html');
             }
             //会員データが取り出せなかった時
             else{

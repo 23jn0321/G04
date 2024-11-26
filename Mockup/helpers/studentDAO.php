@@ -8,6 +8,12 @@ class Student
     public string $GakkaCode;
     public string $GooglePass;       // パスワード
 }
+class Admin
+{
+    public int $AdminID;
+    public string $AdminUserID;
+    public string $AdminPass;
+}
 
 class StudentDAO
 {
@@ -17,19 +23,21 @@ class StudentDAO
         //DBに接続する
         $dbh = DAO::get_db_connect();
 
-        //メールアドレスが一致する会員データを取得する
+        //学籍番号が一致する会員データを取得する
         $sql = "SELECT * FROM Gakusei WHERE GakusekiNo = :gakusekiNo";
         
         $stmt = $dbh->prepare($sql);
-
+       
         //SQLに変数の値を当てはめる
         $stmt->bindValue(':gakusekiNo',$gakusekiNo,PDO::PARAM_STR);
-
+       
         //SQLを実行する
         $stmt->execute();
+       
 
         //1件分のデータをStudentクラスのオブジェクトとして取得する
         $student = $stmt->fetchObject('Student');
+       
 
         //会員データが取得できたとき
         if($student !== false){ 
@@ -37,8 +45,34 @@ class StudentDAO
             if($password == $student->GooglePass){
                 //会員データを返す
                 return $student;
-            }else{
-                echo "Noooooooooooooo";
+            }
+        }
+        return false;
+    }
+    public function get_admin(string $gakusekiNo, string $password)
+    {
+        $dbh = DAO::get_db_connect();
+
+        //学籍番号が一致する会員データを取得する
+        $sql = "SELECT * FROM Manager WHERE AdminUserID = :AdminUserID";
+        
+        $stmt = $dbh->prepare($sql);
+
+        //SQLに変数の値を当てはめる
+        $stmt->bindValue(':AdminUserID',$gakusekiNo,PDO::PARAM_STR);
+
+        //SQLを実行する
+        $stmt->execute();
+
+        //1件分のデータをStudentクラスのオブジェクトとして取得する
+        $admin = $stmt->fetchObject('Admin');
+
+        //会員データが取得できたとき
+        if($admin !== false){ 
+            //パスワードが一致するか検証
+            if($password == $admin->AdminPass){
+                //会員データを返す
+                return $admin;
             }
         }
         return false;
