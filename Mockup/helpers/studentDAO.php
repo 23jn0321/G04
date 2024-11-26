@@ -3,39 +3,42 @@ require_once 'DAO.php';
 
 class Student
 {
-    public int $userID;          //会員ID 
-    public string $GakusekiNo;          //メールアドレス
-    public string $password;       // パスワード
+    public string $GakusekiNo;          //会員ID 
+    public int $GakunenCode;          //メールアドレス
+    public string $GakkaCode;
+    public string $GooglePass;       // パスワード
 }
 
 class StudentDAO
 {
     //DBからメールアドレスとパスワードが一致する会員データを取得する
-    public function get_member(string $GakusekiNo, string $password)
+    public function get_member(string $gakusekiNo, string $password)
     {
         //DBに接続する
         $dbh = DAO::get_db_connect();
 
         //メールアドレスが一致する会員データを取得する
-        $sql = "SELECT * FROM Gakusei WHERE GakusekiNo = :GakusekiNo";
+        $sql = "SELECT * FROM Gakusei WHERE GakusekiNo = :gakusekiNo";
         
         $stmt = $dbh->prepare($sql);
 
         //SQLに変数の値を当てはめる
-        $stmt->bindValue(':GakusekiNo',$GakusekiNo,PDO::PARAM_STR);
+        $stmt->bindValue(':gakusekiNo',$gakusekiNo,PDO::PARAM_STR);
 
         //SQLを実行する
         $stmt->execute();
 
-        //1件分のデータをMemberクラスのオブジェクトとして取得する
-        $member = $stmt->fetchObject('Student');
+        //1件分のデータをStudentクラスのオブジェクトとして取得する
+        $student = $stmt->fetchObject('Student');
 
         //会員データが取得できたとき
-        if($member !== false){
+        if($student !== false){ 
             //パスワードが一致するか検証
-            if(password_verify($password,$member->password)){
+            if($password == $student->GooglePass){
                 //会員データを返す
-                return $member;
+                return $student;
+            }else{
+                echo "Noooooooooooooo";
             }
         }
         return false;
