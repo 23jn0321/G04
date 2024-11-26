@@ -8,11 +8,7 @@
     session_start();
 
     //ログイン済みのとき
-    if(!empty($_SESSION['student'])){
-
-        header('Location: home.html');//htmlファイルからphpファイルに変更
-        exit;
-    }
+    
 
     //POSTメソッドでリクエストされたとき
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -42,7 +38,7 @@
                  $_SESSION['student'] = $student;
 
                 //index.phpに移動
-                header('Location: home.html');
+                header('Location: home.php');
                 exit;
             }
             //会員データが取り出せなかった時
@@ -56,7 +52,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link href="css/LoginStyle.css" rel="stylesheet">
+    <link href="CSSUser/Login.css" rel="stylesheet">
     <title>ログイン</title>
 </head>
 <body>
