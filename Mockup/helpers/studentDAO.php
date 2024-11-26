@@ -1,17 +1,17 @@
 <?php
 require_once 'DAO.php';
 
-class Member
+class Student
 {
     public int $userID;          //会員ID 
-    public string $studentNo;          //メールアドレス
+    public string $GakusekiNo;          //メールアドレス
     public string $password;       // パスワード
 }
 
-class MemberDAO
+class StudentDAO
 {
     //DBからメールアドレスとパスワードが一致する会員データを取得する
-    public function get_member(string $studentNo, string $password)
+    public function get_member(string $GakusekiNo, string $password)
     {
         //DBに接続する
         $dbh = DAO::get_db_connect();
@@ -28,7 +28,7 @@ class MemberDAO
         $stmt->execute();
 
         //1件分のデータをMemberクラスのオブジェクトとして取得する
-        $member = $stmt->fetchObject('Member');
+        $member = $stmt->fetchObject('Student');
 
         //会員データが取得できたとき
         if($member !== false){
@@ -52,23 +52,23 @@ class MemberDAO
 
         $password = password_hash($member->password, PASSWORD_DEFAULT);
 
-        $stmt->bindValue(":email", $member->email, PDO::PARAM_STR);
+        $stmt->bindValue(":GakusekiNo", $member->GakusekiNo, PDO::PARAM_STR);
         $stmt->bindValue(":password", $password, PDO::PARAM_STR);
 
         $stmt->execute();
     }
 
-    public function email_exists(string $email)
+    public function email_exists(string $studentNo)
     {
         //DBに接続する
         $dbh = DAO::get_db_connect();
 
-        $sql = "SELECT * FROM Member WHERE email = :email";
+        $sql = "SELECT * FROM Member WHERE GakusekiNo = :GakusekiNo";
 
         $stmt = $dbh->prepare($sql);
 
         //SQLに変数の値を当てはめる
-        $stmt->bindValue(':email',$email,PDO::PARAM_STR);
+        $stmt->bindValue(':GakusekiNo',$GakusekiNo,PDO::PARAM_STR);
 
         //SQLを実行する
         $stmt->execute();

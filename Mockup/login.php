@@ -1,7 +1,7 @@
 <?php
-    require_once './helpers/studentDAO.php';
+    require_once 'helpers/studentDAO.php';
 
-    $email = '';
+    $gakusekiNo = '';
     $errs = [];
 
     //セッションの開始
@@ -16,14 +16,12 @@
 
     //POSTメソッドでリクエストされたとき
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        //入力されたメールアドレスとパスワードを受け取る
-        $email = $_POST['email'];
+        //入力された学籍番号とパスワードを受け取る
+        $gakusekiNo = $_POST['GakusekiNo'];
         $password = $_POST['password'];
 
-        if($email === ''){
-            $errs[] = 'メールアドレスを入力してください。';
-        }else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            $errs[] = 'メールアドレスの形式に誤りがあります。';
+        if($gakusekiNo === ''){
+            $errs[] = '学籍番号を入力してください。';
         }
         if($password === ''){
             $errs[] = 'パスワードを入力してください。';
@@ -31,25 +29,25 @@
 
         if(empty($errs)){
 
-            //DBからメールアドレス・パスワードが一致する会員データを取り出す
-            $memberDAO = new MemberDAO();
-            $member = $memberDAO->get_member($email,$password);
+            //DBから学籍番号・パスワードが一致する会員データを取り出す
+            $studentDAO = new StudentDAO();
+            $student = $studentDAO->get_member($gakusekiNo,$password);
 
             //会員データを取り出せたとき
-            if($member !== false){
+            if($student !== false){
                 //セッションIDを変更する
                 session_regenerate_id(true);
 
                 //セッション変数に会員データを保存する
-                 $_SESSION['member'] = $member;
+                 $_SESSION['student'] = $student;
 
                 //index.phpに移動
-                header('Location: index.php');
+                header('Location: home.html');
                 exit;
             }
             //会員データが取り出せなかった時
             else{
-                $errs[] = 'メールアドレスまたはパスワードに誤りがあります。';
+                $errs[] = '学籍番号またはパスワードに誤りがあります。';
             }
         }
     }
@@ -73,7 +71,7 @@
         <tr>
             <td>メールアドレス</td>
             <td>
-                <input type="email"required name="email" class="input" value="<?= $email ?>" autofocus>
+                <input type="text"required  class="input" value="<?= $gakusekiNo ?>" autofocus>
             </td>
         </tr>
         <tr>
