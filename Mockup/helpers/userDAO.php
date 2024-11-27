@@ -15,10 +15,10 @@ class user
 
 class GroupAffiliation
 {
-    public int $GroupID;
-    public int $UserID;
-    public string $GroupName;
-    public int $MaxMember;
+    public int $GroupID; //グループID
+    public int $UserID;  //ユーザーID
+    public string $GroupName; //グループ名
+    public int $MaxMember; //グループ最大メンバー数
 }
 
 class userDAO
