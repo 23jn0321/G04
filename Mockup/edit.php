@@ -47,7 +47,7 @@
 <?php include "header.php"; ?>
 
     <!-- プロフィール編集 -->
-    <form action="" method="POST">
+    <form name="pro"action="" method="POST">
     <table id="profileTable" class="box">
         <tr>
             <th colspan="2">
@@ -83,10 +83,9 @@
     }).then((result) => {
       if (result.value) {
       
-        <?php 
-            
-        ?>
+       
         window.location.href = 'home.php'
+        document.pro.submit();
       }
     });
   });

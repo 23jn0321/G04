@@ -12,6 +12,15 @@ class user
     public string $ToketuTxt;
 }
 
+
+class GroupAffiliation
+{
+    public int $GroupID; //グループID
+    public int $UserID;  //ユーザーID
+    public string $GroupName; //グループ名
+    public int $MaxMember; //グループ最大メンバー数
+}
+
 class userDAO
 {
     //DBからメールアドレスとパスワードが一致する会員データを取得する
@@ -53,5 +62,28 @@ class userDAO
         $stmt->bindValue(":username", $user->username, PDO::PARAM_STR);
 
         $stmt->execute();
+    }
+
+    public function imGroup(string $userNo)
+    {
+        $dbh = DAO::get_db_connect();
+
+        $sql = "SELECT ChatGroup.GroupID, UserID,GroupName, MaxMember
+	        FROM ChatGroup INNER JOIN GroupMember
+		        ON ChatGroup.GroupID = GroupMember.GroupID
+			        WHERE UserID = :userid";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(":userid", $userNo, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $groupAffiliation = $stmt->fetchObject('GroupAffiliation');
+
+        if($groupAffiliation !== false){ 
+            return $groupAffiliation;
+        }
+        return false;
     }
 }

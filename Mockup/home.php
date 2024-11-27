@@ -1,3 +1,9 @@
+<?php 
+    require_once 'helpers/userDAO.php';
+    
+?>
+
+
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
