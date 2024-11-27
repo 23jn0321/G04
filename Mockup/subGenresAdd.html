@@ -53,18 +53,18 @@
         const subGenreNames = [];
         const textInputs = document.querySelectorAll('input[type="text"]');
         const textInputCount = textInputs.length;
-        for (let i = 1; i < (textInputCount - 1); i++) {
+        for (let i = 0; i < textInputCount; i++) {
             const subGenre = textInputs[i].value;
             if (subGenre) {
                 subGenreNames.push(subGenre);
             }
         }
-        if (!subGenreNames) {
-            showAlert("大ジャンル名を入力してください！");
+        if (subGenreNames.length === 0) {
+            showAlert("サブジャンル名を入力してください！");
             return;
         }
         Swal.fire({
-            html: `<h1>大ジャンル: <b>${genreName}</h1></b><br><h2>中ジャンル: <b>${subGenreNames.join(', ')}</h2></b><br>これで追加しますか？<br>※空文字列の中ジャンルは追加されません`,
+            html: `<h1>大ジャンル: <b>${genreName}</h1></b><br><h2>中ジャンル: <b>${subGenreNames.join(', ')}</h2></b><br>これで追加しますか？`,
             icon: 'info',
             showCancelButton: true,
             confirmButtonText: 'OK',
