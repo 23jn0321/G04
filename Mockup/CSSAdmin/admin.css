@@ -10,9 +10,9 @@ a.twp-button {
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 450px;
+  width: 350px;
   /* 横幅 */
-  height: 720px;
+  height: 560px;
   /* 高さ */
   font-family: Arial, sans-serif;
   /* お好みのフォント */
@@ -87,7 +87,7 @@ a.btn_06-2 {
   display: inline-block;
   /* ブロック要素化 */
   font-size: 18px;
-  padding: 160px 220px;
+  padding: 120px 160px;
   /* ボタンのサイズを設定 */
   background-color: #7ab6c2;
   /* ライトブルー */

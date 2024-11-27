@@ -59,6 +59,10 @@
                 subGenreNames.push(subGenre);
             }
         }
+        if (!subGenreNames) {
+            showAlert("大ジャンル名を入力してください！");
+            return;
+        }
         Swal.fire({
             html: `<h1>大ジャンル: <b>${genreName}</h1></b><br><h2>中ジャンル: <b>${subGenreNames.join(', ')}</h2></b><br>これで追加しますか？<br>※空文字列の中ジャンルは追加されません`,
             icon: 'info',
