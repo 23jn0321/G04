@@ -6,6 +6,40 @@
     <title>中ジャンル統合</title>
     <link rel="stylesheet" href="CSSAdmin/mergeSubGenre.css">
 </head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+<script>
+    function margeGenre(event) {
+        event.preventDefault()
+
+        const genreName = document.getElementById('genreName').value;
+        const sourceGenre = document.getElementById('sourceGenre').value;
+        const targetGenre = document.getElementById('targetGenre').value;
+        Swal.fire({
+            html: `<h1>大ジャンル: <b>${genreName}</h1></b><br><h2>中ジャンル: <b>${sourceGenre}${targetGenre}</h2></b><br>これで追加しますか？`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'OK',
+            reverseButtons: true,
+            icon: 'info'
+        }).then((result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+                // OKボタンが押された時
+                Swal.fire("ジャンルを追加しました", {
+                    icon: "success",
+                });
+                document.querySelector("form").submit(); // ここで実際にフォーム送信を行う
+
+            } else {
+                // キャンセルボタンが押された時
+                Swal.fire("ジャンル追加がキャンセルされました。", {
+                    icon: "info",
+                });
+            }
+        });
+    }
+</Script>
 
 <body>
 
@@ -16,16 +50,22 @@
         <hr>
     </header>
 
-    <form>
+    <form onsubmit="margeGenre(event)">
         <div class="form-group">
             <label for="genreName">大ジャンル名</label>
-            <input type="text" id="genreName" name="genreName">
+            <br>
+            <select id="genreName" class="genre">
+                <option>ゲーム</option>
+                <option>音楽</option>
+                <option>スポーツ</option>
+                <option>勉強</option>
+            </select>
         </div>
 
         <div class="form-group">
             <label for="subGenreName">統合元ジャンルㅤㅤㅤㅤ統合先ジャンル</label>
             <div class="merge-genre">
-                <select name="sourceGenre" class="genre-select">
+                <select name="sourceGenre" class="genre-select" id="sourceGenre">
                     <option>a</option>
                     <option>b</option>
                     <option>c</option>
@@ -34,7 +74,7 @@
 
                 <span class="arrow">➡</span>
 
-                <select name="targetGenre" class="genre-select">
+                <select name="targetGenre" class="genre-select" id="targetGenre">
                     <option>a</option>
                     <option>b</option>
                     <option>c</option>
