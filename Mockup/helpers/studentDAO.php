@@ -14,6 +14,15 @@ class Admin
     public string $AdminUserID;
     public string $AdminPass;
 }
+class User
+{
+    public int $UserID;
+    public string $GakusekiNo;
+    public string $ProfileComment;
+    public string $UserName;
+    public int $UserFreezeFlag;
+    public string $FreezeReason;
+}
 
 class StudentDAO
 {
@@ -25,18 +34,25 @@ class StudentDAO
 
         //学籍番号が一致する会員データを取得する
         $sql = "SELECT * FROM Gakusei WHERE GakusekiNo = :gakusekiNo";
+
+        $sql2 = "SELECT * FROM GakuseiUser WHERE GakusekiNo = :gakuseiNo";
         
         $stmt = $dbh->prepare($sql);
+
+        $stmt2 = $dbh->prepare($sql2);
        
         //SQLに変数の値を当てはめる
         $stmt->bindValue(':gakusekiNo',$gakusekiNo,PDO::PARAM_STR);
+        $stmt2->bindValue(':gakuseiNo',$gakusekiNo,PDO::PARAM_STR);
        
         //SQLを実行する
         $stmt->execute();
+        $stmt2->execute();
        
-
+        
         //1件分のデータをStudentクラスのオブジェクトとして取得する
         $student = $stmt->fetchObject('Student');
+        $user = $stmt2->fetchObject("user");
        
 
         //会員データが取得できたとき
@@ -44,7 +60,7 @@ class StudentDAO
             //パスワードが一致するか検証
             if($password == $student->GooglePass){
                 //会員データを返す
-                return $student;
+                return $user;
             }
         }
         return false;

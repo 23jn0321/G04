@@ -2,15 +2,6 @@
 <?php
 require_once 'DAO.php';
 
-class user
-{
-    public string $GakusekiNo;          //会員ID 
-    public int $UserNo; 
-    public string  $Comment;    
-    public string $UserName;    
-    public int $ToketuNo;
-    public string $ToketuTxt;
-}
 
 
 class GroupAffiliation
