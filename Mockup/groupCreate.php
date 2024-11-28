@@ -52,10 +52,10 @@
   <label class="selectbox-3">
     <select>
 
-      <option Value="1">ゲーム</option>
-      <option Value="2">音楽</option>
-      <option Value="3">スポーツ</option>
-      <option Value="4">勉強</option>
+      <option value="1">ゲーム</option>
+      <option value="2">音楽</option>
+      <option value="3">スポーツ</option>
+      <option value="4">勉強</option>
     </select>
 </label>
 
@@ -76,6 +76,7 @@
       </select>
   </label>
     }
+    $('#select').on('change', function () {
     else if ($('#select option:selected').text() === '2') {
       中ジャンル：
       <label class="selectbox-3">
