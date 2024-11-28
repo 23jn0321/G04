@@ -16,7 +16,14 @@
         const sourceGenre = document.getElementById('sourceGenre').value;
         const targetGenre = document.getElementById('targetGenre').value;
         Swal.fire({
-            html: `<h1>大ジャンル: <b>${genreName}</h1></b><br><h2>中ジャンル: <b>${sourceGenre}${targetGenre}</h2></b><br>これで追加しますか？`,
+            html: `<h2>以下のジャンルを統合します</h2>
+<p>
+  <strong>大ジャンル:</strong> ${genreName}<br>
+  <strong>統合元の中ジャンル:</strong> ${sourceGenre}<br>
+  <strong>統合先の中ジャンル:</strong> ${targetGenre}
+</p>
+<p>この操作を実行すると、${sourceGenre} に関連するすべてのデータが ${targetGenre} に統合されます。</p>
+<p><strong>本当に実行してよろしいですか？</strong></p>`,
             icon: 'info',
             showCancelButton: true,
             confirmButtonText: 'OK',
