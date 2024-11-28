@@ -1,3 +1,33 @@
+<?php 
+    require_once './helpers/studentDAO.php';
+    require_once './helpers/userDAO.php';
+
+
+    if(!empty($_SESSION['userInfo'])){
+        //セッション変数の会員情報を取得する
+        $user = $_SESSION['userInfo'];
+        $userDAO = new UserDAO();
+        $joinUserGroup = $userDAO->imGroup($user->UserID);
+    }
+
+    
+    //DBから商品グループを取得する
+
+    $goodsDAO = new GoodsDAO();
+    
+
+    if(isset($_GET['groupcode'])){
+        //選択されたグループの商品を取得する
+        $groupcode = $_GET['groupcode'];
+        $goods_list = $goodsDAO->get_goods_by_groupcode($groupcode);
+    }
+    else{
+        //リーダーかどうか取得する
+        $goods_list = $goodsDAO->get_recommend_goods();
+    }  
+
+?>
+
 <!DOCTYPE html>
 <html>
     <body>
@@ -14,14 +44,27 @@
     <p><a href="groupEdit.html"><input type="button" value="グループ編集" id="groupEdit"></a></p>
   </div>
 <!-- 所属グループ -->
-<a href="groupDetailBefor.html">
-    <ul>
-    <li><p>資格勉強の集い(3/5)<br>最終更新日：10/13<br>ジャンル：勉強 / 資格勉強</p></li>
-    <li><p>テスト期間がち勉強(4/5)<br>最終更新日：10/8<br>ジャンル：勉強 / テスト勉強</p></li>
-    <li><p>プログラミング愛好家(3/4)<br>最終更新日：10/3<br>ジャンル：勉強 / プログラミング</p></li>
-    <li><p>テスト勉強(4/4)<br>最終更新日：9/30<br>ジャンル：勉強 / テスト勉強</p></li>
-    </ul>
-</a>
+<?php foreach($joinUserGroup as $userGroup) : ?>
+        <table align="left">
+            <tr>
+                <td>
+                    <a href="groupDetailAfter.html?goodscode=<?=$goods->goodscode?>">
+                    <?= $userGroup->groupName ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?= number_format($goods->price) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?= $goods->recommend? "おすすめ" : " " ?>
+                </td>
+            </tr>
+    </table>
+    <?php endforeach; ?>
 <!-- グループ作成ボタン -->
     <a href="groupCreate.html"><input type="submit" value="グループ作成" id="groupCreate"></a>  
 
