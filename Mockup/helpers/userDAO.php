@@ -2,15 +2,6 @@
 <?php
 require_once 'DAO.php';
 
-class user
-{
-    public string $GakusekiNo;          //会員ID 
-    public int $UserNo; 
-    public string  $Comment;    
-    public string $UserName;    
-    public int $ToketuNo;
-    public string $ToketuTxt;
-}
 
 
 class GroupAffiliation
@@ -58,8 +49,8 @@ class userDAO
         $stmt = $dbh->prepare($sql);
 
 
-        $stmt->bindValue(":profilecomment", $user->profilecomment, PDO::PARAM_STR);
-        $stmt->bindValue(":username", $user->username, PDO::PARAM_STR);
+        $stmt->bindValue(":profilecomment", $user->ProfileComment, PDO::PARAM_STR);
+        $stmt->bindValue(":username", $user->UserName, PDO::PARAM_STR);
 
         $stmt->execute();
     }

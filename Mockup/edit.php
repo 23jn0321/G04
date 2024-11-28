@@ -1,6 +1,17 @@
 <?php
     require_once 'helpers/userDAO.php';
+    require_once './helpers/studentDAO.php';
 
+    //セッションの開始
+    if(session_status() === PHP_SESSION_NONE){
+        session_start();
+    }
+
+    //ログイン中のとき
+    if(!empty($_SESSION['userInfo'])){
+        //セッション変数の会員情報を取得する
+        $user = $_SESSION['userInfo'];
+    }
     $nickName= '';
     $comment= '';
     $errs = [];
@@ -57,13 +68,13 @@
         <tr>
             <td>ニックネーム</td>
             <td>
-                <input type="text" required name="nickName" class="input" value="<?= $nickName ?>" autofocus >
+                <input type="text" required name="nickName" class="input" value="<?= $user->UserName ?>" autofocus >
             </td>
         </tr>
         <tr>
             <td>ひとことコメント</td>
             <td>
-            <input type="text" required name="comment" class="input" value="<?= $comment ?>" autofocus >
+            <input type="text" required name="comment" class="input" value="<?= $user->ProfileComment ?>" autofocus >
             </td>
         </tr>
         <tr>
@@ -82,8 +93,9 @@
       type: 'question'
     }).then((result) => {
       if (result.value) {
-      
-       
+      <?
+    $userDAO = new UserDAO();
+    $editInfo = $userAO->update($nickName,$comment); ?>
         window.location.href = 'home.php'
         document.pro.submit();
       }
