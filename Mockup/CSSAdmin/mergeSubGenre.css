@@ -10,6 +10,11 @@
     /* 縦方向に中央揃え */
 }
 
+select.genre {
+    height: 40px;
+    width: 200px;
+}
+
 /* ラベルのスタイル */
 label {
     margin-bottom: 10px;
