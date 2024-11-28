@@ -49,8 +49,8 @@ class userDAO
         $stmt = $dbh->prepare($sql);
 
 
-        $stmt->bindValue(":profilecomment", $user->profilecomment, PDO::PARAM_STR);
-        $stmt->bindValue(":username", $user->username, PDO::PARAM_STR);
+        $stmt->bindValue(":profilecomment", $user->ProfileComment, PDO::PARAM_STR);
+        $stmt->bindValue(":username", $user->UserName, PDO::PARAM_STR);
 
         $stmt->execute();
     }
