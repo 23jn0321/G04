@@ -1,7 +1,7 @@
 <?php
 require_once 'DAO.php';
 
-class Student
+class GruopCeate
 {
     public int $GroupID;             //グループID 
     public string $GroupName;        //グループ名
