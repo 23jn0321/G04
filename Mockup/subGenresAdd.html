@@ -11,6 +11,53 @@
 </head>
 <script>
     let inputCount = 4;
+    const mainGenreSelect = document.getElementById('genreName');
+    const subGenreContainer = document.getElementById('subGenreContainer');
+    const genres = [
+        ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
+        ['音楽', ['クラシック', 'ロック', 'ジャズ']],
+        ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
+        ['勉強', ['数学', '英語']]
+    ];
+
+
+    // メインジャンルが選ばれた際に処理を行う ※機能していない
+    mainGenreSelect.addEventListener('change', (event) => {
+        const genreName = event.target.value;
+
+        // サブジャンル入力フォームをリセット
+        // Find the form within the subGenreContainer
+        const form = subGenreContainer.querySelector('form');
+        const existingInputs = form.querySelectorAll('input[type="text"]');
+        existingInputs.forEach((input, index) => {
+            if (index < 4) {
+                // Reset the first 4 inputs
+                input.value = '';
+                input.placeholder = '';
+            } else {
+                // Remove additional inputs beyond the first 4
+                input.remove();
+            }
+        });
+
+        // Reset input count
+        inputCount = 4;
+
+        // 選択されたジャンルに対応するサブジャンルを表示
+        for (const [mainGenre, subGenres] of genres) {
+            if (genreName === mainGenre) {
+                const inputs = form.querySelectorAll('input[type="text"]');
+                inputs.forEach((input, index) => {
+                    if (index < subGenres.length) {
+                        input.placeholder = subGenres[index];
+                    }
+                });
+                break; // 見つかったらループを抜ける
+            }
+        }
+    });
+
+
     function addSubGenreField() {
         // 新しいinput要素を作成
         if (inputCount >= 10) {
@@ -110,17 +157,19 @@
             <option>勉強</option>
         </select>
     </div>
-    <form onsubmit="subGenresAdd(event)">
-        <label for="subGenreName">中ジャンル名</label>
-        <input type="text" id="subGenreName1" name="subGenreName1">
-        <input type="text" id="subGenreName2" name="subGenreName2">
-        <input type="text" id="subGenreName3" name="subGenreName3">
-        <input type="text" id="subGenreName4" name="subGenreName4">
-        <!-- 中ジャンル追加ボタン -->
-        <button type="button" onclick="addSubGenreField()">+中ジャンルを追加</button>
-        <br>
+    <div id="subGenreContainer">
+        <form onsubmit="subGenresAdd(event)">
+            <label for="subGenreName">中ジャンル名</label>
+            <input type="text" id="subGenreName1" name="subGenreName1">
+            <input type="text" id="subGenreName2" name="subGenreName2">
+            <input type="text" id="subGenreName3" name="subGenreName3">
+            <input type="text" id="subGenreName4" name="subGenreName4">
+            <!-- 中ジャンル追加ボタン -->
+            <button type="button" onclick="addSubGenreField()">+中ジャンルを追加</button>
+            <br>
 
-        <button type="submit">ジャンルを追加する</button>
+            <button type="submit">ジャンルを追加する</button>
+    </div>
     </form>
 
 </body>

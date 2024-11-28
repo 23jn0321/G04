@@ -1,55 +1,59 @@
 .test-container {
-    overflow-x: auto;
-  }
-  
+  overflow-x: auto;
+}
+
+.test-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.test-header,
+.test-cell {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.test-header {
+  background-color: #f4f4f4;
+}
+
+@media (max-width: 600px) {
   .test-table {
+    display: block;
     width: 100%;
-    border-collapse: collapse;
+    overflow-x: auto;
+    white-space: nowrap;
   }
-  
-  .test-header,
-  .test-cell {
-    border: 1px solid #dddddd;
-    padding: 8px;
+
+  .test-table thead {
+    display: none;
+  }
+
+  .test-table tr {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .test-table td {
+    display: block;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+    border: none;
+  }
+
+  .test-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 10px;
+    font-weight: bold;
     text-align: left;
   }
-  
-  .test-header {
-    background-color: #f4f4f4;
-  }
-  
-  @media (max-width: 600px) {
-    .test-table {
-      display: block;
-      width: 100%;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-  
-    .test-table thead {
-      display: none;
-    }
-  
-    .test-table tr {
-      display: block;
-      margin-bottom: 10px;
-    }
-  
-    .test-table td {
-      display: block;
-      text-align: right;
-      position: relative;
-      padding-left: 50%;
-      border: none;
-    }
-  
-    .test-table td::before {
-      content: attr(data-label);
-      position: absolute;
-      left: 0;
-      width: 45%;
-      padding-left: 10px;
-      font-weight: bold;
-      text-align: left;
-    }
-  }
+}
+
+#link {
+  display: none;
+}
