@@ -42,14 +42,12 @@
         </select>
     </div>
 
+    <!-- サブジャンル選択 -->
     <div id="subGenreContainer">
-        <form>
-            <label for="subGenreName">中ジャンル名</label>
-            <input type="text" id="subGenreName1" name="subGenreName1">
-            <input type="text" id="subGenreName2" name="subGenreName2">
-            <input type="text" id="subGenreName3" name="subGenreName3">
-            <input type="text" id="subGenreName4" name="subGenreName4">
-        </form>
+        <label for="subGenreName">中ジャンル名</label>
+        <select id="subGenreName">
+            <option value="">選択してください</option>
+        </select>
     </div>
 
     <!-- 作成ボタン -->
@@ -57,15 +55,9 @@
 
     <script src="jquery-3.6.0.min.js"></script>
     <script>
-        let inputCount = 4;
         document.addEventListener('DOMContentLoaded', () => {
             const mainGenreSelect = document.getElementById('maingenreName');
-            if (!mainGenreSelect) {
-                console.error('Element with id "maingenreName" not found');
-                return;
-            }
-
-            const subGenreContainer = document.getElementById('subGenreContainer');
+            const subGenreSelect = document.getElementById('subGenreName');
             const genres = [
                 ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
                 ['音楽', ['クラシック', 'ロック', 'ジャズ']],
@@ -78,36 +70,18 @@
                 const genreName = event.target.value;
                 console.log("Selected genre:", genreName); // デバッグ用
 
-                // サブジャンル入力フォームをリセット
-                const form = subGenreContainer.querySelector('form');
-                if (!form) {
-                    console.error("Form element not found within subGenreContainer");
-                    return;
-                }
-
-                const existingInputs = form.querySelectorAll('input[type="text"]');
-                existingInputs.forEach((input, index) => {
-                    if (index < 4) {
-                        // Reset the first 4 inputs
-                        input.value = '';
-                        input.placeholder = '';
-                    } else {
-                        // Remove additional inputs beyond the first 4
-                        input.remove();
-                    }
-                });
-
-                // Reset input count
-                inputCount = 4;
+                // サブジャンルセレクトボックスをリセット
+                subGenreSelect.innerHTML = '<option value="">選択してください</option>';
 
                 // 選択されたジャンルに対応するサブジャンルを表示
                 for (const [mainGenre, subGenres] of genres) {
                     if (genreName === mainGenre) {
-                        const inputs = form.querySelectorAll('input[type="text"]');
-                        inputs.forEach((input, index) => {
-                            if (index < subGenres.length) {
-                                input.value = subGenres[index]; // サブジャンル名を設定
-                            }
+                        // 各サブジャンルをセレクトボックスに追加
+                        subGenres.forEach(subGenre => {
+                            const option = document.createElement('option');
+                            option.value = subGenre;
+                            option.textContent = subGenre;
+                            subGenreSelect.appendChild(option);
                         });
                         break; // 見つかったらループを抜ける
                     }
