@@ -11,50 +11,124 @@
 </head>
 <script>
     let inputCount = 4;
-    const mainGenreSelect = document.getElementById('genreName');
-    const subGenreContainer = document.getElementById('subGenreContainer');
-    const genres = [
-        ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
-        ['音楽', ['クラシック', 'ロック', 'ジャズ']],
-        ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
-        ['勉強', ['数学', '英語']]
-    ];
+    document.addEventListener('DOMContentLoaded', () => {
+        const mainGenreSelect = document.getElementById('genreName');
+        if (!mainGenreSelect) {
+            console.error('Element with id "genreName" not found');
+            return;
+        }
 
+        const subGenreContainer = document.getElementById('subGenreContainer');
+        const genres = [
+            ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
+            ['音楽', ['クラシック', 'ロック', 'ジャズ']],
+            ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
+            ['勉強', ['数学', '英語']]
+        ];
 
-    // メインジャンルが選ばれた際に処理を行う ※機能していない
-    mainGenreSelect.addEventListener('change', (event) => {
-        const genreName = event.target.value;
+        //初期状態でのサブジャンル表示処理
+        const maingenreName = document.getElementById('genreName')
+        genreName = mainGenreSelect.value;  // 修正箇所
+        console.log("Selected genre:", genreName); // デバッグ用
 
         // サブジャンル入力フォームをリセット
-        // Find the form within the subGenreContainer
         const form = subGenreContainer.querySelector('form');
+        if (!form) {
+            console.error("Form element not found within subGenreContainer");
+            return;
+        }
         const existingInputs = form.querySelectorAll('input[type="text"]');
         existingInputs.forEach((input, index) => {
             if (index < 4) {
-                // Reset the first 4 inputs
+
                 input.value = '';
                 input.placeholder = '';
             } else {
-                // Remove additional inputs beyond the first 4
+
                 input.remove();
             }
         });
-
-        // Reset input count
-        inputCount = 4;
-
-        // 選択されたジャンルに対応するサブジャンルを表示
         for (const [mainGenre, subGenres] of genres) {
             if (genreName === mainGenre) {
+                let i = 0
+                while (i < subGenres.length - 4) {
+                    addSubGenreField()
+                    i++;
+                }
                 const inputs = form.querySelectorAll('input[type="text"]');
                 inputs.forEach((input, index) => {
                     if (index < subGenres.length) {
-                        input.placeholder = subGenres[index];
+                        input.value = subGenres[index];
+                        input.setAttribute('readonly', 'true');
                     }
                 });
                 break; // 見つかったらループを抜ける
             }
         }
+
+        // メインジャンルが選ばれた際に処理を行う
+        mainGenreSelect.addEventListener('change', (event) => {
+            const genreName = event.target.value;
+            console.log("Selected genre:", genreName); // デバッグ用
+
+            // サブジャンル入力フォームをリセット
+            const form = subGenreContainer.querySelector('form');
+            if (!form) {
+                console.error("Form element not found within subGenreContainer");
+                return;
+            }
+
+            const existingInputs = form.querySelectorAll('input[type="text"]');
+            existingInputs.forEach((input, index) => {
+                if (index < 4) {
+                    // Reset the first 4 inputs
+                    input.value = '';
+                    input.placeholder = '';
+                } else {
+                    // Remove additional inputs beyond the first 4
+                    input.remove();
+                }
+            });
+            for (const [mainGenre, subGenres] of genres) {
+                if (genreName === mainGenre) {
+                    let i = 0
+                    while (i < subGenres.length - 4) {
+                        addSubGenreField()
+                        i++;
+                    }
+                    const inputs = form.querySelectorAll('input[type="text"]');
+                    inputs.forEach((input, index) => {
+                        if (index < subGenres.length) {
+                            input.value = subGenres[index];
+                            input.setAttribute('readonly', 'true');
+                        }
+                    });
+                    break; // 見つかったらループを抜ける
+                }
+            }
+
+            // Reset input count
+            inputCount = 4;
+
+            // 選択されたジャンルに対応するサブジャンルを表示
+            for (const [mainGenre, subGenres] of genres) {
+                if (genreName === mainGenre) {
+                    let i = 0
+                    while (i < subGenres.length - 4) {
+                        addSubGenreField()
+                        i++;
+                    }
+                    const inputs = form.querySelectorAll('input[type="text"]');
+                    inputs.forEach((input, index) => {
+                        if (index < subGenres.length) {
+                            input.value = subGenres[index];
+                            input.setAttribute('readonly', 'true');
+                        }
+                    });
+                    break; // 見つかったらループを抜ける
+                }
+            }
+        });
     });
 
 
@@ -151,10 +225,10 @@
     <div class="dropdown-container">
         <label for="genreName">大ジャンル名</label>
         <select id="genreName">
-            <option>ゲーム</option>
-            <option>音楽</option>
-            <option>スポーツ</option>
-            <option>勉強</option>
+            <option value="ゲーム">ゲーム</option>
+            <option value="音楽">音楽</option>
+            <option value="スポーツ">スポーツ</option>
+            <option value="勉強">勉強</option>
         </select>
     </div>
     <div id="subGenreContainer">

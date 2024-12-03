@@ -5,7 +5,7 @@
   session_start();
 
   //未ログインのとき
-  if(empty($_SESSION['member'])){
+  /*if(empty($_SESSION['member'])){
       //login.phpに移動
       header('Location:login.php');
       exit;
@@ -19,7 +19,7 @@
       if(isset($_POST[''])){
 
       }
-    }
+    }*/
 
 ?>
 
@@ -48,87 +48,135 @@
   </label>
 </p>
 
-<p>大ジャンル：
-  <label class="selectbox-3">
-    <select>
 
-      <option value="1">ゲーム</option>
-      <option value="2">音楽</option>
-      <option value="3">スポーツ</option>
-      <option value="4">勉強</option>
-    </select>
-</label>
 
-  <script>
-    $(document).ready(function() {
-    if ($('#select option:selected').text() === '1') {
-      中ジャンル：
-      <label class="selectbox-3">
-      <select>
 
-      <option></option>
-      <option>FPS</option>
-      <option>ソシャゲ</option>
-      <option>ボードゲーム</option>
-      <option>RPG</option>
-      <option>カードゲーム</option>
 
-      </select>
-  </label>
-    }
-    $('#select').on('change', function () {
-    else if ($('#select option:selected').text() === '2') {
-      中ジャンル：
-      <label class="selectbox-3">
-      <select>
+<script>
+    let inputCount = 4;
+    document.addEventListener('DOMContentLoaded', () => {
+        const mainGenreSelect = document.getElementById('maingenreName');
+        if (!mainGenreSelect) {
+            console.error('Element with id "genreName" not found');
+            return;
+        }
 
-      <option>J-POP</option>
-      <option>K-POP</option>
-      <option>ボーカロイド</option>
-      <option>バンド活動</option>
-      <option>DTM</option>
-      <option>ボカロ</option>
+        const subGenreContainer = document.getElementById('subGenreContainer');
+        const genres = [
+            ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
+            ['音楽', ['クラシック', 'ロック', 'ジャズ']],
+            ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
+            ['勉強', ['数学', '英語']]
+        ];
 
-    </select>
-  </label>
-    } 
-    else if ($('#select option:selected').text() === '3'){
-      中ジャンル：
-        <label class="selectbox-3">
-        <select>
+        // メインジャンルが選ばれた際に処理を行う
+        mainGenreSelect.addEventListener('change', (event) => {
+            const genreName = event.target.value;
+            console.log("Selected genre:", genreName); // デバッグ用
 
-      <option>サッカー</option>
-      <option>バスケットボール</option>
-      <option>野球</option>
-      <option>バレー</option>
-      <option>スキー・スノボ</option>
-      <option>卓球</option>
-      <option>テニス</option>
-      <option>バトミントン</option>
-      <option>フットサル</option>
-      <option>スポーツ観戦</option>
-    </select>
-  </label>
-    }
-    else{
-      中ジャンル：
-      <label class="selectbox-3">
-      <select>
+            // サブジャンル入力フォームをリセット
+            const form = subGenreContainer.querySelector('form');
+            if (!form) {
+                console.error("Form element not found within subGenreContainer");
+                return;
+            }
 
-      <option>試験勉強</option>
-      <option>資格勉強</option>
-      <option>プログラミング</option>
-      <option>モデリング</option>
-      <option>情報交換</option>
-      <option>就職活動</option>
+            const existingInputs = form.querySelectorAll('input[type="text"]');
+            existingInputs.forEach((input, index) => {
+                if (index < 4) {
+                    // Reset the first 4 inputs
+                    input.value = '';
+                    input.placeholder = '';
+                } else {
+                    // Remove additional inputs beyond the first 4
+                    input.remove();
+                }
+            });
 
-      </select>
-  </label>
-    }
-  });
+            // Reset input count
+            inputCount = 4;
 
-  </script>
+            // 選択されたジャンルに対応するサブジャンルを表示
+            for (const [mainGenre, subGenres] of genres) {
+                if (genreName === mainGenre) {
+                    const inputs = form.querySelectorAll('input[type="text"]');
+                    inputs.forEach((input, index) => {
+                        if (index < subGenres.length) {
+                            option.value = subGenres[index];
+                        }
+                    });
+                    break; // 見つかったらループを抜ける
+                }
+            }
+        });
+    });
+</script>
 
+<body>
+
+
+    <div class="dropdown-container">
+        <label for="genreName">大ジャンル名</label>
+        <select id="genreName">
+            <option value="ゲーム"></option>
+            <option value="音楽">音楽</option>
+            <option value="スポーツ">スポーツ</option>
+            <option value="勉強">勉強</option>
+        </select>
+    </div>
+    <div id="subGenreContainer">
+        <form onsubmit="subGenresAdd(event)">
+            <label for="subGenreName">中ジャンル名</label>
+            <input type="text" id="subGenreName1" name="subGenreName1">
+            <input type="text" id="subGenreName2" name="subGenreName2">
+            <input type="text" id="subGenreName3" name="subGenreName3">
+            <input type="text" id="subGenreName4" name="subGenreName4">
+    </div>
+    </form>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+<body>
+
+    <header>
+        <a href="admin.html">
+            <img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Logo">
+        </a>
+        <hr>
+    </header>
+
+    <div class="dropdown-container">
+        <label for="maingenreName">大ジャンル名</label>
+        <select id="maingenreName">
+            <option value="ゲーム">ゲーム</option>
+            <option value="音楽">音楽</option>
+            <option value="スポーツ">スポーツ</option>
+            <option value="勉強">勉強</option>
+        </select>
+
+
+        <div class="dropdown-container">
+        <label for="subgenreName">中ジャンル名</label>
+        <select id="subgenreName">
+            <option value="ゲーム"></option>
+            <option value="音楽">音楽</option>
+            <option value="スポーツ">スポーツ</option>
+            <option value="勉強">勉強</option>
+        </select>
+    </div>
+</body>
+
+</html>
 
   <!--中ジャンル：
   <label class="selectbox-3">
