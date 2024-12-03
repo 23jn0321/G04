@@ -20,13 +20,14 @@ class GruopDetailDAO
 
 
             //ChatGruopテーブルにグループ内容()を登録する
-            $sql="INSERT INTO ChatGruop(GroupName, MaxMember, SubGenreID, Groupdetail)
-            VALUES (:GroupName, :MaxMember, :SubGenreID, :Groupdetail)";
+            $sql="INSERT INTO ChatGruop(GroupName, MaxMember, MainGenreID, SubGenreID, Groupdetail)
+            VALUES (:GroupName, :MaxMember, :MainGenreID, :SubGenreID, :Groupdetail)";
 
             $stmt=$dbh->prepare($sql);
 
             $stmt->bindValue(':GroupName',$GroupName,PDO::PARAM_STR);
             $stmt->bindValue(':MaxMember',$MaxMember,PDO::PARAM_STR); 
+            $stmt->bindValue(':MainGenreID',$SubGenreID,PDO::PARAM_STR);
             $stmt->bindValue(':SubGenreID',$SubGenreID,PDO::PARAM_INT);
             $stmt->bindValue(':Groupdetail',$SubGenreID,PDO::PARAM_STR);
             $stmt->execute();
