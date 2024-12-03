@@ -93,6 +93,34 @@ class StudentDAO
         }
         return false;
     }
+    public function get_newUserInfo(string $userID)
+    {
+        //DBに接続する
+        $dbh = DAO::get_db_connect();
+
+        //学籍番号が一致する会員データを取得する
+
+        $sql = "SELECT * FROM GakuseiUser WHERE UserID = :userid";
+        
+        $stmt = $dbh->prepare($sql);
+
+        //SQLに変数の値を当てはめる
+        $stmt->bindValue(':userid',$userID,PDO::PARAM_STR);
+       
+        //SQLを実行する
+        $stmt->execute();
+       
+        
+        //1件分のデータをStudentクラスのオブジェクトとして取得する
+        $user = $stmt->fetchObject("user");
+       
+
+        //会員データが取得できたとき
+        if($user !== false){ 
+                return $user;
+        }
+        return false;
+    }
     
     public function insert(Member $member)
     {
