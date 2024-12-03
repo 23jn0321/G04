@@ -49,7 +49,7 @@ class userDAO
         $stmt = $dbh->prepare($sql);
 
 
-        $stmt->bindValue(":profilecomment", $comment PDO::PARAM_STR);
+        $stmt->bindValue(":profilecomment", $comment, PDO::PARAM_STR);
         $stmt->bindValue(":username", $nickName, PDO::PARAM_STR);
 
         $stmt->execute();
