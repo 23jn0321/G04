@@ -21,9 +21,9 @@
         const subGenreContainer = document.getElementById('subGenreContainer');
         const genres = [
             ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
-            ['音楽', ['クラシック', 'ロック', 'ジャズ']],
+            ['音楽', ['クラシック', 'ロック', 'ジャズ', 'ボカロ']],
             ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
-            ['勉強', ['数学', '英語']]
+            ['勉強', ['数学', '英語', 'プログラミング', 'Linux', '資格勉強']]
         ];
 
         //初期状態でのサブジャンル表示処理
@@ -92,7 +92,7 @@
             for (const [mainGenre, subGenres] of genres) {
                 if (genreName === mainGenre) {
                     let i = 0
-                    while (i < subGenres.length - 4) {
+                    while (i < subGenres.length - 5) {
                         addSubGenreField()
                         i++;
                     }
