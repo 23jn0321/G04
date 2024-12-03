@@ -54,7 +54,7 @@
     const subGenreNames = [];
     const textInputs = document.querySelectorAll('input[type="text"]');
     const textInputCount = textInputs.length;
-    for (let i = 1; i < (textInputCount - 1); i++) {
+    for (let i = 1; i < textInputCount; i++) {
       const subGenre = textInputs[i].value;
       if (subGenre) {
         subGenreNames.push(subGenre);
