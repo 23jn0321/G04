@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>グループ作成</title>
+    <link rel="stylesheet" href="CSSUser/Header.css">
+    <link rel="stylesheet" href="CSSUser/GroupCreate.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+</head>
+
+<body>
+    <header>
+        <a href="admin.html">
+            <img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Logo">
+        </a>
+        <hr>
+    </header>
+
+    <!-- グループ名 -->
+    <p>グループ名 ：<input type="text" id="groupName"></p>
+
+    <!-- 参加人数 -->
+    <p>参加人数　：
+        <label class="selectbox-6">
+            <select>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </label>
+    </p>
+
+    <!-- メインジャンルとサブジャンル -->
+    <div class="dropdown-container">
+        <label for="maingenreName">大ジャンル名</label>
+        <select id="maingenreName">
+            <option value="ゲーム">ゲーム</option>
+            <option value="音楽">音楽</option>
+            <option value="スポーツ">スポーツ</option>
+            <option value="勉強">勉強</option>
+        </select>
+    </div>
+
+    <div id="subGenreContainer">
+        <form>
+            <label for="subGenreName">中ジャンル名</label>
+            <input type="text" id="subGenreName1" name="subGenreName1">
+            <input type="text" id="subGenreName2" name="subGenreName2">
+            <input type="text" id="subGenreName3" name="subGenreName3">
+            <input type="text" id="subGenreName4" name="subGenreName4">
+        </form>
+    </div>
+
+    <!-- 作成ボタン -->
+    <input type="button" id="btn08" value="作成">
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        let inputCount = 4;
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainGenreSelect = document.getElementById('maingenreName');
+            if (!mainGenreSelect) {
+                console.error('Element with id "maingenreName" not found');
+                return;
+            }
+
+            const subGenreContainer = document.getElementById('subGenreContainer');
+            const genres = [
+                ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
+                ['音楽', ['クラシック', 'ロック', 'ジャズ']],
+                ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
+                ['勉強', ['数学', '英語']]
+            ];
+
+            // メインジャンルが選ばれた際に処理を行う
+            mainGenreSelect.addEventListener('change', (event) => {
+                const genreName = event.target.value;
+                console.log("Selected genre:", genreName); // デバッグ用
+
+                // サブジャンル入力フォームをリセット
+                const form = subGenreContainer.querySelector('form');
+                if (!form) {
+                    console.error("Form element not found within subGenreContainer");
+                    return;
+                }
+
+                const existingInputs = form.querySelectorAll('input[type="text"]');
+                existingInputs.forEach((input, index) => {
+                    if (index < 4) {
+                        // Reset the first 4 inputs
+                        input.value = '';
+                        input.placeholder = '';
+                    } else {
+                        // Remove additional inputs beyond the first 4
+                        input.remove();
+                    }
+                });
+
+                // Reset input count
+                inputCount = 4;
+
+                // 選択されたジャンルに対応するサブジャンルを表示
+                for (const [mainGenre, subGenres] of genres) {
+                    if (genreName === mainGenre) {
+                        const inputs = form.querySelectorAll('input[type="text"]');
+                        inputs.forEach((input, index) => {
+                            if (index < subGenres.length) {
+                                input.value = subGenres[index]; // サブジャンル名を設定
+                            }
+                        });
+                        break; // 見つかったらループを抜ける
+                    }
+                }
+            });
+        });
+
+        // 作成ボタンがクリックされたとき
+        $("#btn08").click(function () {
+            Swal.fire({
+                title: 'グループを作成しますか？',
+                html: 'グループ名：<span id="groupNameText">資格勉強の集い</span><br>グループ上限人数：5',
+                showCancelButton: true,
+                confirmButtonText: '作成',
+                type: 'question'
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = 'message.html'; // 作成後、別のページに遷移
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
