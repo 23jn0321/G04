@@ -60,6 +60,11 @@
 </header>
 <?php include "header.php"; ?>
 
+<?php
+    $user = $_SESSION['userInfo'];
+    $studentDAO = new StudentDAO();
+    $userName = $studentDAO->get_newUserInfo($user->UserID);
+    ?>
     <!-- プロフィール編集 -->
     <form id="myForm" action="" method="POST">
     <table id="profileTable" class="box">
@@ -71,13 +76,13 @@
         <tr>
             <td>ニックネーム</td>
             <td>
-                <input type="text" required name="nickName" class="input" value="<?= $user->UserName ?>" autofocus >
+                <input type="text" required name="nickName" class="input" value="<?= $userName->UserName ?>" autofocus >
             </td>
         </tr>
         <tr>
             <td>ひとことコメント</td>
             <td>
-            <input type="text" required name="comment" class="input" value="<?= $user->ProfileComment ?>" autofocus >
+            <input type="text" required name="comment" class="input" value="<?= $userName->ProfileComment ?>" autofocus >
             </td>
         </tr>
         <tr>
