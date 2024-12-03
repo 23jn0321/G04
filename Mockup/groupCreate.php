@@ -168,7 +168,7 @@
         <div class="dropdown-container">
         <label for="subgenreName">中ジャンル名</label>
         <select id="subgenreName">
-            <option value="ゲーム">$genres[0,0]</option>
+            <option value="ゲーム"></option>
             <option value="音楽">音楽</option>
             <option value="スポーツ">スポーツ</option>
             <option value="勉強">勉強</option>

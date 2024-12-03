@@ -46,7 +46,7 @@
     <div id="subGenreContainer">
         <label for="subGenreName">中ジャンル名</label>
         <select id="subGenreName">
-            <option value="">選択してください</option>
+            <option hidden>選択してください</option>
         </select>
     </div>
 
@@ -65,49 +65,30 @@
                 ['勉強', ['数学', '英語']]
             ];
 
-            // 初期状態でサブジャンルを「選択してください」に設定
-            subGenreSelect.innerHTML = '<option value="">選択してください</option>';
-
-            // メインジャンルが変更された際に処理を行う
+            // メインジャンルが選ばれた際に処理を行う
             mainGenreSelect.addEventListener('change', (event) => {
                 const genreName = event.target.value;
+                console.log("Selected genre:", genreName); // デバッグ用
 
                 // サブジャンルセレクトボックスをリセット
-                subGenreSelect.innerHTML = '<option value="">選択してください</option>';
+                subGenreSelect.innerHTML = '<option hidden>選択してください</option>';
+
 
                 // 選択されたジャンルに対応するサブジャンルを表示
                 for (const [mainGenre, subGenres] of genres) {
                     if (genreName === mainGenre) {
+                        // 各サブジャンルをセレクトボックスに追加
                         subGenres.forEach(subGenre => {
                             const option = document.createElement('option');
                             option.value = subGenre;
                             option.textContent = subGenre;
                             subGenreSelect.appendChild(option);
                         });
-                        break;  // 見つかったらループを抜ける
+                        break; // 見つかったらループを抜ける
                     }
                 }
             });
-
-            // 初期状態で「ゲーム」が選ばれている場合、そのサブジャンルを設定
-            const initialSelectedGenre = mainGenreSelect.value; // 初期選択のジャンル
-            if (initialSelectedGenre) {
-                // 初期選択ジャンルに対応するサブジャンルを表示
-                subGenreSelect.innerHTML = '<option value="">選択してください</option>'; // リセット
-                for (const [mainGenre, subGenres] of genres) {
-                    if (initialSelectedGenre === mainGenre) {
-                        subGenres.forEach(subGenre => {
-                            const option = document.createElement('option');
-                            option.value = subGenre;
-                            option.textContent = subGenre;
-                            subGenreSelect.appendChild(option);
-                        });
-                        break;  // 見つかったらループを抜ける
-                    }
-                }
-            }
         });
-
 
         // 作成ボタンがクリックされたとき
         $("#btn08").click(function () {
