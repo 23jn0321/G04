@@ -56,6 +56,11 @@
             // 選択されたジャンルに対応するサブジャンルを表示
             for (const [mainGenre, subGenres] of genres) {
                 if (genreName === mainGenre) {
+                    let i = 0
+                    while (i < subGenres.length - 4) {
+                        addSubGenreField()
+                        i++;
+                    }
                     const inputs = form.querySelectorAll('input[type="text"]');
                     inputs.forEach((input, index) => {
                         if (index < subGenres.length) {
