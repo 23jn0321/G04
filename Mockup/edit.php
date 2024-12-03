@@ -21,6 +21,8 @@
         //入力された学籍番号とパスワードを受け取る
         $nickName = $_POST['nickName'];
         $comment = $_POST['comment'];
+    $userDAO = new UserDAO();
+    $editInfo = $userAO->update($nickName,$comment);
 
         if($nickName === ''){
             $errs[] = 'ニックネームを入力してください。';
@@ -80,29 +82,6 @@
         <tr>
             <td>
             <input type="button" value="確定" id="submit">
-
-            <script src="./jquery-3.6.0.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-<script>
-  $("#submit").click(function () {
-    Swal.fire({
-      html: '編集を確定してよろしいですか？',
-      showCancelButton: true,
-      confirmButtonText: 'OK',
-      type: 'question'
-    }).then((result) => {
-      if (result.value) {
-      <?
-    $userDAO = new UserDAO();
-    $editInfo = $userAO->update($nickName,$comment); ?>
-        window.location.href = 'home.php'
-        document.pro.submit();
-      }
-    });
-  });
-</script>
- 
             </td>
             <td></td>
         </tr>
@@ -117,6 +96,24 @@
     </table>
 </form>
 
+<script src="./jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script>
+    $("#submit").click(function () {
+    Swal.fire({
+      html: '編集を確定してよろしいですか？',
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      type: 'question'
+    }).then((result) => {
+      if (result.value) {
+        window.location.href = 'home.php'
+        document.pro.submit();
+      }
+    });
+  });
+</script>
 
 
 </html>
