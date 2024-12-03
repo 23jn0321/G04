@@ -1,0 +1,67 @@
+<!--<?php
+
+$array = array(
+    array( "選択肢１", "選択肢１の値" ),
+    array( "選択肢２", "選択肢２の値" ),
+    array( "選択肢３", "選択肢３の値", "selected" ),
+    array( "選択肢４", "選択肢４の値" ),
+    array( "選択肢５", "選択肢５の値" ),
+);
+$sampleSelectBox = "<select name=\"selectBoxName\">\n";
+for ( $indexA = 0; $indexA < count( $array ); $indexA++ ) {
+    $sampleSelectBox .= "\t<option value=\"{$array[$indexA][1]}\"";
+    if ( $array[$indexA][2] ) {
+        $sampleSelectBox .= " selected=\"selected\"";
+    }
+    $sampleSelectBox .= ">";
+    $sampleSelectBox .= "{$array[$indexA][0]}";
+    $sampleSelectBox .= "</option>\n";
+}
+$sampleSelectBox .= "</select>\n";
+echo "{$sampleSelectBox}";
+
+?>
+
+
+<select name="selectBoxName">
+    <option value="選択肢１の値">選択肢１</option>
+    <option value="選択肢２の値">選択肢２</option>
+    <option value="選択肢３の値" selected="selected">選択肢３</option>
+    <option value="選択肢４の値">選択肢４</option>
+    <option value="選択肢５の値">選択肢５</option>
+</select>
+-->
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+<p>3を選択した時だけリンクを表示</p>
+
+<select name="select" id="select">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3" selected>3</option>
+</select>
+
+<div id="link">
+  <a href="https://qiita.com/">3の時だけ表示するリンク</a>
+</div>
+
+<script>
+
+  $(document).ready(function () {
+    if ($('#select option:selected').text() === '3') {
+      $('#link').show();
+    }
+    $('#select').on('change', function () {
+      if ($('#select option:selected').text() === '3') {
+        $('#link').show();
+      } else {
+        $('#link').hide();
+      }
+    });
+  });
+
+</script>

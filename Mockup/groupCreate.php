@@ -21,6 +21,33 @@
       }
     }
 
+
+
+
+    $array = array(
+      array( "選択肢１", "選択肢１の値" ),
+      array( "選択肢２", "選択肢２の値" ),
+      array( "選択肢３", "選択肢３の値", "selected" ),
+      array( "選択肢４", "選択肢４の値" ),
+      array( "選択肢５", "選択肢５の値" ),
+  );
+  $sampleSelectBox = "<select name=\"selectBoxName\">\n";
+  for ( $indexA = 0; $indexA < count( $array ); $indexA++ ) {
+      $sampleSelectBox .= "\t<option value=\"{$array[$indexA][1]}\"";
+      if ( $array[$indexA][2] ) {
+          $sampleSelectBox .= " selected=\"selected\"";
+      }
+      $sampleSelectBox .= ">";
+      $sampleSelectBox .= "{$array[$indexA][0]}";
+      $sampleSelectBox .= "</option>\n";
+  }
+  $sampleSelectBox .= "</select>\n";
+  echo "{$sampleSelectBox}";
+
+
+
+
+
 ?>
 
 
@@ -47,6 +74,29 @@
     </select>
   </label>
 </p>
+
+
+
+
+
+
+
+<select name="selectBoxName">
+    <option value="選択肢１の値">選択肢１</option>
+    <option value="選択肢２の値">選択肢２</option>
+    <option value="選択肢３の値" selected="selected">選択肢３</option>
+    <option value="選択肢４の値">選択肢４</option>
+    <option value="選択肢５の値">選択肢５</option>
+</select>
+
+
+
+
+
+
+
+
+
 
 <p>大ジャンル：
   <label class="selectbox-3">
