@@ -65,7 +65,24 @@
                 ['勉強', ['数学', '英語']]
             ];
 
-            // メインジャンルが選ばれた際に処理を行う
+            // 初期選択のゲームに対応するサブジャンルを設定
+            const selectedGenre = mainGenreSelect.value; // 初期状態で選ばれているジャンル
+            subGenreSelect.innerHTML = '<option hidden>選択してください</option>';  // サブジャンルセレクトボックスをリセット
+
+            // 選ばれたジャンルに対応するサブジャンルを表示
+            for (const [mainGenre, subGenres] of genres) {
+                if (selectedGenre === mainGenre) {
+                    subGenres.forEach(subGenre => {
+                        const option = document.createElement('option');
+                        option.value = subGenre;
+                        option.textContent = subGenre;
+                        subGenreSelect.appendChild(option);
+                    });
+                    break; // 見つかったらループを抜ける
+                }
+            }
+
+            // メインジャンルが変更された際にサブジャンルを更新
             mainGenreSelect.addEventListener('change', (event) => {
                 const genreName = event.target.value;
                 console.log("Selected genre:", genreName); // デバッグ用
@@ -73,11 +90,9 @@
                 // サブジャンルセレクトボックスをリセット
                 subGenreSelect.innerHTML = '<option hidden>選択してください</option>';
 
-
                 // 選択されたジャンルに対応するサブジャンルを表示
                 for (const [mainGenre, subGenres] of genres) {
                     if (genreName === mainGenre) {
-                        // 各サブジャンルをセレクトボックスに追加
                         subGenres.forEach(subGenre => {
                             const option = document.createElement('option');
                             option.value = subGenre;
