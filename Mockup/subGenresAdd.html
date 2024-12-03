@@ -26,6 +26,46 @@
             ['勉強', ['数学', '英語']]
         ];
 
+        //初期状態でのサブジャンル表示処理
+        const maingenreName = document.getElementById('genreName')
+        genreName = mainGenreSelect.value;  // 修正箇所
+        console.log("Selected genre:", genreName); // デバッグ用
+
+        // サブジャンル入力フォームをリセット
+        const form = subGenreContainer.querySelector('form');
+        if (!form) {
+            console.error("Form element not found within subGenreContainer");
+            return;
+        }
+        const existingInputs = form.querySelectorAll('input[type="text"]');
+        existingInputs.forEach((input, index) => {
+            if (index < 4) {
+
+                input.value = '';
+                input.placeholder = '';
+            } else {
+
+                input.remove();
+            }
+        });
+        for (const [mainGenre, subGenres] of genres) {
+            if (genreName === mainGenre) {
+                let i = 0
+                while (i < subGenres.length - 4) {
+                    addSubGenreField()
+                    i++;
+                }
+                const inputs = form.querySelectorAll('input[type="text"]');
+                inputs.forEach((input, index) => {
+                    if (index < subGenres.length) {
+                        input.value = subGenres[index];
+                        input.setAttribute('readonly', 'true');
+                    }
+                });
+                break; // 見つかったらループを抜ける
+            }
+        }
+
         // メインジャンルが選ばれた際に処理を行う
         mainGenreSelect.addEventListener('change', (event) => {
             const genreName = event.target.value;
@@ -49,6 +89,23 @@
                     input.remove();
                 }
             });
+            for (const [mainGenre, subGenres] of genres) {
+                if (genreName === mainGenre) {
+                    let i = 0
+                    while (i < subGenres.length - 4) {
+                        addSubGenreField()
+                        i++;
+                    }
+                    const inputs = form.querySelectorAll('input[type="text"]');
+                    inputs.forEach((input, index) => {
+                        if (index < subGenres.length) {
+                            input.value = subGenres[index];
+                            input.setAttribute('readonly', 'true');
+                        }
+                    });
+                    break; // 見つかったらループを抜ける
+                }
+            }
 
             // Reset input count
             inputCount = 4;
