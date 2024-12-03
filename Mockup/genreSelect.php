@@ -66,7 +66,7 @@
     </table>
     <?php endforeach; ?>
 <!-- グループ作成ボタン -->
-    <a href="groupCreate.html"><input type="submit" value="グループ作成" id="groupCreate"></a>  
+    <a href="groupCreate.php"><input type="submit" value="グループ作成" id="groupCreate"></a>  
 
 <!-- ジャンル選択 -->
     <div class="genreSelect">
