@@ -15,9 +15,15 @@
 <header>
 <a href="home.php"><img src="jecMatching/Jec.jpg" width="450px"></a>
 <?php if (isset($user)) : ?>
-<input type="text" id="name" value="<?= $user->UserName ?> " placeholder="ニックネームを入力してください" readonly>
+    <?php
+    $user = $_SESSION['userInfo'];
+    $studentDAO = new StudentDAO();
+    $userName = $studentDAO->get_newUserInfo($user->UserID);
+    ?>
+    
+    <input type="text" id="name" value="<?= $userName->UserName ?>" placeholder="ニックネームを入力してください" readonly>
 <?php else: ?>
-    <input type="text" id="name" placeholder="ニックネームを入力してください" readonly>
+    <input type="text" required name="nickName" class="input" value="<?= $user->UserName ?>" autofocus >
     <?php endif; ?>
   <a href="edit.php"><input type="button" value="編集" id="edit"></a>
   <a href="admin.html"><input type="button" value="管理者画面" id="admin"></a>

@@ -39,18 +39,20 @@ class userDAO
         print_r($user);
     }
     
-    public function update(string $nickName, string $comment)
+    public function update(string $nickName, string $comment, string $userID)
     {
         $dbh = DAO::get_db_connect();
 
-        $sql = "UPDATE INTO GakuseiUser(ProfileComment,UserName) 
-                VALUES(:profilecomment,:username)";
+        $sql = "UPDATE GakuseiUser 
+	                SET UserName = :username,ProfileComment = :profilecomment
+		                WHERE UserID = :userid";
 
         $stmt = $dbh->prepare($sql);
 
 
         $stmt->bindValue(":profilecomment", $comment, PDO::PARAM_STR);
         $stmt->bindValue(":username", $nickName, PDO::PARAM_STR);
+        $stmt->bindValue(":userid", $userID, PDO::PARAM_STR);
 
         $stmt->execute();
     }
