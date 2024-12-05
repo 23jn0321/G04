@@ -10,14 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <script>
-    let inputCount = 4;
     document.addEventListener('DOMContentLoaded', () => {
         const mainGenreSelect = document.getElementById('genreName');
-        if (!mainGenreSelect) {
-            console.error('Element with id "genreName" not found');
-            return;
-        }
-
         const subGenreContainer = document.getElementById('subGenreContainer');
         const genres = [
             ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
@@ -26,147 +20,100 @@
             ['勉強', ['数学', '英語', 'プログラミング', 'Linux', '資格勉強']]
         ];
 
-        //初期状態でのサブジャンル表示処理
-        const maingenreName = document.getElementById('genreName')
-        genreName = mainGenreSelect.value;  // 修正箇所
-        console.log("Selected genre:", genreName); // デバッグ用
+        let inputCount = 4;
 
-        // サブジャンル入力フォームをリセット
-        const form = subGenreContainer.querySelector('form');
-        if (!form) {
-            console.error("Form element not found within subGenreContainer");
-            return;
-        }
-        const existingInputs = form.querySelectorAll('input[type="text"]');
-        existingInputs.forEach((input, index) => {
-            if (index < 4) {
+        // 初期状態でのサブジャンル表示処理
+        const genreName = mainGenreSelect.value;
+        updateSubGenreFields(genreName);
 
-                input.value = '';
-                input.placeholder = '';
-            } else {
-
-                input.remove();
-            }
-        });
-        for (const [mainGenre, subGenres] of genres) {
-            if (genreName === mainGenre) {
-                let i = 0
-                while (i < subGenres.length - 4) {
-                    addSubGenreField()
-                    i++;
-                }
-                const inputs = form.querySelectorAll('input[type="text"]');
-                inputs.forEach((input, index) => {
-                    if (index < subGenres.length) {
-                        input.value = subGenres[index];
-                        input.setAttribute('readonly', 'true');
-                    }
-                });
-                break; // 見つかったらループを抜ける
-            }
-        }
-
-        // メインジャンルが選ばれた際に処理を行う
+        // メインジャンル変更時の処理
         mainGenreSelect.addEventListener('change', (event) => {
-            const genreName = event.target.value;
-            console.log("Selected genre:", genreName); // デバッグ用
+            const selectedGenre = event.target.value;
+            updateSubGenreFields(selectedGenre);
+        });
 
-            // サブジャンル入力フォームをリセット
+        function updateSubGenreFields(genreName) {
+            // フィールドをリセット
+            resetSubGenreInputs();
+
+            // 選択されたジャンルに応じたフィールドを追加
+            for (const [mainGenre, subGenres] of genres) {
+                if (genreName === mainGenre) {
+                    subGenres.forEach((subGenre, index) => {
+                        if (index >= 4) {
+                            addSubGenreField();
+                        }
+                        // 入力値を設定
+                        const input = document.querySelector(`#subGenreName${index + 1}`);
+                        if (input) {
+                            input.value = subGenre;
+                            input.setAttribute('readonly', 'true');
+                        }
+                    });
+                    break;
+                }
+            }
+        }
+
+        function resetSubGenreInputs() {
             const form = subGenreContainer.querySelector('form');
             if (!form) {
-                console.error("Form element not found within subGenreContainer");
+                console.error('Form element not found within subGenreContainer');
                 return;
             }
 
             const existingInputs = form.querySelectorAll('input[type="text"]');
             existingInputs.forEach((input, index) => {
                 if (index < 4) {
-                    // Reset the first 4 inputs
                     input.value = '';
                     input.placeholder = '';
+                    input.removeAttribute('readonly');
                 } else {
-                    // Remove additional inputs beyond the first 4
                     input.remove();
                 }
             });
-            for (const [mainGenre, subGenres] of genres) {
-                if (genreName === mainGenre) {
-                    let i = 0
-                    while (i < subGenres.length - 5) {
-                        addSubGenreField()
-                        i++;
-                    }
-                    const inputs = form.querySelectorAll('input[type="text"]');
-                    inputs.forEach((input, index) => {
-                        if (index < subGenres.length) {
-                            input.value = subGenres[index];
-                            input.setAttribute('readonly', 'true');
-                        }
-                    });
-                    break; // 見つかったらループを抜ける
-                }
+
+            inputCount = 4; // 入力カウントをリセット
+            console.log('Inputs have been reset.');
+        }
+
+        function addSubGenreField() {
+            if (inputCount >= 10) {
+                showAlert('一度に追加できる中ジャンルは10個までです！');
+                return;
             }
 
-            // Reset input count
-            inputCount = 4;
+            inputCount += 1;
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.id = `subGenreName${inputCount}`;
+            newInput.name = `subGenreName${inputCount}`;
 
-            // 選択されたジャンルに対応するサブジャンルを表示
-            for (const [mainGenre, subGenres] of genres) {
-                if (genreName === mainGenre) {
-                    let i = 0
-                    while (i < subGenres.length - 4) {
-                        addSubGenreField()
-                        i++;
-                    }
-                    const inputs = form.querySelectorAll('input[type="text"]');
-                    inputs.forEach((input, index) => {
-                        if (index < subGenres.length) {
-                            input.value = subGenres[index];
-                            input.setAttribute('readonly', 'true');
-                        }
-                    });
-                    break; // 見つかったらループを抜ける
-                }
+            const form = subGenreContainer.querySelector('form');
+            const addButton = form.querySelector('button[type="button"]');
+            form.insertBefore(newInput, addButton);
+
+            console.log(`Field subGenreName${inputCount} added.`);
+        }
+
+        function showAlert(message) {
+            const existingAlert = document.querySelector('.alert-fixed');
+            if (existingAlert) {
+                existingAlert.remove();
             }
-        });
+
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-primary alert-fixed';
+            alertDiv.role = 'alert';
+            alertDiv.textContent = message;
+
+            document.body.insertBefore(alertDiv, document.body.firstChild);
+
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 3000);
+        }
     });
-
-
-    function addSubGenreField() {
-        // 新しいinput要素を作成
-        if (inputCount >= 10) {
-            showAlert("一度に追加できる中ジャンルは10個までです！");
-        }
-        else {
-            inputCount += 1
-            var newInput = document.createElement("input");
-            newInput.type = "text";
-            newInput.id = "subGenreName" + inputCount;
-            newInput.name = "subGenreName" + inputCount;
-            // 新しいinput要素をフォームに追加
-            var form = document.querySelector("form");
-            form.insertBefore(newInput, form.querySelector("button"));
-        }
-    }
-    function showAlert(message) {
-        var existingAlert = document.querySelector(".alert-fixed");
-        if (existingAlert) {
-            existingAlert.remove();
-        }
-        // アラート用のdivを作成
-        var alertDiv = document.createElement("div");
-        alertDiv.className = "alert alert-primary alert-fixed"; // Bootstrapのアラートクラス
-        alertDiv.role = "alert"; // アラートとしての役割を設定
-        alertDiv.textContent = message; // メッセージを設定
-
-        // アラートをページに追加（フォームの前に追加）
-        document.body.insertBefore(alertDiv, document.body.firstChild);
-
-        // 3秒後にアラートを非表示にする
-        setTimeout(function () {
-            alertDiv.style.display = "none";
-        }, 3000);
-    }
     function subGenresAdd(event) {
         event.preventDefault()
 
