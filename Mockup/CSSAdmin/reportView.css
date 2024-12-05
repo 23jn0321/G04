@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    padding: 20px;
+}
+
+/* ヘッダーとコンテンツの間の区切り */
+hr {
+    margin: 10px 0;
+}
+
+/* ユーザーリストとグループチャットを横並びに */
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* 左側のリストエリア */
+/* ユーザーリストのスタイル */
+ul {
+    list-style-type: none;
+    height: 50px;
+    width: 400px;
+}
+
+ul li {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    background-color: #f9f9f9;
+}
+
+/* ラベル部分とボタンを横並びに */
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    /* ボタンを右に寄せる */
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.user-info p {
+    margin: 0;
+    flex-grow: 1;
+    /* 通報理由とユーザー名が左に寄る */
+}
+
+.box {
+    margin-top: 20px;
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    margin-right: auto;
+    /* これで左寄せ */
+}
+
+
+.group-chat {
+    margin-bottom: 15px;
+}
+
+.group-name {
+    font-weight: bold;
+}
+
+/* グループチャットのレイアウト */
+#userChats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* 凍結ボタンのスタイル */
+.freeze-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    height: 40px;
+    width: 60px;
+    cursor: pointer;
+}
+
+.freeze-btn:hover {
+    background-color: #d32f2f;
+}
