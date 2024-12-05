@@ -1,10 +1,3 @@
-<?php
-  $host = 'localhost';
-  $dbname= 'JNSV01\sotsu';
-  $username= '23jn03_G04';
-  $password= '23jn03_G04';
-?>
-
 
 <!DOCTYPE html>
 <html>
@@ -105,37 +98,7 @@
   </div>
 
 <div class="send" >
-  <input type="text" id="message" placeholder="メッセージを入力してください">
-
-
-
-
-
-
-
-
-  <!--<body>
-    <form action="">
-  </body>
-      <td>
-        <input type="text"required  class="input" value="<?= $send ?>" autofocus>
-      </td>
-
-     <body>
-          <form action="" method="post">
-              <label for="inputText"></label>
-              <input type="text" id="inputText" name="inputText" required>
-              <button type="submit">送信</button>
-          </form>
-    </body> -->
-
-
-
-
-
-
-
-
+  <input type="text" id="message" name="message" placeholder="メッセージを入力してください">
 
     <!-- ブートストラップ -->
  
