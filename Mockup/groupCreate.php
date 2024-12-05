@@ -1,32 +1,34 @@
 <?php
+  require_once './helpers/DAO.php';
   require_once './helpers/GruopCreateDAO.php';
+
   
   //セッションの開始
   if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
-//を取得
-$groupCreateDAO=new groupCreateDAO();
-$cart_list=$groupCreateDAO->get_cart_by_memberid($member->memberid);
+//POSTメソッドでリクエストされたとき
+if($_SERVER["REQUEST_METHOD"]=="POST"){
 
-//ログイン中のとき
-if(!empty($_SESSION['userInfo'])){
-    //セッション変数の会員情報を取得する
-    $user = $_SESSION['userInfo'];
+    //作成ボタンが押されたとき
+    if(isset($_POST['btn08'])){
+      //グループの内容が空ではなければ
+        if(!empty($GroupName&$MaxMember&$MainGenreName&$SubGenreName)){
+
+        //入力されたグループの内容を受け取る
+        $GroupName=$_POST['GroupName'];
+        $MaxMember=$_POST['MaxMember'];
+        $GroupDetial=$_POST['MainGenreID'];
+        $MainGenreID=$_POST['SubGenreID'];
+        $SubGenreID=$_POST['GroupDetial'];
+
+        $GruopCreateDAO=new $GruopCreateDAO();
+        $GruopCreateDAO->insert($GroupName,$MaxMember,$MainGenreName,$SubGenreName,$GroupDetial);
+        
+        }
+    }
 }
-
-
-$cartDAO=new CartDAO();
-$cart_list=$cartDAO->get_cart_by_memberid($member->memberid);
-
-
-$prefecture_cities = [
-    'ゲーム' => ['FPS', '', '品川区', '港区'],
-    '音楽' => ['横浜市', '川崎市', '相模原市', '藤沢市'],
-    'スポーツ' => ['さいたま市', '川越市', '所沢市', '越谷市']
-];
-
 ?>
 
 
@@ -45,11 +47,11 @@ $prefecture_cities = [
 
 <body>
     <!-- グループ名 -->
-    <p>グループ名 ：<input type="text" id="groupName"></p>
+    <p>グループ名 :<input type="text" id="GroupName"></p>
 
     <!-- 参加人数 -->
-    <p>参加人数　：
-        <label class="selectbox-6">
+    <p>参加人数 :
+        <label class="selectbox-6" id=MaxMember>
             <select>
                 <option>3</option>
                 <option>4</option>
@@ -60,8 +62,8 @@ $prefecture_cities = [
 
     <!-- メインジャンルとサブジャンル -->
     <div class="dropdown-container">
-        <label for="maingenreName">大ジャンル名</label>
-        <select id="maingenreName">
+        <label for="mainGenreName">大ジャンル名</label>
+        <select id="mainGenreName">
             <option value="ゲーム">ゲーム</option>
             <option value="音楽">音楽</option>
             <option value="スポーツ">スポーツ</option>
@@ -84,7 +86,7 @@ $prefecture_cities = [
     <script src="jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const mainGenreSelect = document.getElementById('maingenreName');
+            const mainGenreSelect = document.getElementById('mainGenreName');
             const subGenreSelect = document.getElementById('subGenreName');
             const genres = [
                 ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
@@ -155,6 +157,7 @@ $prefecture_cities = [
 
     <br><br><br><br><br>
 
+    <!--グループ詳細-->
     <label>
         <span class="textbox-1-label">グループの説明：</span>
         <input type="text" class="textbox-1" id="textbox-2" />
