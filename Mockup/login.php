@@ -8,7 +8,11 @@
     session_start();
 
     //ログイン済みのとき
-    
+    if(!empty($_SESSION['userInfo'])){
+
+        header('Location: home.php');
+        exit;
+    }
 
     //POSTメソッドでリクエストされたとき
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
