@@ -1,6 +1,7 @@
 <?php 
     require_once 'helpers/userDAO.php';
     
+    
 ?>
 
 
@@ -47,6 +48,6 @@
 </div>
 
 <!-- マッチングボタン　ジャンル選択に遷移(genreSelect.html) -->
-<a href="genreSelect.html"><input type="submit" id="MatchingButton" value="マッチング"></a>
+<a href="groupCreate.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
 
 </html>

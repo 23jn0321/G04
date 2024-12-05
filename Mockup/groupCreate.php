@@ -1,14 +1,20 @@
 <?php
   require_once './helpers/GruopCreateDAO.php';
+  require_once 'helpers/userDAO.php';
+  
   
   //セッションの開始
-  if(session_status() === PHP_SESSION_NONE){
+if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
 //を取得
-$groupCreateDAO=new groupCreateDAO();
-$cart_list=$groupCreateDAO->get_cart_by_memberid($member->memberid);
+$groupCreateDAO=new GruopDetailDAO();
+$genreList = $groupCreateDAO->groupSelect();
+$genre_json = json_encode($genreList); //JSONエンコード
+
+
+
 
 //ログイン中のとき
 if(!empty($_SESSION['userInfo'])){
@@ -16,16 +22,6 @@ if(!empty($_SESSION['userInfo'])){
     $user = $_SESSION['userInfo'];
 }
 
-
-$cartDAO=new CartDAO();
-$cart_list=$cartDAO->get_cart_by_memberid($member->memberid);
-
-
-$prefecture_cities = [
-    'ゲーム' => ['FPS', '', '品川区', '港区'],
-    '音楽' => ['横浜市', '川崎市', '相模原市', '藤沢市'],
-    'スポーツ' => ['さいたま市', '川越市', '所沢市', '越谷市']
-];
 
 ?>
 
@@ -39,10 +35,11 @@ $prefecture_cities = [
     <link rel="stylesheet" href="CSSUser/GroupCreate.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
-    <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-    <?php include "header.php"; ?>
-</header>
 
+    <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
+
+</header>
+<?php include "header.php"; ?>
 <body>
     <!-- グループ名 -->
     <p>グループ名 ：<input type="text" id="groupName"></p>
@@ -62,10 +59,9 @@ $prefecture_cities = [
     <div class="dropdown-container">
         <label for="maingenreName">大ジャンル名</label>
         <select id="maingenreName">
-            <option value="ゲーム">ゲーム</option>
-            <option value="音楽">音楽</option>
-            <option value="スポーツ">スポーツ</option>
-            <option value="勉強">勉強</option>
+            <?php foreach($genreList as $genre): ?>
+                <option value="<?= $genre[0] ?>">  <?= htmlspecialchars($genre[0]) ?></option>
+            <?php endforeach ?>
         </select>
 
     <!-- サブジャンル選択 -->
@@ -86,13 +82,9 @@ $prefecture_cities = [
         document.addEventListener('DOMContentLoaded', () => {
             const mainGenreSelect = document.getElementById('maingenreName');
             const subGenreSelect = document.getElementById('subGenreName');
-            const genres = [
-                ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
-                ['音楽', ['クラシック', 'ロック', 'ジャズ']],
-                ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
-                ['勉強', ['数学', '英語']]
-            ];
-            
+            const genres = JSON.parse('<?php echo $genre_json; ?>');
+
+            console.log("Genres:", genres); // デバッグ用
 
             // 初期選択のゲームに対応するサブジャンルを設定
             const selectedGenre = mainGenreSelect.value; // 初期状態で選ばれているジャンル

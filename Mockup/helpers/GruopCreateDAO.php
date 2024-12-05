@@ -32,5 +32,40 @@ class GruopDetailDAO
             $stmt->bindValue(':Groupdetail',$SubGenreID,PDO::PARAM_STR);
             $stmt->execute();
     }
+    public function groupSelect(){
+        $dbh = DAO::get_db_connect();
+
+        $sql="SELECT * FROM MainGenre";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->execute();
+
+        $mainGenre = $stmt->fetchAll();
+
+        $genres = [];
+
+        foreach($mainGenre as $genre){
+            $genreID = $genre['MainGenreID'];
+            $genreName = $genre['MainGenreName'];
+
+            $sql2 = "SELECT SubGenreName FROM SubGenre WHERE MainGenre = :mainGenre";
+
+            $stmt2 = $dbh->prepare($sql2);
+
+            $stmt2->bindValue(':mainGenre', $genreID, PDO::PARAM_INT);
+            $stmt2->execute();
+
+            $subGenre = $stmt2->fetchAll(PDO::FETCH_COLUMN);
+
+            $genres[] = [$genreName,$subGenre];
+        }
+
+
+        return $genres;
+        
+    }
+
+
 }
 ?>
