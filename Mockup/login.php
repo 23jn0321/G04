@@ -27,16 +27,16 @@
 
             //DBから学籍番号・パスワードが一致する会員データを取り出す
             $studentDAO = new StudentDAO();
-            $student = $studentDAO->get_member($gakusekiNo,$password);
+            $userInfo = $studentDAO->get_member($gakusekiNo,$password);
             $admin = $studentDAO->get_admin($gakusekiNo,$password);
 
             //会員データを取り出せたとき
-            if($student !== false){
+            if($userInfo !== false){
                 //セッションIDを変更する
                 session_regenerate_id(true);
 
                 //セッション変数に会員データを保存する
-                 $_SESSION['student'] = $student;
+                 $_SESSION['userInfo'] = $userInfo;
 
                 //index.phpに移動
                 header('Location: home.php');

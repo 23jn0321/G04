@@ -1,6 +1,17 @@
 <?php
     require_once 'helpers/userDAO.php';
+    require_once 'helpers/studentDAO.php';
 
+    //セッションの開始
+    if(session_status() === PHP_SESSION_NONE){
+        session_start();
+    }
+
+    //ログイン中のとき
+    if(!empty($_SESSION['userInfo'])){
+        //セッション変数の会員情報を取得する
+        $user = $_SESSION['userInfo'];
+    }
     $nickName= '';
     $comment= '';
     $errs = [];
@@ -10,6 +21,9 @@
         //入力された学籍番号とパスワードを受け取る
         $nickName = $_POST['nickName'];
         $comment = $_POST['comment'];
+        $userDAO = new UserDAO();
+        $editInfo = $userDAO->update($nickName,$comment,$user->UserID);
+       
 
         if($nickName === ''){
             $errs[] = 'ニックネームを入力してください。';
@@ -22,7 +36,7 @@
 
             //DBから学籍番号・パスワードが一致する会員データを取り出す
             $userDAO = new UserDAO();
-            $user = $userDAO->update($nickName,$comment);
+            $user = $userDAO->update($nickName,$comment,$user->UserID);
 
             //会員データを取り出せたとき
             if($student !== false){
@@ -46,8 +60,13 @@
 </header>
 <?php include "header.php"; ?>
 
+<?php
+    $user = $_SESSION['userInfo'];
+    $studentDAO = new StudentDAO();
+    $userName = $studentDAO->get_newUserInfo($user->UserID);
+    ?>
     <!-- プロフィール編集 -->
-    <form name="pro"action="" method="POST">
+    <form id="myForm" action="" method="POST">
     <table id="profileTable" class="box">
         <tr>
             <th colspan="2">
@@ -57,40 +76,18 @@
         <tr>
             <td>ニックネーム</td>
             <td>
-                <input type="text" required name="nickName" class="input" value="<?= $nickName ?>" autofocus >
+                <input type="text" required name="nickName" class="input" value="<?= $userName->UserName ?>" autofocus >
             </td>
         </tr>
         <tr>
             <td>ひとことコメント</td>
             <td>
-            <input type="text" required name="comment" class="input" value="<?= $comment ?>" autofocus >
+            <input type="text" required name="comment" class="input" value="<?= $userName->ProfileComment ?>" autofocus >
             </td>
         </tr>
         <tr>
             <td>
-            <input type="button" value="確定" id="submit">
-
-            <script src="./jquery-3.6.0.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-<script>
-  $("#submit").click(function () {
-    Swal.fire({
-      html: '編集を確定してよろしいですか？',
-      showCancelButton: true,
-      confirmButtonText: 'OK',
-      type: 'question'
-    }).then((result) => {
-      if (result.value) {
-      
-       
-        window.location.href = 'home.php'
-        document.pro.submit();
-      }
-    });
-  });
-</script>
- 
+            <button type="submit" id="submitButton">送信</button>
             </td>
             <td></td>
         </tr>
@@ -105,6 +102,38 @@
     </table>
 </form>
 
+<script src="./jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+       
+$(document).ready(function() {
+            // フォームの送信処理をカスタマイズ
+            $('#myForm').on('submit', function(e) {
+                e.preventDefault(); // 通常の送信を防ぐ
+
+                // SweetAlert2を使って確認ダイアログを表示
+                Swal.fire({
+                    title: '編集確認',
+                    text: '編集を確定しますか？',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: '確定',
+                    cancelButtonText: 'キャンセル',
+                    
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 「送信」ボタンが押された場合、フォームを送信
+                        this.submit();
+                    }
+                });
+            });
+        });
+    
+
+</script>
 
 
 </html>
