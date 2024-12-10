@@ -21,7 +21,7 @@
         //入力された学籍番号とパスワードを受け取る
         $nickName = $_POST['nickName'];
         $comment = $_POST['comment'];
-        $userDAO = new UserDAO();
+        $userDAO = new userDAO();
         $editInfo = $userDAO->update($nickName,$comment,$user->UserID);
        
 

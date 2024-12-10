@@ -13,7 +13,7 @@ class GruopCeateDAO
     public int $MainGenreID;         //大ジャンルID
 }
 
-class GruopCreateDAO
+class GruopDetailDAO
 {
     //DBからグループ内容(グループ名、最大人数、中ジャンルID、大ジャンルID、グループ詳細)をSQLに送信するメソッド
     public function insert(string $GroupName,int $MaxMember,int $MainGenreID,int $SubGenreID, string $Groupdetail)
