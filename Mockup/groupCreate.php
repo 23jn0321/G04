@@ -22,9 +22,6 @@ $genre_json = json_encode($genreList); //JSONエンコード
 
 //POSTメソッドでリクエストされたとき
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-        //作成ボタンが押されたとき
-        print("aaaaaaaaaaaaaaaaaaaaaaa");
-          //グループの内容が空ではなければ
          
     
             //入力されたグループの内容を受け取る
@@ -55,6 +52,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     <!-- CSS適応 -->
     <link rel="stylesheet" href="CSSUser/Header.css">
     <link rel="stylesheet" href="CSSUser/GroupCreate.css">
+
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 
@@ -165,7 +164,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     </label>
 
     <!--　グループ作成ボタン --> 
-    <button type="submit" id="submitButton">作成</button>
+    <button type="submit" id="createBtn">作成</button>
     </table>
 </form>    
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -194,10 +193,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 });
             });
         });
-    </script>
+</script>
 
     <!--検索画面に戻る-->
-    <a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="back"></a>
+<a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="back" class="back"></a>
 
     
 </body>

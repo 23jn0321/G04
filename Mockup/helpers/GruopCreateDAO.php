@@ -42,7 +42,7 @@ class GruopDetailDAO
         $mainGenreID = $stmt->fetchAll();
         var_dump($mainGenreID[0]["MainGenreID"]);
         //中ジャンルの型変換
-        $sql2="SELECT SubGeneID
+        $sql2="SELECT SubGenreID
 	           FROM SubGenre
 		       WHERE SubGenreName = :SubGenreName";
 
@@ -55,12 +55,12 @@ class GruopDetailDAO
         $stmt2->execute();
 
         $subGenreID = $stmt2->fetchAll();
-        var_dump($subGenreID[0]["SubGeneID"]);
+        var_dump($subGenreID[0]["SubGenreID"]);
 
 
 
             //ChatGruopテーブルにグループ内容()を追加する
-            $sql3="INSERT INTO ChatGroup(GroupName, MaxMember, Groupdetail, GrouopDeleteFlag,MainGenreID, SubGenreID,GroupAdminID)
+            $sql3="INSERT INTO ChatGroup(GroupName, MaxMember, Groupdetail, GroupDeleteFlag,MainGenreID, SubGenreID,GroupAdminID)
                                  VALUES (:GroupName, :MaxMember, :Groupdetail, 0, :MainGenreID, :SubGenreID, :GroupAdminID)";
 
             $stmt3=$dbh->prepare($sql3);
@@ -69,7 +69,7 @@ class GruopDetailDAO
             $stmt3->bindValue(':GroupName',$GroupName,PDO::PARAM_STR);
             $stmt3->bindValue(':MaxMember',$MaxMember,PDO::PARAM_INT); 
             $stmt3->bindValue(':MainGenreID',$mainGenreID[0]["MainGenreID"],PDO::PARAM_INT);
-            $stmt3->bindValue(':SubGenreID',$subGenreID[0]["SubGeneID"],PDO::PARAM_INT);
+            $stmt3->bindValue(':SubGenreID',$subGenreID[0]["SubGenreID"],PDO::PARAM_INT);
             $stmt3->bindValue(':Groupdetail',$Groupdetail,PDO::PARAM_STR);
             $stmt3->bindValue(':GroupAdminID',$userID,PDO::PARAM_INT);
 
@@ -95,11 +95,11 @@ class GruopDetailDAO
             $genreID = $genre['MainGenreID'];
             $genreName = $genre['MainGenreName'];
 
-            $sql2 = "SELECT SubGenreName FROM SubGenre WHERE MainGenre = :mainGenre";
+            $sql2 = "SELECT SubGenreName FROM SubGenre WHERE MainGenreID = :mainGenreID";
 
             $stmt2 = $dbh->prepare($sql2);
 
-            $stmt2->bindValue(':mainGenre', $genreID, PDO::PARAM_INT);
+            $stmt2->bindValue(':mainGenreID', $genreID, PDO::PARAM_INT);
             $stmt2->execute();
 
             $subGenre = $stmt2->fetchAll(PDO::FETCH_COLUMN);

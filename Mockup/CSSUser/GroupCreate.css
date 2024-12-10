@@ -550,13 +550,23 @@
 }
 
 
-#btn08 {
+#createBtn {
     position: absolute;
     height: 50px;
     width: 130px;
     top: 630px;
-    left: 750px;
+    left: 1000px;
 
+}
+
+
+#back {
+    height: 50px;
+    width: 130px;
+    position: relative;
+
+    top: 70px;
+    left: 750px;
 }
 
 
@@ -571,12 +581,4 @@
 
 select {
     padding: 5px;
-}
-
-
-#back {
-    position: absolute;
-    margin-top: 350px;
-    padding: 13px;
-    left: 200px;
 }
