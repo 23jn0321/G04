@@ -1,7 +1,7 @@
 <?php
 require_once 'DAO.php';
 
-class GruopCeateDAO
+class GruopCeate
 {
     public int $GroupID;             //グループID 
     public string $GroupName;        //グループ名
@@ -12,31 +12,72 @@ class GruopCeateDAO
     public int $SubGenreID;          //中ジャンルID
     public int $MainGenreID;         //大ジャンルID
 }
+class MainGenre{
+    public int $MainGenreID;
+}
+class SubGenre{
+    public int $SubGenreID;
+}
 
 class GruopDetailDAO
 {
-    //DBからグループ内容(グループ名、最大人数、中ジャンルID、大ジャンルID、グループ詳細)をSQLに送信するメソッド
-    public function insert(string $GroupName,int $MaxMember,int $MainGenreID,int $SubGenreID, string $Groupdetail)
+    //DBからグループ内容(グループ名、最大人数、中ジャンル名、大ジャンル名、グループ詳細)をSQLに送信するメソッド
+    public function insert(string $GroupName,int $MaxMember,string $mainGenreName,string $SubGenreName, string $Groupdetail, int $userID)
     {
-        $dbh=DAO::get_db_connect();
+
+        $dbh = DAO::get_db_connect();
+
+        //大ジャンルの型変換
+        $sql1="SELECT MainGenreID
+	           FROM MainGenre
+		       WHERE MainGenreName = :mainGenreName";
+
+        $stmt = $dbh->prepare($sql1);
+
+        $stmt->bindValue(":mainGenreName",$mainGenreName,PDO::PARAM_STR);
+
+        //実行
+        $stmt->execute();
+
+        $mainGenreID = $stmt->fetchAll();
+        var_dump($mainGenreID[0]["MainGenreID"]);
+        //中ジャンルの型変換
+        $sql2="SELECT SubGeneID
+	           FROM SubGenre
+		       WHERE SubGenreName = :SubGenreName";
+
+        $stmt2 = $dbh->prepare($sql2);
+        var_dump($SubGenreName);
+
+        $stmt2->bindValue(":SubGenreName",$SubGenreName,PDO::PARAM_STR);
+
+        //実行
+        $stmt2->execute();
+
+        $subGenreID = $stmt2->fetchAll();
+        var_dump($subGenreID[0]["SubGeneID"]);
+
 
 
             //ChatGruopテーブルにグループ内容()を追加する
-            $sql="INSERT INTO ChatGruop(GroupName, MaxMember, MainGenreID, SubGenreID, Groupdetail)
-            VALUES (:GroupName, :MaxMember, :MainGenreID, :SubGenreID, :Groupdetail)";
+            $sql3="INSERT INTO ChatGroup(GroupName, MaxMember, Groupdetail, GrouopDeleteFlag,MainGenreID, SubGenreID,GroupAdminID)
+                                 VALUES (:GroupName, :MaxMember, :Groupdetail, 0, :MainGenreID, :SubGenreID, :GroupAdminID)";
 
-            $stmt=$dbh->prepare($sql);
+            $stmt3=$dbh->prepare($sql3);
             
             //SQLに変数の値を当てはめる
-            $stmt->bindValue(':GroupName',$GroupName,PDO::PARAM_STR);
-            $stmt->bindValue(':MaxMember',$MaxMember,PDO::PARAM_STR); 
-            $stmt->bindValue(':MainGenreID',$SubGenreID,PDO::PARAM_STR);
-            $stmt->bindValue(':SubGenreID',$SubGenreID,PDO::PARAM_INT);
-            $stmt->bindValue(':Groupdetail',$SubGenreID,PDO::PARAM_STR);
+            $stmt3->bindValue(':GroupName',$GroupName,PDO::PARAM_STR);
+            $stmt3->bindValue(':MaxMember',$MaxMember,PDO::PARAM_INT); 
+            $stmt3->bindValue(':MainGenreID',$mainGenreID[0]["MainGenreID"],PDO::PARAM_INT);
+            $stmt3->bindValue(':SubGenreID',$subGenreID[0]["SubGeneID"],PDO::PARAM_INT);
+            $stmt3->bindValue(':Groupdetail',$Groupdetail,PDO::PARAM_STR);
+            $stmt3->bindValue(':GroupAdminID',$userID,PDO::PARAM_INT);
 
             //実行
-            $stmt->execute();
+            $stmt3->execute();
     }
+
+    //大ジャンルと中ジャンルの同期
     public function groupSelect(){
         $dbh = DAO::get_db_connect();
 
@@ -70,7 +111,5 @@ class GruopDetailDAO
         return $genres;
         
     }
-
-
 }
 ?>

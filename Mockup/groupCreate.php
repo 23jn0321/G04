@@ -8,19 +8,40 @@ if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
+if(!empty($_SESSION['userInfo'])){
+    //セッション変数の会員情報を取得する
+    $user = $_SESSION['userInfo'];
+}
 //を取得
 $groupCreateDAO=new GruopDetailDAO();
 $genreList = $groupCreateDAO->groupSelect();
 $genre_json = json_encode($genreList); //JSONエンコード
 
 
+//POSTメソッドでリクエストされたとき
+if($_SERVER["REQUEST_METHOD"] === "POST"){
+        //作成ボタンが押されたとき
+        print("aaaaaaaaaaaaaaaaaaaaaaa");
+          //グループの内容が空ではなければ
+         
+    
+            //入力されたグループの内容を受け取る
+            $GroupName = $_POST['groupName'];
+            $MaxMember = $_POST['joinNum'];
+            $GroupDetial = $_POST['groupDetail'];
+            $MainGenreName = $_POST['maingenreName'];
+            $SubGenreName = $_POST['subGenreName'];
 
-//ログイン中のとき
-if(!empty($_SESSION['userInfo'])){
-    //セッション変数の会員情報を取得する
-    $user = $_SESSION['userInfo'];
-}
 
+            $GroupCreateDAO = new GruopDetailDAO();
+            $sss = 101;
+            $GroupCreateDAO->insert($GroupName,$MaxMember,$MainGenreName,$SubGenreName,$GroupDetial,$sss);
+
+            header('Location: message.php');
+            exit;
+            
+            
+    }
 
 ?>
 
@@ -39,17 +60,24 @@ if(!empty($_SESSION['userInfo'])){
 
 </header>
 <?php include "header.php"; ?>
+
+
+    <!-- 作成ボタン -->
+
+<form id="sendbutton" action="" method="POST">
+<table id="profileTable" class="box">
+
 <body>
     <!-- グループ名 -->
-    <p>グループ名 ：<input type="text" id="groupName"></p>
+    <p>グループ名 ：<input type="text" id="groupName" name="groupName"></p>
 
     <!-- 参加人数 -->
     <p>参加人数　：
         <label class="selectbox-6">
-            <select>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+            <select name="joinNum">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
             </select>
         </label>
     </p>
@@ -57,24 +85,26 @@ if(!empty($_SESSION['userInfo'])){
     <!-- メインジャンルとサブジャンル -->
     <div class="dropdown-container">
         <label for="maingenreName">大ジャンル名</label>
-        <select id="maingenreName">
+        <select id="maingenreName" name="maingenreName">
             <?php foreach($genreList as $genre): ?>
-                <option value="<?= $genre[0] ?>">  <?= htmlspecialchars($genre[0]) ?></option>
+            <option value="<?= $genre[0] ?>">
+                <?= htmlspecialchars($genre[0]) ?>
+            </option>
             <?php endforeach ?>
         </select>
 
-    <!-- サブジャンル選択 -->
-    <a>
-        <label for="subGenreName" >中ジャンル名</label>
-        <select id="subGenreName">
-            <option hidden>選択してください</option>
-        </select>
-        </div>
-    
+        <!-- サブジャンル選択 -->
+        <a>
+            <label for="subGenreName">中ジャンル名</label>
+            <select id="subGenreName" name="subGenreName">
+                <option hidden>選択してください</option>
+            </select>
+    </div>
+
     </a>
 
-    <!-- 作成ボタン -->
-    <input type="button" id="btn08" value="作成">
+    
+        
 
     <script src="jquery-3.6.0.min.js"></script>
     <script>
@@ -124,19 +154,42 @@ if(!empty($_SESSION['userInfo'])){
                 }
             });
         });
+    </script>
 
+    <!--グループ詳細-->
+    <label>
+        <span class="textbox-1-label">グループの説明：</span>
+        <input type="text" class="textbox-1" id="textbox-2" name="groupDetail" />
+    </label>
+
+    <!--　グループ作成ボタン --> 
+    <button type="submit" id="submitButton">作成</button>
+    </table>
+</form>    
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
         // 作成ボタンがクリックされたとき
-        $("#btn08").click(function () {
-            Swal.fire({
-                title: 'グループを作成しますか？',
-                html: 'グループ名：<span id="groupNameText">資格勉強の集い</span><br>グループ上限人数：5',
-                showCancelButton: true,
-                confirmButtonText: '作成',
-                type: 'question'
-            }).then((result) => {
-                if (result.value) {
-                    window.location.href = 'message.html'; // 作成後、別のページに遷移
-                }
+        $(document).ready(function() {
+            // フォームの送信処理をカスタマイズ
+            $('#sendbutton').on('submit', function(e) {
+                e.preventDefault(); // 通常の送信を防ぐ
+
+                // SweetAlert2を使って確認ダイアログを表示
+                Swal.fire({
+                    title: '編集確認',
+                    text: '編集を確定しますか？',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: '確定',
+                    cancelButtonText: 'キャンセル',
+                    
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 「送信」ボタンが押された場合、フォームを送信
+                        this.submit();
+                    }
+                });
             });
         });
     </script>
@@ -144,13 +197,7 @@ if(!empty($_SESSION['userInfo'])){
     <!--検索画面に戻る-->
     <a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="back"></a>
 
-    <br><br><br><br><br>
-
-    <label>
-        <span class="textbox-1-label">グループの説明：</span>
-        <input type="text" class="textbox-1" id="textbox-2" />
-    </label>
-
+    
 </body>
 
 </html>

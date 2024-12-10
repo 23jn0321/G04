@@ -25,8 +25,8 @@ class GenreDAO{
         // 取得したデータをループして Genre オブジェクトに格納
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $genre = new Genre();
-            $genre->mainGenreID = $row['mainGenreID'];
-            $genre->mainGenreName = $row['mainGenreName'];
+            $genre->mainGenreID = $row['MainGenreID'];
+            $genre->mainGenreName = $row['MainGenreName'];
             $genres[] = $genre;
         }
 
