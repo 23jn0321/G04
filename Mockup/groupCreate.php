@@ -32,8 +32,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 
             $GroupCreateDAO = new GruopDetailDAO();
-            $sss = 101;
-            $GroupCreateDAO->insert($GroupName,$MaxMember,$MainGenreName,$SubGenreName,$GroupDetial,$sss);
+            $GroupCreateDAO->insert($GroupName,$MaxMember,$MainGenreName,$SubGenreName,$GroupDetial,$user->UserID);
 
             header('Location: message.php');
             exit;
