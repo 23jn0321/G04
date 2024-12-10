@@ -271,16 +271,6 @@
 
 
 
-#CreateBotton {
-    position: relative;
-    left: 25px;
-    top: 50px;
-    padding: 20px 50px 20px 50px;
-}
-
-
-
-
 
 
 .selectbox-6 {
@@ -555,17 +545,17 @@
     height: 50px;
     width: 130px;
     top: 630px;
-    left: 1000px;
+    left: 0px;
 
 }
 
 
-#back {
+#searchBack {
     height: 50px;
     width: 130px;
     position: relative;
 
-    top: 70px;
+    top: 750px;
     left: 750px;
 }
 

@@ -1,5 +1,5 @@
 <?php
-  require_once './helpers/GruopCreateDAO.php';
+  require_once './helpers/GroupCreateDAO.php';
   require_once 'helpers/userDAO.php';
   
   
@@ -194,7 +194,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 </script>
 
     <!--検索画面に戻る-->
-<a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="back" class="back"></a>
+<a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
 
     
 </body>

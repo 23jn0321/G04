@@ -1,4 +1,21 @@
+<?php
+    require_once './helpers/messageDAO.php';
+     
+    //セッションの開始
+  if(session_status() === PHP_SESSION_NONE){
+      session_start();
 
+  }
+  if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST['message'])) {
+        $message = $_POST['message']; // テキストボックスのメッセージを受け取る
+        $userId = $_SESSION['userInfo']; // ユーザーIDなどをセッションから取得
+        $messageDAO=new messageDAO();
+        $messageDAO->messageInsert(1,101,$message);
+    }
+}
+?>
+?>
 <!DOCTYPE html>
 <html>
   <meta charset="utf-8">
@@ -80,10 +97,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 
-
-<input type="button" id="btn08" class="secret" value="">
-<input type="button" id="btn09" class="secret" value="">
 <!-- メッセージ機能 (https://naruweb.com/coding/linechat/)から引用 -->
+<form action="" method="POST" id="chatMessage">
 <div class="room">
     <ul>
       <li class="chat you" id="btn08">   <!-- 相手のメッセージにはclass「you」をつける。 -->
@@ -97,14 +112,12 @@
     </ul>
   </div>
 
-<div class="send" >
-  <input type="text" id="message" name="message" placeholder="メッセージを入力してください">
-
-    <!-- ブートストラップ -->
- 
-    <input type="button" value="Send" id="submit">
+  <div class="send">
+    <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
+    <input type="submit" value="Send" id="send">
     <a href="groupDetailAfter.html"><input type="button" value="グループ詳細" id="groupDetail"></a>
-  </div> 
+  </div>
+  </form>
   <script>
 
     $("#btn08").click(function () {
