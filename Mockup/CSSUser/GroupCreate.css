@@ -271,14 +271,6 @@
 
 
 
-<<<<<<< HEAD
-
-
-
-
-
-=======
->>>>>>> bb77f9aebd0f38788ba70311e8c0413218cca94a
 
 
 .selectbox-6 {
@@ -552,13 +544,8 @@
     position: absolute;
     height: 50px;
     width: 130px;
-<<<<<<< HEAD
-    top: 70px;
-    left: 300px;
-=======
     top: 630px;
     left: 0px;
->>>>>>> bb77f9aebd0f38788ba70311e8c0413218cca94a
 
 }
 
@@ -566,16 +553,10 @@
 #searchBack {
     height: 50px;
     width: 130px;
-<<<<<<< HEAD
-    position: absolute;
-    top: 600px;
-    left: 200px;
-=======
     position: relative;
 
     top: 750px;
     left: 750px;
->>>>>>> bb77f9aebd0f38788ba70311e8c0413218cca94a
 }
 
 

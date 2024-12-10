@@ -1,13 +1,12 @@
 <?php
   require_once './helpers/GroupCreateDAO.php';
-  require_once 'helpers/userDAO.php';
+  //require_once 'helpers/userDAO.php';
   
-  
+  include "header.php"; 
   //セッションの開始
 if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
-
 if(!empty($_SESSION['userInfo'])){
     //セッション変数の会員情報を取得する
     $user = $_SESSION['userInfo'];
@@ -48,18 +47,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <!DOCTYPE html>
 <html lang="ja">
 <meta charset="utf-8">
-<header>
-    <!-- CSS適応 -->
-    <link rel="stylesheet" href="CSSUser/Header.css">
-    <link rel="stylesheet" href="CSSUser/GroupCreate.css">
-
-
-
-    <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-
-</header>
-<?php include "header.php"; ?>
-
 
     <!-- 作成ボタン -->
 
@@ -194,11 +181,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     </script>
 
     <!--検索画面に戻る-->
-<<<<<<< HEAD
-    <a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="back"></a>
-=======
 <a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
->>>>>>> bb77f9aebd0f38788ba70311e8c0413218cca94a
 
     
 </body>
