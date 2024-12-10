@@ -1,64 +1,53 @@
 <?php 
 require_once 'DAO.php'; 
-class Group { 
-    public string $g; 
-     public string $goodsname; 
-     public int $price;  
-     public string $detail; 
-     public int $groupcode; 
-      public bool $recommend; 
-      public string $goodsimage; 
-    }
-    class GoodsDAO { 
-        public function get_recommend_goods() { 
-           
-            $dbh = DAO::get_db_connect(); 
-             $sql = "SELECT * FROM Goods WHERE recommend = 1"; 
-             $stmt = $dbh->prepare($sql);
-              $stmt->execute(); 
-               $data = []; 
-               while($row = $stmt->fetchObject('Goods')) 
-               { $data[] = $row; } return $data;
-             }
-             public function get_goods_by_groupcode(int $groupcode)
+
+class GruopDetailDAO
+{
+          //DBからグループ内容(グループID、グループ名、グループ人数、最終更新日、大ジャンル、中ジャンル、学籍番号)を取得するメソッド
+          public function getGroup(int $GroupID, string $GroupName, string $MemberInfo, string $LastUpdated ,string $Genre ,string $gakusekiNo)
              {
+              //DBに接続
+              $dbh = DAO::get_db_connect(); 
 
-              $dbh = DAO::get_db_connect();
-
-              $sql = "SELECT * FROM goods WHERE groupcode = :groupcode ORDER BY recommend DESC";
+              //DBからグループ内容を取得くするSQL
+              $sql ="SELECT 
+                      g.GroupID, 
+                      g.GroupName, 
+                      CONCAT(g.MaxMember, ' / ', 
+                      (SELECT COUNT(DISTINCT gm_sub.UserID) 
+                        FROM GroupMember gm_sub 
+                          WHERE gm_sub.GroupID = g.GroupID)) AS MemberInfo, -- サブクエリでユニークな参加人数をカウント
+                            COALESCE(FORMAT(MAX(cm.SendTime), 'MM/dd'), '情報なし') AS LastUpdated, -- 日付をmm/dd形式でフォーマット
+                              CONCAT(mg.MainGenreName, ' / ', sg.SubGenreName) AS Genre -- メインジャンルとサブジャンルを/で結合
+                        FROM GroupMember gm
+                          INNER JOIN ChatGroup g ON gm.GroupID = g.GroupID -- グループ情報を結合
+                          INNER JOIN MainGenre mg ON g.MainGenreID = mg.MainGenreID -- メインジャンルを結合
+                          INNER JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID -- サブジャンルを結合
+                          LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID -- 最新メッセージを取得
+                            WHERE gm.UserID = :UserID AND g.GroupDeleteFlag = 0 -- ユーザーIDと削除フラグでフィルタリング
+                              GROUP BY 
+                                  g.GroupID, g.GroupName, g.MaxMember, mg.MainGenreName, sg.SubGenreName
+                              ORDER BY g.GroupName";
 
               $stmt = $dbh->prepare($sql);
 
-              $stmt->bindValue(':groupcode', $groupcode, PDO::PARAM_INT);
+              $stmt->bindValue(':GroupID', $GroupID, PDO::PARAM_INT);
+              $stmt->bindValue(':GroupName', $GroupName, PDO::PARAM_STR);
+              $stmt->bindValue(':MemberInfo', $MemberInfo, PDO::PARAM_STR);
+              $stmt->bindValue(':LastUpdated', $LastUpdated, PDO::PARAM_STR);
+              $stmt->bindValue(':Genre', $Genre, PDO::PARAM_STR);
+              $stmt->bindValue(':UserID', $UserID, PDO::PARAM_STR);
+              $stmt->bindValue(':gakusekiNo',$gakusekiNo,PDO::PARAM_STR);
 
+              
+
+              //実行
               $stmt->execute();
 
-              $data=[];
-              while($row= $stmt->fetchobject('Goods')){
-                $data[]=$row;
-              }
 
-              return $data;
+              print_r($MemberInfo);
 
 
              }
-
-
-             public function get_goods_by_goodscode(string $goodscode) { 
-           
-              $dbh = DAO::get_db_connect(); 
-               $sql = "SELECT * FROM Goods WHERE goodscode =:goodscode";
-
-               $stmt = $dbh->prepare($sql);
-  
-                $stmt->bindValue(':goodscode', $goodscode, PDO::PARAM_INT);
-  
-                $stmt->execute();
-  
-                $goods=$stmt ->fetchObject('Goods');
-  
-                return $goods;
-  
-  
-               }
-             }
+            }
+?>
