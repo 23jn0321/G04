@@ -48,6 +48,6 @@
 </div>
 
 <!-- マッチングボタン　ジャンル選択に遷移(genreSelect.html) -->
-<a href="groupCreate.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
+<a href="message.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
 
 </html>

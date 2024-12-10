@@ -1,5 +1,5 @@
 <?php
-  require_once './helpers/GruopCreateDAO.php';
+  require_once './helpers/GroupCreateDAO.php';
   require_once 'helpers/userDAO.php';
   
   
@@ -20,6 +20,8 @@ $genre_json = json_encode($genreList); //JSONエンコード
 
 //POSTメソッドでリクエストされたとき
 if($_SERVER["REQUEST_METHOD"] === "POST"){
+        //作成ボタンが押されたとき
+          //グループの内容が空ではなければ
          
     
             //入力されたグループの内容を受け取る
@@ -51,8 +53,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     <link rel="stylesheet" href="CSSUser/Header.css">
     <link rel="stylesheet" href="CSSUser/GroupCreate.css">
 
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 
     <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
@@ -162,7 +162,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     </label>
 
     <!--　グループ作成ボタン --> 
-    <button type="submit" id="createBtn">作成</button>
+    <button type="submit" id="submitButton">作成</button>
     </table>
 </form>    
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -191,10 +191,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 });
             });
         });
-</script>
+    </script>
 
     <!--検索画面に戻る-->
-<a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="back" class="back"></a>
+<<<<<<< HEAD
+    <a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="back"></a>
+=======
+<a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
+>>>>>>> bb77f9aebd0f38788ba70311e8c0413218cca94a
 
     
 </body>

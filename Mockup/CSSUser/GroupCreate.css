@@ -271,16 +271,14 @@
 
 
 
-#CreateBotton {
-    position: relative;
-    left: 25px;
-    top: 50px;
-    padding: 20px 50px 20px 50px;
-}
+<<<<<<< HEAD
 
 
 
 
+
+=======
+>>>>>>> bb77f9aebd0f38788ba70311e8c0413218cca94a
 
 
 .selectbox-6 {
@@ -550,23 +548,34 @@
 }
 
 
-#createBtn {
+#submitButton {
     position: absolute;
     height: 50px;
     width: 130px;
+<<<<<<< HEAD
+    top: 70px;
+    left: 300px;
+=======
     top: 630px;
-    left: 1000px;
+    left: 0px;
+>>>>>>> bb77f9aebd0f38788ba70311e8c0413218cca94a
 
 }
 
 
-#back {
+#searchBack {
     height: 50px;
     width: 130px;
+<<<<<<< HEAD
+    position: absolute;
+    top: 600px;
+    left: 200px;
+=======
     position: relative;
 
-    top: 70px;
+    top: 750px;
     left: 750px;
+>>>>>>> bb77f9aebd0f38788ba70311e8c0413218cca94a
 }
 
 
