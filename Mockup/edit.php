@@ -87,14 +87,14 @@
             <td>ニックネーム</td>
             <td>
                 <!-- 現在のニックネームを初期値として表示 -->
-                <input type="text" required name="nickName" class="input" value="<?= $userName->UserName ?>" autofocus>
+                <input type="text" required name="nickName" class="input" value="<?= $user->UserName ?>" autofocus>
             </td>
         </tr>
         <tr>
             <td>ひとことコメント</td>
             <td>
                 <!-- 現在のコメントを初期値として表示 -->
-                <input type="text" required name="comment" class="input" value="<?= $userName->ProfileComment ?>" autofocus>
+                <input type="text" required name="comment" class="input" value="<?= $user->ProfileComment ?>" autofocus>
             </td>
         </tr>
         <tr>

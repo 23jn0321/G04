@@ -52,7 +52,7 @@ class StudentDAO
         
         //1件分のデータをStudentクラスのオブジェクトとして取得する
         $student = $stmt->fetchObject('Student');
-        $user = $stmt2->fetchObject("user");
+        $user = $stmt2->fetchObject("User");
        
 
         //会員データが取得できたとき
@@ -95,6 +95,7 @@ class StudentDAO
     }
     public function get_newUserInfo(string $userID)
     {
+
         //DBに接続する
         $dbh = DAO::get_db_connect();
 
@@ -105,16 +106,14 @@ class StudentDAO
         $stmt = $dbh->prepare($sql);
 
         //SQLに変数の値を当てはめる
-        $stmt->bindValue(':userid',$userID,PDO::PARAM_STR);
+        $stmt->bindValue(':userid',$userID,PDO::PARAM_INT);
        
         //SQLを実行する
         $stmt->execute();
        
         
         //1件分のデータをStudentクラスのオブジェクトとして取得する
-        $user = $stmt->fetchObject("user");
-       
-
+        $user = $stmt->fetchAll();
         //会員データが取得できたとき
         if($user !== false){ 
                 return $user;
