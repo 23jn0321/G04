@@ -1,3 +1,22 @@
+<?php
+
+      require_once './helpers/GruopDAO.php';
+
+      if($_SERVER["REQUEST_METHOD"] === "POST"){
+         
+
+        $GroupDAO = new GruopDetailDAO();
+        $sss = 101;
+        $GroupDAO->getGroup($GroupID,$GroupName,$MemberInfo,$LastUpdated,$Genre,$gakusekiNo);
+
+        header('Location: message.php');
+        exit;
+        
+        
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
