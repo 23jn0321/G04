@@ -1,6 +1,18 @@
 <?php 
-    require_once 'helpers/userDAO.php';
-    
+ require_once 'helpers/userDAO.php';
+    require_once 'helpers/GroupDAO.php';
+   
+    include "header.php"; 
+  
+    $loggedInUser = null;
+
+if (isset($_SESSION['userInfo']) ) {
+    //$userInfo = $_SESSION['userInfo'];
+
+    $loggedInUser = $_SESSION['userInfo'];
+}
+    $groupDAO = new GroupDAO();
+    $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
     
 ?>
 
@@ -14,30 +26,22 @@
   <link rel="stylesheet" href="CSSUser/Header.css">
   <link rel="stylesheet" href="CSSUser/Home.css">
 </header>
-<?php include "header.php"; ?>
+
 
 <div>
-  <p id="group">所属グループ一覧</p>
+  <p id="title">所属グループ一覧</p>
 </div>
 
   <p>
     <!-- グループ表示 -->
+    <nav class="group">
     <ul>
+    <?php foreach ($groupInfo as $var): ?>
       <li>
-        <p>資格勉強の集い(3/5)<br>最終更新日：10/13<br>ジャンル：勉強 / 資格勉強</p><a href="groupEdit.html"><input type="button" value="グループ編集">
+        <p><?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?></p>
+        
       </li>
-      <li>
-        <p>テスト期間がち勉強(4/5)<br>最終更新日：10/8<br>ジャンル：勉強 / テスト勉強</p>
-      </li>
-      <li>
-        <p>プログラミング愛好家(3/4)<br>最終更新日：10/3<br>ジャンル：勉強 / プログラミング</p>
-      </li>
-      <li>
-        <p>テスト勉強(4/4)<br>最終更新日：9/30<br>ジャンル：勉強 / テスト勉強</p>
-      </li>
-      <li>
-        <p>K-POP愛(2/3)<br>最終更新日：9/22<br>ジャンル：音楽 / K-POP</p>
-      </li>
+      <?php endforeach; ?>
     </ul>
 </a>
 </p>
