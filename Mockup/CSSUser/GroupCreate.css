@@ -271,12 +271,7 @@
 
 
 
-#CreateBotton {
-    position: relative;
-    left: 25px;
-    top: 50px;
-    padding: 20px 50px 20px 50px;
-}
+
 
 
 
@@ -550,12 +545,12 @@
 }
 
 
-#createBtn {
+#submitButton {
     position: absolute;
     height: 50px;
     width: 130px;
-    top: 630px;
-    left: 1000px;
+    top: 70px;
+    left: 300px;
 
 }
 
@@ -563,10 +558,9 @@
 #back {
     height: 50px;
     width: 130px;
-    position: relative;
-
-    top: 70px;
-    left: 750px;
+    position: absolute;
+    top: 600px;
+    left: 200px;
 }
 
 
