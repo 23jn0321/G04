@@ -38,7 +38,7 @@ require_once './helpers/GroupDAO.php';
         <?php endforeach ?> 
     </table>  
         <table> 
-        <?php endforeach; ?> 
+       
     </table>  
 </body>
 </html>

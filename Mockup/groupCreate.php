@@ -1,7 +1,5 @@
 <?php
-  require_once './helpers/DAO.php';
   require_once './helpers/GruopCreateDAO.php';
-
   require_once 'helpers/userDAO.php';
   
   
