@@ -1,5 +1,6 @@
 <?php
     require_once './helpers/messageDAO.php';
+    include "header.php";
      
     //セッションの開始
   if(session_status() === PHP_SESSION_NONE){
@@ -11,11 +12,11 @@
         $message = $_POST['message']; // テキストボックスのメッセージを受け取る
         $userId = $_SESSION['userInfo']; // ユーザーIDなどをセッションから取得
         $messageDAO=new messageDAO();
-        $messageDAO->messageInsert(1,101,$message);
+        $messageDAO->messageInsert(1,$userId->UserID,$message);
     }
 }
 ?>
-?>
+
 <!DOCTYPE html>
 <html>
   <meta charset="utf-8">
@@ -29,12 +30,7 @@
 </head>
     
 <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-      <div class="logo">
-        <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px" id="jecIMG"></a>
-        <input type="text" id="name" value="電子太郎 さん" placeholder="ニックネームを入力してください" readonly>
-        <a href="edit.html"><input type="button" value="編集" id="edit"></a>
-        <hr>
-      </div>
+
       
     
   </header>
