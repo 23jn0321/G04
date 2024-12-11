@@ -1,3 +1,15 @@
+<?php
+require_once 'helpers/GenreDAO.php';
+
+$genreDAO = new GenreDAO();
+$genres = $genreDAO->get_Genre();
+
+// メインジャンル情報を出力
+foreach ($genres as $genre) {
+    echo "メインジャンルID: " . $genre->mainGenreID . "<br>";
+    echo "メインジャンル名: " . $genre->mainGenreName . "<br><br>";
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 

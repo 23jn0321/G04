@@ -8,7 +8,11 @@
     session_start();
 
     //ログイン済みのとき
-    
+    if(!empty($_SESSION['userInfo'])){
+
+        header('Location: home.php');
+        exit;
+    }
 
     //POSTメソッドでリクエストされたとき
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -33,7 +37,7 @@
             //会員データを取り出せたとき
             if($userInfo !== false){
                 //セッションIDを変更する
-                session_regenerate_id(true);
+             
 
                 //セッション変数に会員データを保存する
                  $_SESSION['userInfo'] = $userInfo;
@@ -42,7 +46,7 @@
                 header('Location: home.php');
                 exit;
             }else if($admin !== false){
-                session_regenerate_id(true);
+
 
 
                 $_SESSION['admin'] = $admin;

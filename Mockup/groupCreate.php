@@ -1,231 +1,188 @@
 <?php
-  require_once './helpers/GruopCreateDAO.php';
+  require_once './helpers/GroupCreateDAO.php';
+  //require_once 'helpers/userDAO.php';
   
-  //セッションを開始
-  session_start();
+  include "header.php"; 
+  //セッションの開始
+if(session_status() === PHP_SESSION_NONE){
+    session_start();
+}
+if(!empty($_SESSION['userInfo'])){
+    //セッション変数の会員情報を取得する
+    $user = $_SESSION['userInfo'];
+}
+//を取得
+$groupCreateDAO=new GruopDetailDAO();
+$genreList = $groupCreateDAO->groupSelect();
+$genre_json = json_encode($genreList); //JSONエンコード
 
-  //未ログインのとき
-  /*if(empty($_SESSION['member'])){
-      //login.phpに移動
-      header('Location:login.php');
-      exit;
-  }
-  //ログイン中の会員情報を取得
-  $member=$_SESSION['member'];
 
-  //POSTメソッドでリクエストされたとき
-  if($_SERVER['REQUEST_METHOD']==='POST'){
-      //「カートに入れる」ボタンがクリックされたとき
-      if(isset($_POST[''])){
+//POSTメソッドでリクエストされたとき
+if($_SERVER["REQUEST_METHOD"] === "POST"){
+        //作成ボタンが押されたとき
+          //グループの内容が空ではなければ
+         
+    
+            //入力されたグループの内容を受け取る
+            $GroupName = $_POST['groupName'];
+            $MaxMember = $_POST['joinNum'];
+            $GroupDetial = $_POST['groupDetail'];
+            $MainGenreName = $_POST['maingenreName'];
+            $SubGenreName = $_POST['subGenreName'];
 
-      }
-    }*/
+
+            $GroupCreateDAO = new GruopDetailDAO();
+            $GroupCreateDAO->insert($GroupName,$MaxMember,$MainGenreName,$SubGenreName,$GroupDetial,$user->UserID);
+
+            header('Location: message.php');
+            exit;
+            
+            
+    }
 
 ?>
 
 
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <meta charset="utf-8">
-<header>
-  <!-- CSS適応 -->
-  <link rel="stylesheet" href="CSSUser/Header.css">
-  <link rel="stylesheet" href="CSSUser/GroupCreate.css">
 
-  <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-  <?php include "header.php"; ?>
-</header>
+    <!-- 作成ボタン -->
 
-<p>グループ名 ：<input type="text" id="groupName"></p>
-<p>参加人数　：
+<form id="sendbutton" action="" method="POST">
+<table id="profileTable" class="box">
 
-  <label class="selectbox-6">
-    <select>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </label>
-</p>
+<body>
+    <!-- グループ名 -->
+    <p>グループ名 ：<input type="text" id="groupName" name="groupName"></p>
 
+    <!-- 参加人数 -->
+    <p>参加人数　：
+        <label class="selectbox-6">
+            <select name="joinNum">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </label>
+    </p>
 
+    <!-- メインジャンルとサブジャンル -->
+    <div class="dropdown-container">
+        <label for="maingenreName">大ジャンル名</label>
+        <select id="maingenreName" name="maingenreName">
+            <?php foreach($genreList as $genre): ?>
+            <option value="<?= $genre[0] ?>">
+                <?= htmlspecialchars($genre[0]) ?>
+            </option>
+            <?php endforeach ?>
+        </select>
 
+        <!-- サブジャンル選択 -->
+        <a>
+            <label for="subGenreName">中ジャンル名</label>
+            <select id="subGenreName" name="subGenreName">
+                <option hidden>選択してください</option>
+            </select>
+    </div>
 
+    </a>
 
-<script>
-    let inputCount = 4;
-    document.addEventListener('DOMContentLoaded', () => {
-        const mainGenreSelect = document.getElementById('maingenreName');
-        if (!mainGenreSelect) {
-            console.error('Element with id "genreName" not found');
-            return;
-        }
+    
+        
 
-        const subGenreContainer = document.getElementById('subGenreContainer');
-        const genres = [
-            ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
-            ['音楽', ['クラシック', 'ロック', 'ジャズ']],
-            ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
-            ['勉強', ['数学', '英語']]
-        ];
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainGenreSelect = document.getElementById('maingenreName');
+            const subGenreSelect = document.getElementById('subGenreName');
+            const genres = JSON.parse('<?php echo $genre_json; ?>');
 
-        // メインジャンルが選ばれた際に処理を行う
-        mainGenreSelect.addEventListener('change', (event) => {
-            const genreName = event.target.value;
-            console.log("Selected genre:", genreName); // デバッグ用
+            console.log("Genres:", genres); // デバッグ用
 
-            // サブジャンル入力フォームをリセット
-            const form = subGenreContainer.querySelector('form');
-            if (!form) {
-                console.error("Form element not found within subGenreContainer");
-                return;
-            }
+            // 初期選択のゲームに対応するサブジャンルを設定
+            const selectedGenre = mainGenreSelect.value; // 初期状態で選ばれているジャンル
+            subGenreSelect.innerHTML = '<option hidden>選択してください</option>';  // サブジャンルセレクトボックスをリセット
 
-            const existingInputs = form.querySelectorAll('input[type="text"]');
-            existingInputs.forEach((input, index) => {
-                if (index < 4) {
-                    // Reset the first 4 inputs
-                    input.value = '';
-                    input.placeholder = '';
-                } else {
-                    // Remove additional inputs beyond the first 4
-                    input.remove();
-                }
-            });
-
-            // Reset input count
-            inputCount = 4;
-
-            // 選択されたジャンルに対応するサブジャンルを表示
+            // 選ばれたジャンルに対応するサブジャンルを表示
             for (const [mainGenre, subGenres] of genres) {
-                if (genreName === mainGenre) {
-                    const inputs = form.querySelectorAll('input[type="text"]');
-                    inputs.forEach((input, index) => {
-                        if (index < subGenres.length) {
-                            option.value = subGenres[index];
-                        }
+                if (selectedGenre === mainGenre) {
+                    subGenres.forEach(subGenre => {
+                        const option = document.createElement('option');
+                        option.value = subGenre;
+                        option.textContent = subGenre;
+                        subGenreSelect.appendChild(option);
                     });
                     break; // 見つかったらループを抜ける
                 }
             }
+
+            // メインジャンルが変更された際にサブジャンルを更新
+            mainGenreSelect.addEventListener('change', (event) => {
+                const genreName = event.target.value;
+                console.log("Selected genre:", genreName); // デバッグ用
+
+                // サブジャンルセレクトボックスをリセット
+                subGenreSelect.innerHTML = '<option hidden>選択してください</option>';
+
+                // 選択されたジャンルに対応するサブジャンルを表示
+                for (const [mainGenre, subGenres] of genres) {
+                    if (genreName === mainGenre) {
+                        subGenres.forEach(subGenre => {
+                            const option = document.createElement('option');
+                            option.value = subGenre;
+                            option.textContent = subGenre;
+                            subGenreSelect.appendChild(option);
+                        });
+                        break; // 見つかったらループを抜ける
+                    }
+                }
+            });
         });
-    });
-</script>
-
-<body>
-
-
-    <div class="dropdown-container">
-        <label for="genreName">大ジャンル名</label>
-        <select id="genreName">
-            <option value="ゲーム"></option>
-            <option value="音楽">音楽</option>
-            <option value="スポーツ">スポーツ</option>
-            <option value="勉強">勉強</option>
-        </select>
-    </div>
-    <div id="subGenreContainer">
-        <form onsubmit="subGenresAdd(event)">
-            <label for="subGenreName">中ジャンル名</label>
-            <input type="text" id="subGenreName1" name="subGenreName1">
-            <input type="text" id="subGenreName2" name="subGenreName2">
-            <input type="text" id="subGenreName3" name="subGenreName3">
-            <input type="text" id="subGenreName4" name="subGenreName4">
-    </div>
-    </form>
-
-</body>
-
-</html>
-
-
-
-
-
-
-
-
-
-<body>
-
-    <header>
-        <a href="admin.html">
-            <img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Logo">
-        </a>
-        <hr>
-    </header>
-
-    <div class="dropdown-container">
-        <label for="maingenreName">大ジャンル名</label>
-        <select id="maingenreName">
-            <option value="ゲーム">ゲーム</option>
-            <option value="音楽">音楽</option>
-            <option value="スポーツ">スポーツ</option>
-            <option value="勉強">勉強</option>
-        </select>
-
-
-        <div class="dropdown-container">
-        <label for="subgenreName">中ジャンル名</label>
-        <select id="subgenreName">
-            <option value="ゲーム"></option>
-            <option value="音楽">音楽</option>
-            <option value="スポーツ">スポーツ</option>
-            <option value="勉強">勉強</option>
-        </select>
-    </div>
-</body>
-
-</html>
-
-  <!--中ジャンル：
-  <label class="selectbox-3">
-    <select>
-
-      <option>サッカー</option>
-      <option>テニス</option>
-      <option>バスケットボール</option>
-      <option>野球</option>
-      <option>バレーボール</option>
-      <option>ラグビー</option>
-      <option>卓球</option>
-      <option>バトミントン</option>
-    </select>
-  </label>-->
-
-  <!--検索画面に戻る-->
-  <a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="modoru"></a>
-
-  <br><br><br><br><br>
-
-  <label>
-    <span class="textbox-1-label">グループの説明：</span>
-    <input type="text" class="textbox-1" id="textbox-2" />
-  </label>
-
-
-
-  <script src="./jquery-3.6.0.min.js"></script>
-
-
-  <input type="button" id="btn08" value="作成">
-
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-
-  <script>
-    $("#btn08").click(function () {
-      Swal.fire({
-        title: 'グループを作成しますか？',
-        html: 'グループ名：資格勉強の集い<br>グループ上限人数：５',
-        showCancelButton: true,
-        confirmButtonText: '作成',
-        type: 'question'
-      }).then((result) => {
-        if (result.value) {
-          
-          
-          window.location.href = 'message.html'
-        }
-      });
-    });
     </script>
+
+    <!--グループ詳細-->
+    <label>
+        <span class="textbox-1-label">グループの説明：</span>
+        <input type="text" class="textbox-1" id="textbox-2" name="groupDetail" />
+    </label>
+
+    <!--　グループ作成ボタン --> 
+    <button type="submit" id="submitButton">作成</button>
+    </table>
+</form>    
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        // 作成ボタンがクリックされたとき
+        $(document).ready(function() {
+            // フォームの送信処理をカスタマイズ
+            $('#sendbutton').on('submit', function(e) {
+                e.preventDefault(); // 通常の送信を防ぐ
+
+                // SweetAlert2を使って確認ダイアログを表示
+                Swal.fire({
+                    title: '編集確認',
+                    text: '編集を確定しますか？',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: '確定',
+                    cancelButtonText: 'キャンセル',
+                    
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 「送信」ボタンが押された場合、フォームを送信
+                        this.submit();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!--検索画面に戻る-->
+<a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
+
+    
+</body>
+
+</html>

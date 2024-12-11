@@ -1,10 +1,21 @@
 <?php
-  $host = 'localhost';
-  $dbname= 'JNSV01\sotsu';
-  $username= '23jn03_G04';
-  $password= '23jn03_G04';
-?>
+    require_once './helpers/messageDAO.php';
+    include "header.php";
+     
+    //セッションの開始
+  if(session_status() === PHP_SESSION_NONE){
+      session_start();
 
+  }
+  if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST['message'])) {
+        $message = $_POST['message']; // テキストボックスのメッセージを受け取る
+        $userId = $_SESSION['userInfo']; // ユーザーIDなどをセッションから取得
+        $messageDAO=new messageDAO();
+        $messageDAO->messageInsert(1,$userId->UserID,$message);
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -19,12 +30,7 @@
 </head>
     
 <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-      <div class="logo">
-        <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px" id="jecIMG"></a>
-        <input type="text" id="name" value="電子太郎 さん" placeholder="ニックネームを入力してください" readonly>
-        <a href="edit.html"><input type="button" value="編集" id="edit"></a>
-        <hr>
-      </div>
+
       
     
   </header>
@@ -87,10 +93,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 
-
-<input type="button" id="btn08" class="secret" value="">
-<input type="button" id="btn09" class="secret" value="">
 <!-- メッセージ機能 (https://naruweb.com/coding/linechat/)から引用 -->
+<form action="" method="POST" id="chatMessage">
 <div class="room">
     <ul>
       <li class="chat you" id="btn08">   <!-- 相手のメッセージにはclass「you」をつける。 -->
@@ -104,44 +108,12 @@
     </ul>
   </div>
 
-<div class="send" >
-  <input type="text" id="message" placeholder="メッセージを入力してください">
-
-
-
-
-
-
-
-
-  <!--<body>
-    <form action="">
-  </body>
-      <td>
-        <input type="text"required  class="input" value="<?= $send ?>" autofocus>
-      </td>
-
-     <body>
-          <form action="" method="post">
-              <label for="inputText"></label>
-              <input type="text" id="inputText" name="inputText" required>
-              <button type="submit">送信</button>
-          </form>
-    </body> -->
-
-
-
-
-
-
-
-
-
-    <!-- ブートストラップ -->
- 
-    <input type="button" value="Send" id="submit">
+  <div class="send">
+    <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
+    <input type="submit" value="Send" id="send">
     <a href="groupDetailAfter.html"><input type="button" value="グループ詳細" id="groupDetail"></a>
-  </div> 
+  </div>
+  </form>
   <script>
 
     $("#btn08").click(function () {

@@ -1,5 +1,7 @@
 <?php
+  require_once './helpers/DAO.php';
   require_once './helpers/GruopCreateDAO.php';
+
   require_once 'helpers/userDAO.php';
   
   
@@ -7,21 +9,31 @@
 if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
-
 //を取得
-$groupCreateDAO=new GruopDetailDAO();
+$groupCreateDAO =new GruopDetailDAO();
 $genreList = $groupCreateDAO->groupSelect();
 $genre_json = json_encode($genreList); //JSONエンコード
 
-echo '<pre>';
-print_r($genreList);
-echo '</pre>';
+//POSTメソッドでリクエストされたとき
+if($_SERVER["REQUEST_METHOD"]=="POST"){
 
+    //作成ボタンが押されたとき
+    if(isset($_POST['btn08'])){
+      //グループの内容が空ではなければ
+        if(!empty($GroupName&$MaxMember&$MainGenreName&$SubGenreName)){
 
-//ログイン中のとき
-if(!empty($_SESSION['userInfo'])){
-    //セッション変数の会員情報を取得する
-    $user = $_SESSION['userInfo'];
+        //入力されたグループの内容を受け取る
+        $GroupName=$_POST['GroupName'];
+        $MaxMember=$_POST['MaxMember'];
+        $GroupDetial=$_POST['MainGenreID'];
+        $MainGenreID=$_POST['SubGenreID'];
+        $SubGenreID=$_POST['GroupDetial'];
+
+        $GruopCreateDAO=new $GruopCreateDAO();
+        $GruopCreateDAO->insert($GroupName,$MaxMember,$MainGenreName,$SubGenreName,$GroupDetial);
+        
+        }
+    }
 }
 
 
@@ -42,14 +54,13 @@ if(!empty($_SESSION['userInfo'])){
 
 </header>
 <?php include "header.php"; ?>
-
 <body>
     <!-- グループ名 -->
-    <p>グループ名 ：<input type="text" id="groupName"></p>
+    <p>グループ名 :<input type="text" id="GroupName"></p>
 
     <!-- 参加人数 -->
-    <p>参加人数　：
-        <label class="selectbox-6">
+    <p>参加人数 :
+        <label class="selectbox-6" id=MaxMember>
             <select>
                 <option>3</option>
                 <option>4</option>
@@ -63,20 +74,18 @@ if(!empty($_SESSION['userInfo'])){
         <label for="maingenreName">大ジャンル名</label>
         <select id="maingenreName">
             <?php foreach($genreList as $genre): ?>
-            <option value="<?= $genre[0] ?>">
-                <?= htmlspecialchars($genre[0]) ?>
-            </option>
+                <option value="<?= $genre[0] ?>">  <?= htmlspecialchars($genre[0]) ?></option>
             <?php endforeach ?>
         </select>
 
-        <!-- サブジャンル選択 -->
-        <a>
-            <label for="subGenreName">中ジャンル名</label>
-            <select id="subGenreName">
-                <option hidden>選択してください</option>
-            </select>
-    </div>
-
+    <!-- サブジャンル選択 -->
+    <a>
+        <label for="subGenreName" >中ジャンル名</label>
+        <select id="subGenreName">
+            <option hidden>選択してください</option>
+        </select>
+        </div>
+    
     </a>
 
     <!-- 作成ボタン -->
@@ -85,7 +94,7 @@ if(!empty($_SESSION['userInfo'])){
     <script src="jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const mainGenreSelect = document.getElementById('maingenreName');
+            const mainGenreSelect = document.getElementById('mainGenreName');
             const subGenreSelect = document.getElementById('subGenreName');
             const genres = JSON.parse('<?php echo $genre_json; ?>');
 
@@ -152,6 +161,7 @@ if(!empty($_SESSION['userInfo'])){
 
     <br><br><br><br><br>
 
+    <!--グループ詳細-->
     <label>
         <span class="textbox-1-label">グループの説明：</span>
         <input type="text" class="textbox-1" id="textbox-2" />
