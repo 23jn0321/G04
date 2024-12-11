@@ -1,7 +1,5 @@
-html {
-  overflow: hidden;
 
-}
+
 
 ul,
 li,
@@ -18,7 +16,7 @@ li {
 
 .room {
 
-  width: 1270px;
+  width: 100000px;
   height: 600px;
   /* チャットルームの幅を指定 */
   background: #f9afcf;
@@ -32,8 +30,9 @@ li {
 
 
   position: relative;
-  left: 580px;
+  left: 1000px;
   bottom: 1160px;
+  
 }
 
 .chat {
@@ -102,49 +101,9 @@ li {
 }
 
 
-#group {
-  outline-color: black;
-}
-
-.group ul {
-  max-width: 500px;
-  padding-left: 0;
-  border: solid 1px;
-  position: fixed;
-  position: relative;
-  left: 50px;
-  position: relative;
-  bottom: 70px;
-}
-
-.group li {
-  max-width: 500px;
-  list-style: none;
-  border: solid 1px;
-  padding-top: 26px;
-  padding-bottom: 26px;
-  margin: 10px;
-  text-align: center;
 
 
-}
 
-
-#groupEdit {
-  padding: 13px 10px 12px 10px;
-  position: relative;
-  left: 401px;
-  bottom: 63px;
-}
-
-#group {
-  padding: 10px 10px 10px 10px;
-  border: solid 1px;
-  width: 300px;
-  text-align: center;
-  position: relative;
-  left: 50px;
-}
 
 #message {
   font-size: 20px;
@@ -155,12 +114,6 @@ li {
   bottom: 1150px;
 }
 
-#groupDetail {
-  padding: 5px 10px 5px 10px;
-  position: relative;
-  left: 540px;
-  bottom: 1850px;
-}
 
 .secret {
   display: none;

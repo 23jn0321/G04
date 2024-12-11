@@ -1,5 +1,8 @@
 <?php
     require_once './helpers/messageDAO.php';
+    require_once 'helpers/userDAO.php';
+    require_once 'helpers/GroupDAO.php';
+    
     include "header.php";
      
     //セッションの開始
@@ -7,12 +10,27 @@
       session_start();
 
   }
+
+  if(isset($_GET['GroupID'])){
+    //リクエストパラメータのgroupIDを取得する
+    $groupID = $_GET['GroupID'];
+}
+$loggedInUser = null;
+
+if (isset($_SESSION['userInfo']) ) {
+    //$userInfo = $_SESSION['userInfo'];
+
+    $loggedInUser = $_SESSION['userInfo'];
+}
+    $groupDAO = new GroupDAO();
+    $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
+
   if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['message'])) {
         $message = $_POST['message']; // テキストボックスのメッセージを受け取る
         $userId = $_SESSION['userInfo']; // ユーザーIDなどをセッションから取得
         $messageDAO=new messageDAO();
-        $messageDAO->messageInsert(1,$userId->UserID,$message);
+        $messageDAO->messageInsert($groupID,$userId->UserID,$message);
     }
 }
 ?>
@@ -23,32 +41,33 @@
   <header>
 <!-- CSS適応 -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="CSSUser/Header.css">
+    
+    <link rel="stylesheet" href="CSSUser/Home.css">
     <link rel="stylesheet" href="CSSUser/Message.css">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-    
-<!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
+
 
       
     
   </header>
   <div>
-  <p id="group">所属グループ一覧</p>
-  <a href="groupEdit.html"><input type="button" value="グループ編集" id="groupEdit"></a>
+  <p id="title">所属グループ一覧</p>
 </div>
-<a href="message.html">
-<p>
-  <!-- グループ表示 -->
- <div class="group">
-  <ul>
-  <li><p>資格勉強の集い(3/5)<br>最終更新日：10/13<br>ジャンル：勉強 / 資格勉強</p></li>
-  <li><p>テスト期間がち勉強(4/5)<br>最終更新日：10/8<br>ジャンル：勉強 / テスト勉強</p></li>
-  <li><p>プログラミング愛好家(3/4)<br>最終更新日：10/3<br>ジャンル：勉強 / プログラミング</p></li>
-  <li><p>テスト勉強(4/4)<br>最終更新日：9/30<br>ジャンル：勉強 / テスト勉強</p></li>
-  </ul>
- </div>
+
+
+    <!-- グループ表示 -->
+    <nav class="group">
+    <ul>
+    <?php foreach ($groupInfo as $var): ?>
+      <li>
+        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
+        </a>
+      </li>
+      <?php endforeach; ?>
+    </ul>
 </a>
 </p>
 
