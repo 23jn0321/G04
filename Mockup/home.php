@@ -38,8 +38,9 @@ if (isset($_SESSION['userInfo']) ) {
     <ul>
     <?php foreach ($groupInfo as $var): ?>
       <li>
-        <p><?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?></p>
-        
+        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>"><p><?= $var->GroupName?>
+        （<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
+        </p></a>
       </li>
       <?php endforeach; ?>
     </ul>
