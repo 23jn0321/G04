@@ -19,23 +19,27 @@ class GroupDAO
 
               //DBからグループ内容を取得くするSQL
               $sql ="SELECT 
-                      g.GroupID, 
-                      g.GroupName, 
-                      CONCAT(g.MaxMember, ' / ', 
-                      (SELECT COUNT(DISTINCT gm_sub.UserID) 
-                        FROM GroupMember gm_sub 
-                          WHERE gm_sub.GroupID = g.GroupID)) AS MemberInfo, 
-                            COALESCE(FORMAT(MAX(cm.SendTime), 'MM/dd'), '情報なし') AS LastUpdated, 
-                              CONCAT(mg.MainGenreName, ' / ', sg.SubGenreName) AS Genre 
-                        FROM GroupMember gm
-                          INNER JOIN ChatGroup g ON gm.GroupID = g.GroupID
-                          INNER JOIN MainGenre mg ON g.MainGenreID = mg.MainGenreID 
-                          INNER JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
-                          LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID 
-                            WHERE gm.UserID = :UserID AND g.GroupDeleteFlag = 0 
-                              GROUP BY 
-                                  g.GroupID, g.GroupName, g.MaxMember, mg.MainGenreName, sg.SubGenreName
-                              ORDER BY g.GroupName";
+                        g.GroupID, 
+                        g.GroupName, 
+                        CONCAT(
+                            (SELECT COUNT(DISTINCT gm_sub.UserID) 
+                            FROM GroupMember gm_sub 
+                            WHERE gm_sub.GroupID = g.GroupID), 
+                            ' / ', 
+                            g.MaxMember
+                        ) AS MemberInfo, 
+                        COALESCE(FORMAT(MAX(cm.SendTime), 'MM/dd'), '情報なし') AS LastUpdated, 
+                        CONCAT(mg.MainGenreName, ' / ', sg.SubGenreName) AS Genre 
+                    FROM GroupMember gm
+                        INNER JOIN ChatGroup g ON gm.GroupID = g.GroupID
+                        INNER JOIN MainGenre mg ON g.MainGenreID = mg.MainGenreID 
+                        INNER JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
+                        LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID 
+                    WHERE gm.UserID = :UserID AND g.GroupDeleteFlag = 0 
+                    GROUP BY 
+                        g.GroupID, g.GroupName, g.MaxMember, mg.MainGenreName, sg.SubGenreName
+                    ORDER BY g.GroupName
+";
 
               //
               $stmt = $dbh->prepare($sql);

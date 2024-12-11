@@ -32,15 +32,15 @@ if (isset($_SESSION['userInfo']) ) {
   <p id="title">所属グループ一覧</p>
 </div>
 
-  <p>
+
     <!-- グループ表示 -->
     <nav class="group">
     <ul>
     <?php foreach ($groupInfo as $var): ?>
       <li>
-        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>"><p><?= $var->GroupName?>
-        （<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
-        </p></a>
+        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
+        </a>
       </li>
       <?php endforeach; ?>
     </ul>
