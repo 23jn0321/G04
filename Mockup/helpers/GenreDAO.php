@@ -46,10 +46,10 @@ class subGenreDAO{
 
         while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
             $subGenre=new subGenre();
-            $subGenre->subGenreID=$row['SubGeneID'];
-            $subGenre->mainGenreID=$row['MainGenre'];
+            $subGenre->subGenreID=$row['SubGenreID'];
+            $subGenre->mainGenreID=$row['MainGenreID'];
             $subGenre->subGenreName=$row['SubGenreName'];
-            $subGenre->deleteFlag=$row['DeleteFlag'];
+            $subGenre->deleteFlag=$row['GenreDeleteFlag'];
             $subGenres[]=$subGenre;
         }
         return $subGenres;

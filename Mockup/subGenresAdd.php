@@ -4,12 +4,30 @@ require_once 'helpers/GenreDAO.php';
 $genreDAO = new GenreDAO();
 $genres = $genreDAO->get_Genre();
 
-// メインジャンル情報を出力
+$subGenreDAO=new subGenreDAO();
+$subGenres=$subGenreDAO->get_subGenre();
+
+$genreWithSubGenres = [];
+
 foreach ($genres as $genre) {
-    $genreA=array();
-    $subGenre=array();
-    echo "メインジャンルID: " . $genre->mainGenreID . "<br>";
-    echo "メインジャンル名: " . $genre->mainGenreName . "<br><br>";
+    $subGenreNames = [];
+    
+    foreach ($subGenres as $subGenre) {
+        if ($subGenre->mainGenreID == $genre->mainGenreID && !$subGenre->deleteFlag) {
+            $subGenreNames[] = $subGenre->subGenreName;
+        }
+    }
+    
+    $genreWithSubGenres[] = [
+        'mainGenreName' => $genre->mainGenreName,
+        'subGenreNames' => $subGenreNames
+    ];
+}
+
+
+foreach ($genreWithSubGenres as $item) {
+    echo "メインジャンル名: " . $item['mainGenreName'] . "<br>";
+    echo "サブジャンル: " . implode(", ", $item['subGenreNames']) . "<br><br>";
 }
 ?>
 <!DOCTYPE html>
