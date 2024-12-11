@@ -1,58 +1,161 @@
 <!DOCTYPE html>
-<html>
-<meta charset="utf-8">
-<header>
-  <!-- CSS適応 -->
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>ユーザーごとのチャット表示</title>
   <link rel="stylesheet" href="CSSUser/Header.css">
-  <link rel="stylesheet" href="CSSUser/Home.css">
+  <style>
+    /* 全体のレイアウト調整 */
+    body {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      margin: 0;
+    }
 
-  <a href="admin.html"><img src="jecMatching/JecMatchingAdmin.jpg" width="450px"></a>
-  <hr>
-</header>
+    /* 左側のリストエリア */
+    ul {
+      list-style-type: none;
+      padding: 0;
+      width: 30%;
+    }
 
+    ul li {
+      cursor: pointer;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 5px;
+      background-color: #f9f9f9;
+    }
 
-<ul>
-  <li onclick="">
-    <p>23jn0000 電子 花子<br>性的な嫌がらせ/出会い目的</p>
-  </li>
-  <li>
-    <p>23jn0000 電子 太郎<br>不適切な名前</p>
-  </li>
-  <li>
-    <p>23jn0000 電子 次郎<br>不適切な言葉使い</p>
-  </li>
-  <li>
-    <p>23jn0000 電子 やす子<br>その他/違反行為</p>
-  </li>
-  <li>
-    <p>23jn0000 電子 三郎<br>不適切な言葉使い</p>
-  </li>
-  <li>
-    <p>23jn0000 電子 由衣<br>性的な嫌がらせ/出会い目的</p>
-  </li>
+    /* 右側のグループチャットエリア */
+    .box {
+      width: 60%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
 
-</ul><br>
-<br>
-<br>
-<br>
-<br>
-<br>
+    .group-chat {
+      margin-bottom: 15px;
+    }
 
+    .group-name {
+      font-weight: bold;
+    }
 
-<div class="box">
+    /* グループチャットを右に寄せる */
+    #userChats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="admin.html"><img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Matching"></a>
+    <hr>
+  </header>
+
   <ul>
-    <p>こんにちは</p>
+    <li onclick="showUserChats(0)">
+      <p>23jn0000 電子 花子</p>
+    </li>
+    <li onclick="showUserChats(1)">
+      <p>23jn0000 電子 太郎</p>
+    </li>
+    <li onclick="showUserChats(2)">
+      <p>23jn0000 電子 次郎</p>
+    </li>
+    <li onclick="showUserChats(3)">
+      <p>23jn0000 電子 やす子</p>
+    </li>
+    <li onclick="showUserChats(4)">
+      <p>23jn0000 電子 三郎</p>
+    </li>
+    <li onclick="showUserChats(5)">
+      <p>23jn0000 電子 由衣</p>
+    </li>
   </ul>
-  <ul>
-    <p>おはようございます</p>
-  </ul>
-  <ul>
-    <p>おやすみなさい</p>
-  </ul>
 
+  <div class="box">
+    <!-- ユーザーごとのチャット表示部分 -->
+    <div id="userChats"></div>
+  </div>
 
-</div>
+  <script>
+    // ユーザーごとのグループチャット内容を2次元配列に格納
+    const userChats = [
+      // 花子
+      [
+        { group: 'ゲーム', chat: ['こんにちは、ゲーム好きです！', '今日はRPGの話をしよう！'] },
+        { group: '音楽', chat: ['音楽の話しようよ！', 'ボカロ曲最近聴いてる'] },
+        { group: 'スポーツ', chat: ['スポーツも好きです！', 'サッカー観戦が楽しい'] }
+      ],
+      // 太郎
+      [
+        { group: '勉強', chat: ['プログラミングの話しよう！', '新しいJavaScriptのフレームワーク使ってみた'] },
+        { group: 'ゲーム', chat: ['RPGが好き！', '新しいゲームが気になる'] }
+      ],
+      // 次郎
+      [
+        { group: '音楽', chat: ['ロック好きだよ！', '最近のアルバム良かった！'] },
+        { group: '勉強', chat: ['数学の勉強しよう！', '英語も練習中です'] }
+      ],
+      // やす子
+      [
+        { group: 'スポーツ', chat: ['水泳が得意です！', 'バスケ観戦楽しみ'] },
+        { group: '勉強', chat: ['Linux勉強中', '資格勉強頑張ってます'] }
+      ],
+      // 三郎
+      [
+        { group: '音楽', chat: ['ジャズが好き！', 'ロックライブ行きたい'] },
+        { group: 'スポーツ', chat: ['サッカー観戦が楽しみ'] }
+      ],
+      // 由衣
+      [
+        { group: 'ゲーム', chat: ['MMORPGが好き', '最近はシューティングもやってる'] },
+        { group: '音楽', chat: ['ボカロ最高です！', '最近はロックも聴いてる'] }
+      ]
+    ];
 
+    // ユーザー名クリック時にそのユーザーのグループチャットを表示する
+    function showUserChats(userIndex) {
+      const userChatContainer = document.getElementById('userChats');
+      userChatContainer.innerHTML = ''; // 既存の内容をクリア
 
+      // 選択されたユーザーのチャットを表示
+      const selectedUserChats = userChats[userIndex];
+
+      selectedUserChats.forEach(userChat => {
+        const groupName = userChat.group;
+        const chats = userChat.chat;
+
+        // グループ名表示
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'group-chat';
+        const groupTitle = document.createElement('p');
+        groupTitle.className = 'group-name';
+        groupTitle.textContent = `${groupName} グループ`;
+        groupDiv.appendChild(groupTitle);
+
+        // チャットメッセージ表示
+        chats.forEach(chat => {
+          const chatDiv = document.createElement('p');
+          chatDiv.textContent = chat;
+          groupDiv.appendChild(chatDiv);
+        });
+
+        // グループチャットをコンテナに追加
+        userChatContainer.appendChild(groupDiv);
+      });
+    }
+  </script>
+
+</body>
 
 </html>
