@@ -1,31 +1,19 @@
 <?php 
-    require_once './helpers/studentDAO.php';
-    require_once './helpers/userDAO.php';
+ require_once 'helpers/userDAO.php';
+    require_once 'helpers/GroupDAO.php';
+   
+    include "header.php"; 
+  
+    $loggedInUser = null;
 
+if (isset($_SESSION['userInfo']) ) {
+    //$userInfo = $_SESSION['userInfo'];
 
-    if(!empty($_SESSION['userInfo'])){
-        //セッション変数の会員情報を取得する
-        $user = $_SESSION['userInfo'];
-        $userDAO = new UserDAO();
-        $joinUserGroup = $userDAO->imGroup($user->UserID);
-    }
-
+    $loggedInUser = $_SESSION['userInfo'];
+}
+    $groupDAO = new NewGroupDAO();
+    $groupInfo = $groupDAO->getNewGroup();
     
-    //DBから商品グループを取得する
-
-    $goodsDAO = new GoodsDAO();
-    
-
-    if(isset($_GET['groupcode'])){
-        //選択されたグループの商品を取得する
-        $groupcode = $_GET['groupcode'];
-        $goods_list = $goodsDAO->get_goods_by_groupcode($groupcode);
-    }
-    else{
-        //リーダーかどうか取得する
-        $goods_list = $goodsDAO->get_recommend_goods();
-    }  
-
 ?>
 
 <!DOCTYPE html>
@@ -36,35 +24,22 @@
 <!-- CSS適応 -->
         <link rel="stylesheet" href="CSSUser/Header.css">
         <link rel="stylesheet" href="CSSUser/GenreSelect.css">
-        <?php include "header.php"; ?>
  
 
   <div>
-    <p id="group">所属グループ一覧</p>
-    <p><a href="groupEdit.html"><input type="button" value="グループ編集" id="groupEdit"></a></p>
+    <p id="group">最新のグループ</p>
   </div>
 <!-- 所属グループ -->
-<?php foreach($joinUserGroup as $userGroup) : ?>
-        <table align="left">
-            <tr>
-                <td>
-                    <a href="groupDetailAfter.html?goodscode=<?=$goods->goodscode?>">
-                    <?= $userGroup->groupName ?>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= number_format($goods->price) ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= $goods->recommend? "おすすめ" : " " ?>
-                </td>
-            </tr>
-    </table>
-    <?php endforeach; ?>
+<nav class="group">
+    <ul>
+    <?php foreach ($groupInfo as $var): ?>
+      <li>
+        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
+        </a>
+      </li>
+      <?php endforeach; ?>
+    </ul>
 <!-- グループ作成ボタン -->
     <a href="groupCreate.php"><input type="submit" value="グループ作成" id="groupCreate"></a>  
 
