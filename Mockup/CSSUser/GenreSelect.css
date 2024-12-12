@@ -1,18 +1,27 @@
 
-.group {
+#title{
+    padding: 10px 10px 10px 10px;
+    border: solid 1px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+    left: 50px;
+}
+
+.newGroup {
 width: 100%;
 margin: 0px auto 0 auto; 
 overflow-y: auto; 
 
 }
 
-.group li:hover {
+.newGroup li:hover {
     background-color: #effff0;
     color: #01080e;
     outline: 1px solid #2589d0;
   }
 
-.group ul {
+.newGroup ul {
 overflow-y: auto;
 max-width: 550px;
 max-height: 680px;
@@ -27,7 +36,7 @@ border: solid 2px;
 position: relative;
 }
 
-.group ul li {
+.newGroup ul li {
 text-align: center;
 list-style: none;
 border:solid 1px;
@@ -39,7 +48,7 @@ padding-bottom: 10px;
 text-align: center;
 }
 
-.group a {
+.newGroup a {
 font-size: 18px;
 font-weight: bold;
 display: block;
@@ -49,7 +58,7 @@ text-decoration: none;
 position: relative;
 }
 
-.group a::after {
+.newGroup a::after {
 position: absolute;
 left: 0;
 bottom: 0;
@@ -66,14 +75,6 @@ transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     padding: 13px 10px 12px 10px;
     position: relative;
     left: 121px;
-}
-#group{
-    padding: 10px 10px 10px 10px;
-    border: solid 1px;
-    width: 300px;
-    text-align: center;
-    position: relative;
-    left: 50px;
 }
 
 div p{

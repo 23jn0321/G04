@@ -27,14 +27,14 @@ if (isset($_SESSION['userInfo']) ) {
  
 
   <div>
-    <p id="group">最新のグループ</p>
+    <p id="title">最新のグループ</p>
   </div>
 <!-- 所属グループ -->
-<nav class="group">
+<nav class="newGroup">
     <ul>
     <?php foreach ($groupInfo as $var): ?>
       <li>
-        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+        <a href="groupDetailBefor.html?GroupID=<?= urlencode($var->GroupID) ?>">
           <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
         </a>
       </li>

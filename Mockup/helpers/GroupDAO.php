@@ -67,7 +67,7 @@ class GroupDAO
               $dbh = DAO::get_db_connect(); 
 
               //DBからグループ内容を取得くするSQL
-              $sql ="SELECT TOP 5
+              $sql ="SELECT TOP 8
                     g.GroupID, 
                     g.GroupName, 
                     CONCAT(
