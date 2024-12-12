@@ -48,12 +48,7 @@ foreach ($genreWithSubGenres as $item) {
     document.addEventListener('DOMContentLoaded', () => {
         const mainGenreSelect = document.getElementById('genreName');
         const subGenreContainer = document.getElementById('subGenreContainer');
-        const genres = [
-            ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
-            ['音楽', ['クラシック', 'ロック', 'ジャズ', 'ボカロ']],
-            ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
-            ['勉強', ['数学', '英語', 'プログラミング', 'Linux', '資格勉強']]
-        ];
+        const genres = [];
 
         // 初期状態でのサブジャンル表示処理
         const genreName = mainGenreSelect.value;
