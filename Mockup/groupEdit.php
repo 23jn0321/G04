@@ -1,10 +1,15 @@
 <?php 
- require_once 'helpers/userDAO.php';
-    require_once 'helpers/GroupDAO.php';
+require_once 'helpers/userDAO.php';
+require_once 'helpers/GroupDAO.php';
    
     include "header.php"; 
   
     $loggedInUser = null;
+
+    if(isset($_GET['GroupID'])){
+        //リクエストパラメータのgroupIDを取得する
+        $groupID = $_GET['GroupID'];
+    }
 
 if (isset($_SESSION['userInfo']) ) {
     //$userInfo = $_SESSION['userInfo'];
@@ -14,6 +19,8 @@ if (isset($_SESSION['userInfo']) ) {
     $groupDAO = new GroupDAO();
    
     $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
+
+    $my_group = $groupDAO->get_My_Group($groupID);
     
     
 ?>
@@ -47,47 +54,19 @@ if (isset($_SESSION['userInfo']) ) {
     </ul>
 </a>
 <!-- グループ編集 -->
-<a href="message.html"></a>
-<p id=gn>グループ名 ：</p><input type="text" id="groupName">
-<p id=sanka>参加人数　：</p>
+ <div class="groupEdit">
+    <p id=gn>グループ名：<input type="text" id="groupName"value="<?= $my_group['GroupName']; ?>"></p><br>
+    <p id=sanka>参加人数：<input type="text" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p><br>
+    <p id=mainGenre>大ジャンル<input type="text" id="sanka" value="<?= $my_group['MainGenreName']; ?>"readonly></p>
+    <p id=subGenre>中ジャンル：<input type="text" id="sanka" value="<?= $my_group['SubGenreName']; ?>"readonly></p>
 
-<label class="selectbox-6">
-  <select>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-  </select>
-</label>
 
-<p id=j1></pid>大ジャンル：</p>
-<label class="selectbox-3">
-  <select>
 
-      <option>ゲーム</option>
-      <option>音楽</option>
-      <option>スポーツ</option>
-      <option>勉強</option>
-  </select>
-</label>
+    <p id="SETUMEI">グループの説明：</p>
+    <input type="text" class="textbox-1" id="textbox-2" value="<?= $my_group['GroupDetail']; ?>"/>
+    
 
-<p id=j2></pid>中ジャンル：</p>
-  <label class="selectbox-3">
-      <select>
-
-      <option>サッカー</option>
-      <option>テニス</option>
-      <option>バスケットボール</option>
-      <option>野球</option>
-      <option>バレーボール</option>
-      <option>ラグビー</option>
-      <option>卓球</option>
-      <option>バトミントン</option>
-  </select>
-</label>
-<label>
-    <span class="textbox-1-label">グループの説明：</span>
-    <input type="text" class="textbox-1" id="textbox-2" />
-</label>
+</div>
 
 
 

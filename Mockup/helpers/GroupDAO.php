@@ -1,5 +1,5 @@
-<?php 
-require_once 'DAO.php'; 
+<?php
+require_once 'DAO.php';
 class ChatGroup
 {
   public int $GroupID;
@@ -12,14 +12,14 @@ class ChatGroup
 
 class GroupDAO
 {
-          //DBからグループ内容(グループID、グループ名、グループ人数、最終更新日、大ジャンル、中ジャンル、学籍番号)を取得するメソッド
-          public function getGroup($UserID)
-             {
-              //DBに接続
-              $dbh = DAO::get_db_connect(); 
-
+  //DBからグループ内容(グループID、グループ名、グループ人数、最終更新日、大ジャンル、中ジャンル、学籍番号)を取得するメソッド
+  public function getGroup($UserID)
+  {
+    //DBに接続
+    $dbh = DAO::get_db_connect();
+		
               //DBからグループ内容を取得くするSQL
-              $sql ="SELECT					
+              $sql = "SELECT					
                       g.GroupID, 
                       g.GroupName, 
                       g.GroupAdminID, -- GroupAdminIDを追加
@@ -40,34 +40,68 @@ class GroupDAO
                   WHERE gm.UserID = :UserID AND g.GroupDeleteFlag = 0 
                   GROUP BY 
                       g.GroupID, g.GroupName, g.GroupAdminID, g.MaxMember, mg.MainGenreName, sg.SubGenreName -- GroupAdminIDを追加
-                  ORDER BY g.GroupName";
+                  ORDER BY 
+                      CASE 
+                          WHEN MAX(cm.SendTime) IS NULL THEN 0 
+                          ELSE 1
+                      END ASC,
+                      MAX(cm.SendTime) DESC";
 
-              //
-              $stmt = $dbh->prepare($sql);
+    //
+    $stmt = $dbh->prepare($sql);
 
-              //
-              $stmt->bindValue(':UserID', $UserID, PDO::PARAM_INT);
+    //
+    $stmt->bindValue(':UserID', $UserID, PDO::PARAM_INT);
 
-              //実行
-              $stmt->execute();
-              
-              $data = [];
-              while($row = $stmt->fetchObject('ChatGroup')){
-                $data[] = $row;
-              }
-              return $data;
-             }
-            }
-            class NewGroupDAO
+    //実行
+    $stmt->execute();
+
+    $data = [];
+    while ($row = $stmt->fetchObject('ChatGroup')) {
+      $data[] = $row;
+    }
+    return $data;
+  }
+
+  public function get_My_Group(int $GroupID)
+  {
+    $dbh = DAO::get_db_connect();
+
+    $sql = "SELECT 
+                    g.GroupName, 
+                    g.MaxMember, 
+                    g.GroupDetail, 
+                    mg.MainGenreName, 
+                    sg.SubGenreName
+                FROM 
+                    ChatGroup g
+                INNER JOIN 
+                    MainGenre mg ON g.MainGenreID = mg.MainGenreID
+                INNER JOIN 
+                    SubGenre sg ON g.SubGenreID = sg.SubGenreID
+                WHERE 
+                    g.GroupID = :groupID";
+
+    $stmt = $dbh->prepare($sql);
+
+    $stmt->bindValue(':groupID', $GroupID, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
+}
+class NewGroupDAO
 {
- 
-             public function getNewGroup()
-             {
-              //DBに接続
-              $dbh = DAO::get_db_connect(); 
 
-              //DBからグループ内容を取得くするSQL
-              $sql ="SELECT TOP 8
+  public function getNewGroup()
+  {
+    //DBに接続
+    $dbh = DAO::get_db_connect();
+
+    //DBからグループ内容を取得くするSQL
+    $sql = "SELECT TOP 8
                     g.GroupID, 
                     g.GroupName, 
                     CONCAT(
@@ -90,16 +124,15 @@ class GroupDAO
                 ORDER BY g.GroupID DESC;
                 ";
 
-              //
-              $stmt = $dbh->prepare($sql);
-              //実行
-              $stmt->execute();
-              
-              $data = [];
-              while($row = $stmt->fetchObject('ChatGroup')){
-                $data[] = $row;
-              }
-              return $data;
-             }
+    //
+    $stmt = $dbh->prepare($sql);
+    //実行
+    $stmt->execute();
+
+    $data = [];
+    while ($row = $stmt->fetchObject('ChatGroup')) {
+      $data[] = $row;
+    }
+    return $data;
+  }
 }
-?>
