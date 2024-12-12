@@ -7,9 +7,12 @@
     $loggedInUser = null;
 
 if (isset($_SESSION['userInfo']) ) {
-    //$userInfo = $_SESSION['userInfo'];
+    $userInfo = $_SESSION['userInfo'];
 
     $loggedInUser = $_SESSION['userInfo'];
+}else{
+  header("Location: login.php");
+  exit;
 }
     $groupDAO = new GroupDAO();
    
@@ -25,7 +28,6 @@ if (isset($_SESSION['userInfo']) ) {
 <meta charset="utf-8">
 <header>
   <!-- CSS適応 -->
-  <link rel="stylesheet" href="CSSUser/Header.css">
   <link rel="stylesheet" href="CSSUser/Home.css">
 </header>
 
@@ -45,17 +47,16 @@ if (isset($_SESSION['userInfo']) ) {
         </a>
        
         <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
-         <input type="button" onclick="location.href='groupEdit.html'" id="groupEditR" value="グループ編集">
+         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集">
           <?php endif; ?>
       </li>
       <?php endforeach; ?>
     </ul>
 </a>
-</p>
 
 <!-- お知らせボックス -->
 
 <!-- マッチングボタン　ジャンル選択に遷移(genreSelect.html) -->
-<a href="groupCreate.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
+<a href="genreSelect.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
 
 </html>
