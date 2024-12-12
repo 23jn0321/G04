@@ -17,9 +17,9 @@ class GroupDAO
   {
     //DBに接続
     $dbh = DAO::get_db_connect();
-
-    //DBからグループ内容を取得くするSQL
-    $sql = "SELECT					
+		
+              //DBからグループ内容を取得くするSQL
+              $sql = "SELECT					
                       g.GroupID, 
                       g.GroupName, 
                       g.GroupAdminID, -- GroupAdminIDを追加
@@ -40,7 +40,12 @@ class GroupDAO
                   WHERE gm.UserID = :UserID AND g.GroupDeleteFlag = 0 
                   GROUP BY 
                       g.GroupID, g.GroupName, g.GroupAdminID, g.MaxMember, mg.MainGenreName, sg.SubGenreName -- GroupAdminIDを追加
-                  ORDER BY g.GroupName";
+                  ORDER BY 
+                      CASE 
+                          WHEN MAX(cm.SendTime) IS NULL THEN 0 
+                          ELSE 1
+                      END ASC,
+                      MAX(cm.SendTime) DESC";
 
     //
     $stmt = $dbh->prepare($sql);
