@@ -12,7 +12,9 @@ if (isset($_SESSION['userInfo']) ) {
     $loggedInUser = $_SESSION['userInfo'];
 }
     $groupDAO = new GroupDAO();
+   
     $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
+    
     
 ?>
 
@@ -41,6 +43,10 @@ if (isset($_SESSION['userInfo']) ) {
         <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
           <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
         </a>
+       
+        <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
+         <input type="button" onclick="location.href='groupEdit.html'" id="groupEditR" value="グループ編集">
+          <?php endif; ?>
       </li>
       <?php endforeach; ?>
     </ul>
@@ -48,9 +54,6 @@ if (isset($_SESSION['userInfo']) ) {
 </p>
 
 <!-- お知らせボックス -->
-<div class="box">
-  <p>お知らせ表示</p>
-</div>
 
 <!-- マッチングボタン　ジャンル選択に遷移(genreSelect.html) -->
 <a href="groupCreate.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
