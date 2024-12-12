@@ -6,8 +6,8 @@ $genres = $genreDAO->get_Genre();
 
 // メインジャンル情報を出力
 foreach ($genres as $genre) {
-    echo "メインジャンルID: " . $genre->mainGenreID . "<br>";
-    echo "メインジャンル名: " . $genre->mainGenreName . "<br><br>";
+  echo "メインジャンルID: " . $genre->mainGenreID . "<br>";
+  echo "メインジャンル名: " . $genre->mainGenreName . "<br><br>";
 }
 ?>
 <!DOCTYPE html>
@@ -18,6 +18,8 @@ foreach ($genres as $genre) {
   <title>ユーザーごとのチャット表示</title>
   <link rel="stylesheet" href="CSSUser/Header.css">
   <link rel="stylesheet" href="CSSAdmin/reportView.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -34,38 +36,37 @@ foreach ($genres as $genre) {
       <li onclick="showUserChats(0)">
         <div class="user-info">
           <p>23jn0000 電子 花子<br>性的な嫌がらせ/出会い目的</p>
-          <button class="freeze-btn">凍結</button>
+          <button class="freeze-btn" data-user-name="花子" onclick="freezeUser(this)">凍結</button>
         </div>
       </li>
       <li onclick="showUserChats(1)">
         <div class="user-info">
           <p>23jn0000 電子 太郎<br>不適切な名前</p>
-          <button class="freeze-btn">凍結</button>
+          <button class="freeze-btn" data-user-name="太郎" onclick="freezeUser(this)">凍結</button>
         </div>
       </li>
       <li onclick="showUserChats(2)">
         <div class="user-info">
           <p>23jn0000 電子 次郎<br>不適切な言葉使い</p>
-          <button class="freeze-btn">凍結</button>
+          <button class="freeze-btn" data-user-name="次郎" onclick="freezeUser(this)">凍結</button>
         </div>
       </li>
       <li onclick="showUserChats(3)">
         <div class="user-info">
           <p>23jn0000 電子 やす子<br>その他/違反行為</p>
-          <button class="freeze-btn">凍結</button>
+          <button class="freeze-btn" data-user-name="やす子" onclick="freezeUser(this)">凍結</button>
         </div>
       </li>
       <li onclick="showUserChats(4)">
         <div class="user-info">
           <p>23jn0000 電子 三郎<br>不適切な言葉使い</p>
-          <button class="freeze-btn">凍結</button>
+          <button class="freeze-btn" data-user-name="三郎" onclick="freezeUser(this)">凍結</button>
         </div>
       </li>
       <li onclick="showUserChats(5)">
         <div class="user-info">
           <p>23jn0000 電子 由衣<br>性的な嫌がらせ/出会い目的</p>
-          <button class="freeze-btn">凍結</button>
-        </div>
+          <button class="freeze-btn" data-user-name="由衣" onclick="freezeUser(this)">凍結</button>
       </li>
     </ul>
 
@@ -151,6 +152,33 @@ foreach ($genres as $genre) {
     window.onload = function () {
       showUserChats(0);
     };
+    function freezeUser(button) {
+      const userName = button.getAttribute("data-user-name"); // ボタンのdata-user-name属性からユーザー名を取得
+
+      Swal.fire({
+        html: `<h1>ユーザー「${userName}」を凍結しますか？</h1>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'キャンセル',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // OKボタンが押された時
+          Swal.fire("ユーザーを凍結しました", {
+            icon: "success",
+          });
+          // 実際に凍結処理をここで行うことができます（例: サーバーへAPIリクエスト）
+          // 例: freezeUserInDatabase(userName);
+        } else {
+          // キャンセルボタンが押された時
+          Swal.fire("凍結がキャンセルされました。", {
+            icon: "info",
+          });
+        }
+      });
+    }
+
   </script>
 
 </body>
