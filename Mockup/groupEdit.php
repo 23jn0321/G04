@@ -31,6 +31,7 @@ if (isset($_SESSION['userInfo']) ) {
 <!-- CSS適応 -->
     
     <link rel="stylesheet" href="CSSUser/home.css">
+
   </header>
   <div>
   <p id="group">所属グループ一覧</p>
@@ -55,15 +56,15 @@ if (isset($_SESSION['userInfo']) ) {
 </a>
 <!-- グループ編集 -->
  <div class="groupEdit">
-    <p id=gn>グループ名：<input type="text" id="groupName"value="<?= $my_group['GroupName']; ?>"></p><br>
-    <p id=sanka>参加人数：<input type="text" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p><br>
-    <p id=mainGenre>大ジャンル<input type="text" id="sanka" value="<?= $my_group['MainGenreName']; ?>"readonly></p>
-    <p id=subGenre>中ジャンル：<input type="text" id="sanka" value="<?= $my_group['SubGenreName']; ?>"readonly></p>
+    <p>グループ名：<input type="text" id="groupName"value="<?= $my_group['GroupName']; ?>"></p><br>
+    <p>参加人数：<input type="text" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p><br>
+    <p>大ジャンル<input type="text" id="mainGenre" value="<?= $my_group['MainGenreName']; ?>"readonly></p><br>
+    <p>中ジャンル：<input type="text" id="subGenre" value="<?= $my_group['SubGenreName']; ?>"readonly></p><br>
 
 
 
-    <p id="SETUMEI">グループの説明：</p>
-    <input type="text" class="textbox-1" id="textbox-2" value="<?= $my_group['GroupDetail']; ?>"/>
+    <p id="SETUMEI">グループの説明：</p><br>
+    <input type="text" id="textbox-2" value="<?= $my_group['GroupDetail']; ?>"/>
     
 
 </div>

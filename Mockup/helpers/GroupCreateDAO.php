@@ -69,16 +69,7 @@ class GruopDetailDAO
 
             //実行
             $stmt3->execute();
-
-             // 挿入したグループのGroupIDを取得
-             $groupID = $dbh->lastInsertId();
-
-             // GroupMemberテーブルに作成者を追加
-             $sql4 = "INSERT INTO GroupMember(UserID, GroupID) VALUES (:UserID, :GroupID)";
-             $stmt4 = $dbh->prepare($sql4);
-             $stmt4->bindValue(':UserID', $userID, PDO::PARAM_INT);
-             $stmt4->bindValue(':GroupID', $groupID, PDO::PARAM_INT);
-             $stmt4->execute();
+            
     }
 
     //大ジャンルと中ジャンルの同期
