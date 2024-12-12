@@ -18,7 +18,7 @@
 $loggedInUser = null;
 
 if (isset($_SESSION['userInfo']) ) {
-    //$userInfo = $_SESSION['userInfo'];
+    $userInfo = $_SESSION['userInfo'];
 
     $loggedInUser = $_SESSION['userInfo'];
 }
