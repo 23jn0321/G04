@@ -45,9 +45,6 @@ foreach ($genres as $genre) {
         const subGenreContainer = document.getElementById('subGenreContainer');
         const genres = <?php echo json_encode($genreWithSubGenres); ?>;
         console.log(genres);
-
-
-
         // 初期状態でのサブジャンル表示処理
         const genreName = mainGenreSelect.value;
         updateSubGenreFields(genreName);

@@ -1,11 +1,11 @@
 
 #title{
-    padding: 10px 10px 10px 10px;
-    border: solid 1px;
-    width: 300px;
-    text-align: center;
+    outline-color: black;
+    list-style: none;
+    border:solid 1px;
+    padding: 13px 220px 12px 203px;
     position: relative;
-    left: 50px;
+    left: 40p
 }
 
 .newGroup {
