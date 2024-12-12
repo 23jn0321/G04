@@ -23,11 +23,6 @@ foreach ($genres as $genre) {
         'subGenreNames' => $subGenreNames
     ];
 }
-echo '<pre>';
-echo json_encode($genreWithSubGenres, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-echo '</pre>';
-
-
 
 ?>
 <!DOCTYPE html>
