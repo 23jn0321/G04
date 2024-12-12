@@ -82,23 +82,23 @@ if (isset($_SESSION['userInfo']) ) {
     </buttom>
     <nav class="drawer__nav">
       <div class="drawer__nav__inner">
-        <ul class="drawer__nav__menu">
-          <li class="drawer__nav__item">
+        <th class="drawer__nav__menu">
+          <tr class="drawer__nav__item">
             <a class="drawer__nav__link" href="#"><nobr><p>所属グループ一覧　　<button onclick="location.href='groupEdit.html'">グループ編集</button></p></nobr></a>
-          </li>
-          <li class="drawer__nav__item">
+          </tr>
+          <tr class="drawer__nav__item">
             <a class="drawer__nav__link" href="#"><ul><li><p>テスト期間がち勉強(4/5)<br>最終更新日：10/8<br>ジャンル：勉強 / テスト勉強</p></li></ul></a>
-          </li>
-          <li class="drawer__nav__item">
+          </tr>
+          <tr class="drawer__nav__item">
             <a class="drawer__nav__link" href="#"><ul><li><p>プログラミング愛好家(3/4)<br>最終更新日：10/3<br>ジャンル：勉強 / プログラミング</p></li></ul></a>
-          </li>
-          <li class="drawer__nav__item">
+          </tr>
+          <tr class="drawer__nav__item">
             <a class="drawer__nav__link" href="#"><ul><li><p>テスト勉強(4/4)<br>最終更新日：9/30<br>ジャンル：勉強 / テスト勉強</p></li></ul></a>
-          </li>
-          <li class="drawer__nav__item">
+          </tr>
+          <tr class="drawer__nav__item">
             <a class="drawer__nav__link" href="#"><ul><li><p>資格勉強の集い(3/5)<br>最終更新日：10/13<br>ジャンル：勉強 / 資格勉強</p></li></ul></a>
-          </li>
-        </ul>
+          </tr>
+      </th>
       </div>
     </nav>
   </div>
@@ -115,22 +115,22 @@ if (isset($_SESSION['userInfo']) ) {
 <!-- メッセージ機能 (https://naruweb.com/coding/linechat/)から引用 -->
 <form action="" method="POST" id="chatMessage">
 <div class="room">
-    <ul>
-      <li class="chat you" id="btn08">   <!-- 相手のメッセージにはclass「you」をつける。 -->
+    <ulH>
+      <liH class="chat you" id="btn08">   <!-- 相手のメッセージにはclass「you」をつける。 -->
         <label for="btn08"class="mes" id="btn08">相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ</label>
         <div class="status">電子花子<br>17:00</div>
-      </li>
-      <li class="chat me" id="btn09">    <!-- 相手のメッセージにはclass「me」をつける。 -->
+      </liH>
+      <liH class="chat me" id="btn09">    <!-- 相手のメッセージにはclass「me」をつける。 -->
         <label for="btn09" class="mes" >自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ</label>
         <div class="status">電子太郎<br>17:05</div>
-      </li>
-    </ul>
+      </liH>
+    </ulH>
   </div>
 
   <div class="send">
     <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
     <input type="submit" value="Send" id="send">
-    <a href="groupDetailAfter.html"><input type="button" value="グループ詳細" id="groupDetail"></a>
+
   </div>
   </form>
   <script>
