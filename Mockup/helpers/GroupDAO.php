@@ -91,6 +91,18 @@ class GroupDAO
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
+
+  public function groupInfoUpdate(int $groupID,string $newGroupName,string $newGroupDetail)
+  {
+      $dbh = DAO::get_db_connect();
+      $sql = "UPDATE ChatGroup SET GroupName = :newGroupName, GroupDetail = :newGroupDetail WHERE GroupID = :groupID";
+      $stmt = $dbh->prepare($sql);
+      $stmt->bindValue(":newGroupName", $newGroupName, PDO::PARAM_STR);
+      $stmt->bindValue(":newGroupDetail", $newGroupDetail, PDO::PARAM_STR);
+      $stmt->bindValue("groupID", $groupID, PDO::PARAM_INT);
+
+      $stmt->execute();
+  }
 }
 class NewGroupDAO
 {

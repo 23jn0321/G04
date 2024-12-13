@@ -50,7 +50,7 @@
             if($student !== false){
                 // セッションIDを変更し、ユーザーのセキュリティを強化
                 // プロフィール編集後、home.phpにリダイレクト
-                header('Location: home.php');
+                header(header: 'Location: home.php');
                 exit;
             }
         }
