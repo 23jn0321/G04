@@ -11,6 +11,7 @@
 .group {
 width: 100%;
 margin: 0px auto 0 auto; 
+overflow-y: auto;
     
 
 }
@@ -123,11 +124,4 @@ html,body {
 #admin{
     position: relative;
     left: 600px;
-}
-
-
-
-
-#mainGenre{
-    
 }

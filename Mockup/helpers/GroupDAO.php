@@ -80,7 +80,9 @@ class GroupDAO
                 INNER JOIN 
                     SubGenre sg ON g.SubGenreID = sg.SubGenreID
                 WHERE 
-                    g.GroupID = :groupID";
+                    g.GroupID = :groupID
+                    AND g.GroupDeleteFlag = 0";
+                    
 
     $stmt = $dbh->prepare($sql);
 
@@ -102,6 +104,14 @@ class GroupDAO
       $stmt->bindValue("groupID", $groupID, PDO::PARAM_INT);
 
       $stmt->execute();
+  }
+  public function deleteGroup(int $groupID)
+  {
+    $dbh = DAO::get_db_connect();
+    $sql = "UPDATE ChatGroup SET GroupDeleteFlag = 1 WHERE GroupID = :groupID";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(":groupID", $groupID, PDO::PARAM_INT);
+    $stmt->execute();
   }
 }
 class NewGroupDAO

@@ -1,42 +1,45 @@
 <?php 
 require_once 'helpers/userDAO.php';
 require_once 'helpers/GroupDAO.php';
-   
-    include "header.php"; 
-  
-    $loggedInUser = null;
 
-    if(isset($_GET['GroupID'])){
-        //リクエストパラメータのgroupIDを取得する
-        $groupID = $_GET['GroupID'];
-    }
+include "header.php"; 
 
-if (isset($_SESSION['userInfo']) ) {
-    //$userInfo = $_SESSION['userInfo'];
+$loggedInUser = null;
 
+// URLからGroupID取得
+if (isset($_GET['GroupID'])) {
+    $groupID = $_GET['GroupID'];
+}
+
+// セッションからユーザー情報を取得
+if (isset($_SESSION['userInfo'])) {
     $loggedInUser = $_SESSION['userInfo'];
 }
+
+$groupDAO = new GroupDAO();
+$groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
+$my_group = $groupDAO->get_My_Group($groupID);
+
+// 編集内容の保存処理
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["groupName"])) {
+    $GroupName = $_POST['groupName'];
+    $GroupDetial = $_POST['groupDetail'];
+
+    $GroupCreateDAO = new GroupDAO();
+    $GroupCreateDAO->groupInfoUpdate($groupID, $GroupName, $GroupDetial);
+    header('Location: groupEdit.php?GroupID=' . urlencode($groupID));
+    exit;
+}
+
+// 削除処理
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
     $groupDAO = new GroupDAO();
-   
-    $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
-
-    $my_group = $groupDAO->get_My_Group($groupID);
-
-    if($_SERVER["REQUEST_METHOD"] === "POST"){
-      //作成ボタンが押されたとき
-        //グループの内容が空ではなければ
-       
-  
-          //入力されたグループの内容を受け取る
-          $GroupName = $_POST['groupName'];
-          $GroupDetial = $_POST['groupDetail'];
-
-          $GroupCreateDAO = new GroupDAO();
-          $GroupCreateDAO->groupInfoUpdate($groupID,$GroupName,$GroupDetial);
-  }
-    
-    
+    $groupDAO->deleteGroup($groupID);
+    header('Location: home.php');
+    exit;
+}
 ?>
+
 <!DOCTYPE html>
 <html>
   <meta charset="utf-8">
@@ -62,7 +65,7 @@ if (isset($_SESSION['userInfo']) ) {
         </a>
        
         <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
-         <input type="button" onclick="location.href='groupEdit.php'" id="groupEditR" value="グループ編集">
+         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集">
           <?php endif; ?>
       </li>
       <?php endforeach; ?>
@@ -76,13 +79,15 @@ if (isset($_SESSION['userInfo']) ) {
     <p>大ジャンル<input type="text" name="mainGenre" id="mainGenre" value="<?= $my_group['MainGenreName']; ?>"readonly></p><br>
     <p>中ジャンル：<input type="text" name="subGenre" id="subGenre" value="<?= $my_group['SubGenreName']; ?>"readonly></p><br>
 
-
-
     <p id="SETUMEI">グループの説明：</p><br>
     <input type="text" name="groupDetail" id="textbox-2" value="<?= $my_group['GroupDetail']; ?>"/>
 </div>
 <input type="submit" id="editDetail" value="編集内容を確定する">
 </form>
+
+
+
+
 
 
 
@@ -110,29 +115,87 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 // 確定ボタンが押された場合、フォームを送信
-                this.submit();
+                e.target.submit();
             }
         });
     });
 });
 </script>
 
-<!-- 退出ボタン ??に遷移(??.html) -->
-<input type="submit" id="Exit" value="グループを削除する">
+
+<!-- 削除ボタン専用フォーム -->
+<form id="deleteForm" action="" method="POST" >
+  <input type="hidden" name="deleteGroup" value="1">
+  <input type="submit" id="Exit" value="グループを削除する">
+</form>
+
 
 <script>
-  $("#Exit").click(function(){
-    Swal.fire({
-      text: '"資格勉強の集い"を削除しますか？',
-      showCancelButton: true,
-      confirmButtonText: 'OK'
-    }).then((result) => {
-      if (result.value) {
-          window.location.href='home.html'
-      }
-    });
-  });
-  </script>
+$(document).ready(function () {
+    $('#deleteForm').on('submit', function (e) {
+        e.preventDefault(); // デフォルト送信をストップ
 
+        Swal.fire({
+            title: '⚠️ 削除確認 ⚠️',
+            text: '削除すると二度と戻せなくなります',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '本当に削除する',
+            cancelButtonText: 'キャンセル',
+            customClass: {
+              title: 'custom-title',
+              content: 'custom-content',
+              cancelButton: 'cancel-btn',
+              confirmButton: 'confirm-btn'
+            },
+            showClass:{
+              popup: 'animate__animated animate__shakeX'
+            },
+            backdrop: true,
+            dieOpen: () => {
+              document.querySelector('.swal2-content').classList.add('custom-content');
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                e.target.submit(); // サーバーサイドに送信
+            }
+        });
+    });
+});
+</script>
+
+<style>
+  .custom-title{
+    color:#FF0000;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+  }
+  .custom-content{
+    color: #FFFFFF;
+    font-size: 18px;
+    font-family: 'Arial', sans-serif;
+  }
+  .confirm-btn{
+    background-color: #FF6347;
+    color: white;
+    font-weight: bold ;
+  }
+
+  .cancel-btn{
+    background-color: #2F4F4F;
+    color: white;
+  }
+  .animate__shakeX{
+    animation: shakeX 0.8s ease-in-out infinite;
+  }
+
+  @keyframes shakeX{
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100%{ transform: translateX(0) }
+  }
+</style>
 
 </html>
