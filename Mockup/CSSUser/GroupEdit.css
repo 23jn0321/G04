@@ -2,6 +2,8 @@ div p{
     font-size: 20px;
     position: absolute;
     left: 800px;
+    margin: 0px auto 0 auto; 
+    position: absolute;
 }
 #SETUMEI    {
     position: absolute;
@@ -11,4 +13,20 @@ div p{
     position: absolute;
     left: 800px;
     bottom: 540px;
+}
+#editDetail{
+    padding: 10px 10px 10px 10px;
+    position: absolute;
+    left: 800px;
+    bottom: 450px;
+}
+#Exit{
+    padding: 10px 10px 10px 10px;
+    color: rgb(153, 0, 0);
+    position: absolute;
+    left: 1000px;
+    bottom: 450px;
+}
+#groupName{
+    padding: 7px 7px;
 }

@@ -147,13 +147,6 @@ $(document).ready(function () {
               content: 'custom-content',
               cancelButton: 'cancel-btn',
               confirmButton: 'confirm-btn'
-            },
-            showClass:{
-              popup: 'animate__animated animate__shakeX'
-            },
-            backdrop: true,
-            dieOpen: () => {
-              document.querySelector('.swal2-content').classList.add('custom-content');
             }
         }).then((result) => {
             if (result.isConfirmed) {
@@ -184,17 +177,6 @@ $(document).ready(function () {
   .cancel-btn{
     background-color: #2F4F4F;
     color: white;
-  }
-  .animate__shakeX{
-    animation: shakeX 0.8s ease-in-out infinite;
-  }
-
-  @keyframes shakeX{
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    50% { transform: translateX(10px); }
-    75% { transform: translateX(-10px); }
-    100%{ transform: translateX(0) }
   }
 </style>
 
