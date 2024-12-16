@@ -23,37 +23,8 @@ width: 100%;
 margin: 0px auto 0 auto; 
 overflow-y: auto;
 }
-/* 所属グループのリンクスタイル */
-.group ul li a {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    color: #333;
-    padding: 10px;
-    transition: color 0.3s ease;
-}
 
-/* ホバーしたときの文字色の変更 */
-/* 所属グループのリンクスタイル */
-.group ul li a {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    color: #333;
-    padding: 10px;
-    border: 2px solid transparent;
-    border-radius: 10px; /* 角を丸くする */
-    transition: all 0.3s ease;
-}
 
-/* ホバー時のアニメーション */
-.group ul li a:hover {
-    background-color: #ffe6f2; /* 優しいピンク色の背景 */
-    border-color: #ff99cc; /* 枠線の色を薄いピンクに */
-    color: #cc0066; /* 文字色を濃いピンクに変更 */
-    transform: scale(1.05); /* 少し拡大して目立たせる */
-    box-shadow: 0 4px 10px rgba(255, 153, 204, 0.5); /* ふわっとした影 */
-}
 
 
 
@@ -63,6 +34,7 @@ overflow-y: auto;
     background-color: #effff0;
     color: #01080e;
     outline: 1px solid #2589d0;
+    
   }
 
 .group ul {

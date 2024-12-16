@@ -16,28 +16,20 @@ class messageDAO {
         $stmt->execute();
     }
 
-    public function getMessages(int $GroupID, string $lastFetchTime = null) {
+    public function getMessagesByGroup($groupID) {
         $dbh = DAO::get_db_connect();
-
-        $sql = "SELECT cm.MessageDetail, cm.SendTime, cm.SendUserID, u.UserName 
-                FROM ChatMessage cm
-                JOIN GakuseiUser u ON cm.SendUserID = u.UserID
-                WHERE cm.GroupID = :GroupID";
-
-        if ($lastFetchTime) {
-            $sql .= " AND cm.SendTime > :lastFetchTime";
-        }
-
-        $sql .= " ORDER BY cm.SendTime ASC";
+        $sql = "SELECT m.MessageID, m.GroupID, m.SendUserID, m.MessageDetail, m.SendTime, 
+                         u.UserName AS SendUserName
+                  FROM ChatMessage m
+                  JOIN GakuseiUser u ON m.SendUserID = u.UserID
+                  WHERE m.GroupID = :groupID
+                  ORDER BY m.SendTime ASC";
+    
         $stmt = $dbh->prepare($sql);
-
-        $stmt->bindValue(":GroupID", $GroupID, PDO::PARAM_INT);
-        if ($lastFetchTime) {
-            $stmt->bindValue(":lastFetchTime", $lastFetchTime, PDO::PARAM_STR);
-        }
-
+        $stmt->bindValue(':groupID', $groupID, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_OBJ); // 結果をオブジェクト形式で返す
     }
+    
 }
 ?>

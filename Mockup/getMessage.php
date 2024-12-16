@@ -1,18 +1,24 @@
 <?php
-    require_once './helpers/messageDAO.php';
+require_once './helpers/messageDAO.php';
 
-    $groupID = 1;  // 仮にGroupIDを1に設定。動的に設定することも可能。
-    $userID = $_SESSION['userInfo']; // セッションからユーザーIDを取得
-    $messageDAO = new messageDAO();
+header('Content-Type: application/json');
 
-    // メッセージを取得
-    $messages = $messageDAO->getMessages($groupID);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-    // メッセージリストをHTML形式で出力
-    foreach ($messages as $message) {
-        echo '<li class="chat ' . ($message['SendUserID'] == $userID ? 'me' : 'you') . '">';
-        echo '<label class="mes">' . htmlspecialchars($message['MessageDetail']) . '</label>';
-        echo '<div class="status">' . htmlspecialchars($message['UserName']) . '<br>' . $message['SendTime'] . '</div>';
-        echo '</li>';
-    }
-?>
+$groupID = isset($_GET['GroupID']) ? intval($_GET['GroupID']) : null;
+
+if (!$groupID) {
+    echo json_encode(["status" => "error", "message" => "GroupID is missing"]);
+    exit;
+}
+
+$messageDAO = new messageDAO();
+$messages = $messageDAO->getMessagesByGroup($groupID);
+
+if ($messages) {
+    echo json_encode(["status" => "success", "messages" => $messages]);
+} else {
+    echo json_encode(["status" => "error", "message" => "No messages found"]);
+}

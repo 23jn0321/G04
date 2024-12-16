@@ -33,6 +33,21 @@ if (isset($_SESSION['userInfo']) ) {
         $messageDAO->messageInsert($groupID,$userId->UserID,$message);
     }
 }
+
+$messageDAO = new messageDAO();
+$messages = $messageDAO->getMessagesByGroup($groupID); // GroupIDでメッセージを取得
+
+$myMessages = []; // 自分のメッセージ
+$otherMessages = []; // 他人のメッセージ
+
+foreach ($messages as $msg) {
+    if ($msg->SendUserID == $loggedInUser->UserID) {
+        $myMessages[] = $msg; // 自分のメッセージに分類
+    } else {
+        $otherMessages[] = $msg; // 他人のメッセージに分類
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +64,8 @@ if (isset($_SESSION['userInfo']) ) {
 </head>
 
 
-      
+<input type="button" id="btn08" class="secret" value="">
+<input type="button" id="btn09" class="secret" value="">
     
   </header>
   <div>
@@ -114,27 +130,98 @@ if (isset($_SESSION['userInfo']) ) {
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
-
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <!-- メッセージ機能 (https://naruweb.com/coding/linechat/)から引用 -->
 <form action="" method="POST" id="chatMessage">
 <div class="room">
-    <ulH>
-      <liH class="chat you" id="btn08">   <!-- 相手のメッセージにはclass「you」をつける。 -->
-        <label for="btn08"class="mes" id="btn08">相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ相手のメッセージ</label>
-        <div class="status">電子花子<br>17:00</div>
-      </liH>
-      <liH class="chat me" id="btn09">    <!-- 相手のメッセージにはclass「me」をつける。 -->
-        <label for="btn09" class="mes" >自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ自分のメッセージ</label>
-        <div class="status">電子太郎<br>17:05</div>
-      </liH>
-    </ulH>
-  </div>
+        <ulH id="messageContainer">
+            <!-- メッセージが表示されます -->
+        </ulH>
+    </div>
 
-  <div class="send">
-    <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
-    <input type="submit" value="Send" id="send">
+    <!-- Message Input -->
+    <div class="send">
+        <form id="chatMessage" method="POST">
+            <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
+            <input type="submit" value="Send" id="send">
+        </form>
+    </div>
 
-  </div>
+    <script>
+        $(document).ready(function () {
+            const groupID = <?= json_encode($groupID) ?>; // PHPからGroupIDを取得
+            const loggedInUserID = <?= json_encode($loggedInUser->UserID) ?>;
+            const messageContainer = $("#messageContainer");
+
+            // メッセージを取得
+            function fetchMessages() {
+                $.ajax({
+                    url: "getMessage.php",
+                    type: "GET",
+                    data: { GroupID: groupID },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.status === "success") {
+                            renderMessages(response.messages);
+                        } else {
+                            console.error(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching messages:", error);
+                    }
+                });
+            }
+
+            // メッセージを表示
+            function renderMessages(messages) {
+                let html = "";
+                messages.forEach(msg => {
+                    if (msg.SendUserID == loggedInUserID) {
+                        // 自分のメッセージ
+                        html += `
+                        <liH class="chat me">
+                            <label for="btn09" class="mes">${msg.MessageDetail}</label>
+                            <div class="status">あなた<br>${msg.SendTime}</div>
+                        </liH>`;
+                    } else {
+                        // 相手のメッセージ
+                        html += `
+                        <liH class="chat you">
+                            <label for="btn08" class="mes">${msg.MessageDetail}</label>
+                            <div class="status">${msg.SendUserName}<br>${msg.SendTime}</div>
+                        </liH>`;
+                    }
+                });
+                messageContainer.html(html);
+            }
+
+            // 初期化
+            fetchMessages();
+
+            // 5秒ごとに更新
+            setInterval(fetchMessages, 5000);
+
+            // メッセージ送信
+            $("#chatMessage").on("submit", function (e) {
+                e.preventDefault(); // フォーム送信を阻止
+                const message = $("#message").val();
+
+                $.ajax({
+                    url: "", // 現在のページで処理
+                    type: "POST",
+                    data: { message: message },
+                    success: function () {
+                        $("#message").val(""); // 入力をクリア
+                        fetchMessages(); // メッセージを再取得
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error sending message:", error);
+                    }
+                });
+            });
+        });
+    </script> 
   </form>
   <script>
 
