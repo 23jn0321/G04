@@ -1,6 +1,5 @@
 <?php
   require_once './helpers/GroupCreateDAO.php';
-  //require_once 'helpers/userDAO.php';
   
   include "header.php"; 
   //セッションの開始

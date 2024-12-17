@@ -1,25 +1,34 @@
 <?php
+    require_once '\helpers\GroupDetailDAO.php';
+    include "header.php";
 
-      require_once './helpers/GruopDAO.php';
-
-      if($_SERVER["REQUEST_METHOD"] === "POST"){
-         
-
-        $GroupDAO = new GruopDetailDAO();
-        $sss = 101;
-        $GroupDAO->getGroup($GroupID,$GroupName,$MemberInfo,$LastUpdated,$Genre,$gakusekiNo);
-
-        header('Location: message.php');
-        exit;
-        
-        
+    //セッションの開始
+    if(session_status() === PHP_SESSION_NONE){
+      session_start();
 }
+  if(isset($_GET['GroupID'])){
+    //リクエストパラメータのgroupIDを取得する
+    $groupID = $_GET['GroupID'];
+}
+  //を取得
+$groupCreateDAO=new GroupDetailDAO();
+$genreList = $groupCreateDAO->groupSelect();
+$genre_json = json_encode($genreList); //JSONエンコード
+
+  $groupDetailDAO=new GroupDetailDAO();
+  $groupDetailDAO->getGroup1($groupDetailDAO->groupName);
+  $groupDetailDAO->getGroup1($groupDetailDAO->MaxMember);
+  $groupDetailDAO->getGroup1($groupDetailDAO->Genre);
+  $groupDetailDAO->getGroup1($groupDetailDAO->Groupdetail);
+
+
 ?>
 
 
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+<!--ヘッダー-->
 <header>
   <!-- CSS適応 -->
   <link rel="stylesheet" href="CSSUser/Header.css">
@@ -31,6 +40,7 @@
   <a href="edit.html"><input type="button" value="編集" id="edit"></a>
   <hr>
 </header>
+
 <div>
   <p id="group">所属グループ一覧</p>
   <a href="groupEdit.html"><input type="button" value="グループ編集" id="groupEdit"></a>
@@ -84,13 +94,15 @@
     </ul>
 </a>
 </p>
-<p id="groupName">グループ名：資格勉強の集い(3/5)</p>
-<p id=groupGenre>グループのジャンル</p><input type="text" id="txtGG" value="勉強、資格勉強" 　readonly>
-<p id=groupMem>参加者</p><textarea id="txtGM" rows="5" cols="33" value="" 　readonly>
+
+
+<p id="groupName">グループ名：</p><input type="text" value=<?= $groupDetailDAO->groupName ?> readonly>
+<p id=groupGenre>グループのジャンル</p><input type="text" id="txtGG" value=<?= $groupDetailDAO->MaxMember ?> 　readonly>
+<p id=groupMem>参加者</p><textarea id="txtGM" rows="5" cols="33" value=<?= $groupDetailDAO->Genre ?> 　readonly>
 電子花子               情報処理科      １年
-ベンキョ・ジンセイ     情報処理科      ２年
+ベンキョ・ジンセイ      情報処理科      ２年
 大橋雪乃成             情報処理科      ２年
 </textarea></p>
-<p id=groupEdit>グループ詳細</p><input type="text" id="txtGE" value="誰でも歓迎です！！資格取得に向けてみんなで勉強しましょう！！！" 　readonly>
+<p id=groupEdit>グループ詳細</p><input type="text" id="txtGE" value=<?= $groupDetailDAO->Groupdetail ?> 　readonly>
 
 
