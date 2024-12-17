@@ -168,11 +168,11 @@ foreach ($genres as $genre) {
                 // OKボタンが押された時
                 const genreData = genres.find(genre => genre.mainGenreName === genreName);
                 if (genreData) {
-                    console.log(genreData.subGenreNames.length);
                     const existingInputs = document.querySelectorAll('input[type="text"]');
+                    console.log(existingInputs.length);
+                    console.log(document.getElementById('subGenreName' + i).value);
                     for (let i = genreData.subGenreNames.length + 1; i < existingInputs.length + 1; i++) {
-                        console.log(existingInputs.length);
-                        console.log(document.getElementById('subGenreName' + i).value);
+
                         //insert
                     }
 
