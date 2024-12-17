@@ -25,7 +25,6 @@ if (isset($_SESSION['userInfo']) ) {
     $studyGenre = $genreSelectDAO->get_Study_SubGenre();
 
 
-    var_dump($gameGenre);
 // グループ情報を取得
 ?>
 
@@ -61,9 +60,13 @@ if (isset($_SESSION['userInfo']) ) {
         <details class="accordion-004">
 <!-- ゲームジャンル -->
             <summary>ゲーム</summary>
+            <label>
+                <input type="checkbox" class="select-all" data-target="game-checkboxes">
+                すべて選択
+            </label>
             <?php foreach ($gameGenre as $genre): ?>
                 <label>
-                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" >
+                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="game-checkboxes">
                     <?= $genre[1]?>
                 </label>
             <?php endforeach; ?>
@@ -71,9 +74,13 @@ if (isset($_SESSION['userInfo']) ) {
         <details class="accordion-004">
 <!-- 音楽ジャンル -->
             <summary>音楽</summary>
+            <label>
+                <input type="checkbox" class="select-all" data-target="music-checkboxes">
+                すべて選択
+            </label>
             <?php foreach ($musicGenre as $genre): ?>
                 <label>
-                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" >
+                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="music-checkboxes">
                     <?= $genre[1] ?>
                 </label>
             <?php endforeach; ?>
@@ -81,9 +88,13 @@ if (isset($_SESSION['userInfo']) ) {
         <details class="accordion-004"> 
 <!-- スポーツジャンル -->
             <summary>スポーツ</summary>
+            <label>
+                <input type="checkbox" class="select-all" data-target="sports-checkboxes">
+                すべて選択
+            </label>
             <?php foreach ($sportsGenre as $genre): ?>
                 <label>
-                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" >
+                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="sports-checkboxes">
                     <?= $genre[1] ?>
                 </label>
             <?php endforeach; ?>
@@ -91,9 +102,13 @@ if (isset($_SESSION['userInfo']) ) {
         <details class="accordion-004">
 <!-- 勉強ジャンル -->
             <summary>勉強</summary>
+            <label>
+                <input type="checkbox" class="select-all" data-target="study-checkboxes">
+                すべて選択
+            </label>
             <?php foreach ($studyGenre as $genre): ?>
                 <label>
-                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" >
+                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="study-checkboxes">
                     <?= $genre[1] ?>
                 </label>
             <?php endforeach; ?>
@@ -102,6 +117,25 @@ if (isset($_SESSION['userInfo']) ) {
     <button type="submit" id="Search">検索</button>
 </form>
 
-<!-- 検索ボタン 検索結果画面に遷移(search.html) -->
+
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // すべて選択チェックボックスにイベントリスナーを追加
+        const selectAllCheckboxes = document.querySelectorAll(".select-all");
+
+        selectAllCheckboxes.forEach(selectAll => {
+            selectAll.addEventListener("change", function () {
+                const targetClass = this.getAttribute("data-target");
+                const targetCheckboxes = document.querySelectorAll(`.${targetClass}`);
+
+                targetCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked; // すべて選択 or 解除
+                });
+            });
+        });
+    });
+</script>
     </body>
 </html>

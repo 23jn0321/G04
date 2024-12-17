@@ -34,11 +34,17 @@ if (!empty($selectedGenres)) {
     <?php if (!empty($groups)): ?>
         <ul>
             <?php foreach ($groups as $group): ?>
-                <li>
-                    <a href="groupDetail.php?GroupID=<?= htmlspecialchars($group->GroupID) ?>">
-                        <?= htmlspecialchars($group->GroupName) ?> (<?= $group->MemberCount ?>人)<br>
-                        ジャンル: <?= htmlspecialchars($group->Genre) ?>
-                    </a>
+                <li class="group-item">
+                    <div class="group-title">
+                        <a href="groupDetail.php?GroupID=<?= htmlspecialchars($group->GroupID) ?>">
+                            <?= htmlspecialchars($group->GroupName) ?>
+                        </a>
+                        (<?= htmlspecialchars($group->MemberCount) ?>/<?= htmlspecialchars($group->MaxMember) ?>)
+                    </div>
+                    <div class="group-details">
+                        最終更新日: <?= htmlspecialchars($group->LastChatTime ?: '更新履歴なし') ?><br>
+                        ジャンル: <?= htmlspecialchars($group->MainGenre) ?> / <?= htmlspecialchars($group->SubGenre) ?>
+                    </div>
                 </li>
             <?php endforeach; ?>
         </ul>
