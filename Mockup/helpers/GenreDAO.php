@@ -1,19 +1,23 @@
-<?php 
-    require_once 'DAO.php';
+<?php
+require_once 'DAO.php';
 
-class Genre{
+class Genre
+{
     public int $mainGenreID;        //メインジャンルID
     public string $mainGenreName;   //メインジャンルネーム
 }
-class SubGenre{
+class SubGenre
+{
     public int $subGenreID;         //サブジャンルID
     public int $mainGenreID;        //メインジャンルID
     public string $subGenreName;    //サブジャンルネーム
     public bool $deleteFlag;         //サブジャンルのdeleteflag
 }
 
-class GenreDAO{
-    public function get_Genre(){
+class GenreDAO
+{
+    public function get_Genre()
+    {
         $dbh = DAO::get_db_connect();
 
         $sql = "SELECT * FROM MainGenre";
@@ -21,7 +25,7 @@ class GenreDAO{
         $stmt = $dbh->query($sql);
 
         $genres = [];
-        
+
         // 取得したデータをループして Genre オブジェクトに格納
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $genre = new Genre();
@@ -31,28 +35,41 @@ class GenreDAO{
         }
 
         return $genres;
-        
     }
 }
-class subGenreDAO{
-    public function get_subGenre(){
-        $dbh=DAO::get_db_connect();
+class subGenreDAO
+{
+    public function get_subGenre()
+    {
+        $dbh = DAO::get_db_connect();
 
-        $sql="SELECT * FROM SubGenre";
-        
-        $stmt=$dbh->query($sql);
+        $sql = "SELECT * FROM SubGenre";
 
-        $subGenres=[];
+        $stmt = $dbh->query($sql);
 
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
-            $subGenre=new subGenre();
-            $subGenre->subGenreID=$row['SubGenreID'];
-            $subGenre->mainGenreID=$row['MainGenreID'];
-            $subGenre->subGenreName=$row['SubGenreName'];
-            $subGenre->deleteFlag=$row['GenreDeleteFlag'];
-            $subGenres[]=$subGenre;
+        $subGenres = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $subGenre = new subGenre();
+            $subGenre->subGenreID = $row['SubGenreID'];
+            $subGenre->mainGenreID = $row['MainGenreID'];
+            $subGenre->subGenreName = $row['SubGenreName'];
+            $subGenre->deleteFlag = $row['GenreDeleteFlag'];
+            $subGenres[] = $subGenre;
         }
         return $subGenres;
     }
+    public function insert(int $mainGenreID, string $subGenreName)
+    {
+        $dbh = DAO::get_db_connect();
+
+        $sql = "INSERT INTO SubGenre (MainGenreID,SubGenreName) VALUES (:mainGenreID,:subGenreName)";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':mainGenreID', $mainGenreID, PDO::PARAM_INT);
+        $stmt->bindValue(':subGenreName', $subGenreName, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
 }
-?>
