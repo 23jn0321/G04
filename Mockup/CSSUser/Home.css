@@ -120,10 +120,10 @@ div p{
     bottom: 700px;
   }
 #MatchingButton{
-    position: relative;
-    left: 700px;
-    bottom: 1180px;
-    padding: 22px 315px 22px 315px;
+    position: absolute;
+    left: 1600px;
+    bottom: 500px;
+    padding: 20px 20px 20px 20px;
 }
 
 .multiselect{
