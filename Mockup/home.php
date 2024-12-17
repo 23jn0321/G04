@@ -7,12 +7,17 @@
     $loggedInUser = null;
 
 if (isset($_SESSION['userInfo']) ) {
-    //$userInfo = $_SESSION['userInfo'];
+    $userInfo = $_SESSION['userInfo'];
 
     $loggedInUser = $_SESSION['userInfo'];
+}else{
+  header("Location: login.php");
+  exit;
 }
     $groupDAO = new GroupDAO();
+   
     $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
+    
     
 ?>
 
@@ -23,7 +28,6 @@ if (isset($_SESSION['userInfo']) ) {
 <meta charset="utf-8">
 <header>
   <!-- CSS適応 -->
-  <link rel="stylesheet" href="CSSUser/Header.css">
   <link rel="stylesheet" href="CSSUser/Home.css">
 </header>
 
@@ -41,18 +45,18 @@ if (isset($_SESSION['userInfo']) ) {
         <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
           <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
         </a>
+       
+        <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
+         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集">
+          <?php endif; ?>
       </li>
       <?php endforeach; ?>
     </ul>
 </a>
-</p>
 
 <!-- お知らせボックス -->
-<div class="box">
-  <p>お知らせ表示</p>
-</div>
 
 <!-- マッチングボタン　ジャンル選択に遷移(genreSelect.html) -->
-<a href="groupCreate.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
+<a href="genreSelect.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
 
 </html>

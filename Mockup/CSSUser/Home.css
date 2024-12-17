@@ -8,17 +8,33 @@
     left: 40px;
 
 }
+#groupEditR {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* アニメーションの設定 */
+}
+#groupEditR:hover {
+    transform: scale(1.1); /* ホバーしたら少し大きくなる */
+}
 .group {
 width: 100%;
 margin: 0px auto 0 auto; 
-overflow-y: auto; 
-
+overflow-y: auto;
 }
+
+
+
+
+
+    
 
 .group li:hover {
     background-color: #effff0;
     color: #01080e;
     outline: 1px solid #2589d0;
+    
   }
 
 .group ul {
@@ -33,7 +49,8 @@ list-style: none;
 left: -625px;
 padding-left:0;
 border: solid 2px;
-position: relative;
+position: absolute;
+left: 50px;
 }
 
 .group ul li {

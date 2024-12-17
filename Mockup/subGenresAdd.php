@@ -16,7 +16,7 @@ foreach ($genres as $genre) {
         if ($subGenre->mainGenreID == $genre->mainGenreID && !$subGenre->deleteFlag) {
             $subGenreNames[] = $subGenre->subGenreName;
         }
-    }
+    }  
     
     $genreWithSubGenres[] = [
         'mainGenreName' => $genre->mainGenreName,
@@ -24,11 +24,6 @@ foreach ($genres as $genre) {
     ];
 }
 
-
-foreach ($genreWithSubGenres as $item) {
-    echo "メインジャンル名: " . $item['mainGenreName'] . "<br>";
-    echo "サブジャンル: " . implode(", ", $item['subGenreNames']) . "<br><br>";
-}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -48,13 +43,8 @@ foreach ($genreWithSubGenres as $item) {
     document.addEventListener('DOMContentLoaded', () => {
         const mainGenreSelect = document.getElementById('genreName');
         const subGenreContainer = document.getElementById('subGenreContainer');
-        const genres = [
-            ['ゲーム', ['RPG', 'シューティング', 'パズル', 'アクション', 'MMORPG', 'ホラー']],
-            ['音楽', ['クラシック', 'ロック', 'ジャズ', 'ボカロ']],
-            ['スポーツ', ['サッカー', 'バスケットボール', 'テニス', '野球', '水泳']],
-            ['勉強', ['数学', '英語', 'プログラミング', 'Linux', '資格勉強']]
-        ];
-
+        const genres = <?php echo json_encode($genreWithSubGenres); ?>;
+        console.log(genres);
         // 初期状態でのサブジャンル表示処理
         const genreName = mainGenreSelect.value;
         updateSubGenreFields(genreName);
@@ -66,27 +56,25 @@ foreach ($genreWithSubGenres as $item) {
         });
 
         function updateSubGenreFields(genreName) {
-            // フィールドをリセット
-            resetSubGenreInputs();
+    resetSubGenreInputs();
 
-            // 選択されたジャンルに応じたフィールドを追加
-            for (const [mainGenre, subGenres] of genres) {
-                if (genreName === mainGenre) {
-                    subGenres.forEach((subGenre, index) => {
-                        if (index >= 4) {
-                            addSubGenreField();
-                        }
-                        // 入力値を設定
-                        const input = document.querySelector(`#subGenreName${index + 1}`);
-                        if (input) {
-                            input.value = subGenre;
-                            input.setAttribute('readonly', 'true');
-                        }
-                    });
-                    break;
-                }
+    // genres をループして対応する大ジャンルを検索
+    const genreData = genres.find(genre => genre.mainGenreName === genreName);
+    if (genreData) {
+        // サブジャンルの入力フィールドを追加
+        genreData.subGenreNames.forEach((subGenre, index) => {
+            if (index >= 4) {
+                addSubGenreField(); // 必要な数だけフィールドを追加
             }
-        }
+            const input = document.querySelector(`#subGenreName${index + 1}`);
+            if (input) {
+                input.value = subGenre;
+                input.setAttribute('readonly', 'true');
+            }
+        });
+    }
+}
+
 
         function resetSubGenreInputs() {
             const form = subGenreContainer.querySelector('form');
@@ -201,14 +189,16 @@ foreach ($genreWithSubGenres as $item) {
     </header>
 
     <div class="dropdown-container">
-        <label for="genreName">大ジャンル名</label>
-        <select id="genreName">
-            <option value="ゲーム">ゲーム</option>
-            <option value="音楽">音楽</option>
-            <option value="スポーツ">スポーツ</option>
-            <option value="勉強">勉強</option>
-        </select>
+    <label for="genreName">大ジャンル名</label>
+    <select id="genreName" name="genreName">
+        <?php foreach ($genres as $genre): ?>
+            <option value="<?php echo htmlspecialchars($genre->mainGenreName, ENT_QUOTES, 'UTF-8'); ?>">
+                <?php echo htmlspecialchars($genre->mainGenreName, ENT_QUOTES, 'UTF-8'); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
     </div>
+
     <div id="subGenreContainer">
         <form onsubmit="subGenresAdd(event)">
             <label for="subGenreName">中ジャンル名</label>

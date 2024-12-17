@@ -1,36 +1,80 @@
-#group{
+
+#title{
     outline-color: black;
-}
-ul{
-    max-width: 900px;
-    padding-left:0;
-    border: solid 1px;
-    position: relative;
-    left: 50px;
-}
-li{
-    max-width: 900px;
     list-style: none;
     border:solid 1px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin: 10px;
-    text-align: center;
-    
+    padding: 13px 220px 12px 203px;
+    position: relative;
+    left: 4000px;
 }
+
+.newGroup {
+width: 100%;
+margin: 0px auto 0 auto; 
+overflow-y: auto; 
+
+}
+
+.newGroup li:hover {
+    background-color: #effff0;
+    color: #01080e;
+    outline: 1px solid #2589d0;
+  }
+
+.newGroup ul {
+overflow-y: auto;
+max-width: 550px;
+max-height: 680px;
+flex-wrap: wrap;
+display: flex;
+margin: auto;
+justify-content: space-around; 
+list-style: none;
+left: -625px;
+padding-left:0;
+border: solid 2px;
+position: relative;
+}
+
+.newGroup ul li {
+text-align: center;
+list-style: none;
+border:solid 1px;
+width: 800px;
+list-style: none;
+border:solid 1px;
+padding-top: 10px;
+padding-bottom: 10px;
+text-align: center;
+}
+
+.newGroup a {
+font-size: 18px;
+font-weight: bold;
+display: block;
+padding: 30px 0 30px 0;
+margin-bottom: 10px;
+text-decoration: none;
+position: relative;
+}
+
+.newGroup a::after {
+position: absolute;
+left: 0;
+bottom: 0;
+display: block;
+content: "";
+width: 0%;
+height: 2px;
+background: #000;
+transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
 
 #groupEdit{
     padding: 13px 10px 12px 10px;
     position: relative;
     left: 121px;
-}
-#group{
-    padding: 10px 10px 10px 10px;
-    border: solid 1px;
-    width: 300px;
-    text-align: center;
-    position: relative;
-    left: 50px;
 }
 
 div p{
@@ -103,7 +147,7 @@ html,body {
     position: relative;
     left: 48px;
     bottom: 653px;
-    left: 600px;
+    left: 6010px;
 }
 
 #Search{
