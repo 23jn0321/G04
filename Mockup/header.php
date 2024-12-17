@@ -9,9 +9,10 @@ if (session_status() === PHP_SESSION_NONE) {
 $loggedInUser = null;
 
 if (isset($_SESSION['userInfo']) ) {
-    //$userInfo = $_SESSION['userInfo'];
-
     $loggedInUser = $_SESSION['userInfo'];
+}else{
+  header("Location: login.php");
+  exit;
 }
 
 ?>

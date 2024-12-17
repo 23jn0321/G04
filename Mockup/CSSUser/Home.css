@@ -8,17 +8,33 @@
     left: 40px;
 
 }
+#groupEditR {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* アニメーションの設定 */
+}
+#groupEditR:hover {
+    transform: scale(1.1); /* ホバーしたら少し大きくなる */
+}
 .group {
 width: 100%;
 margin: 0px auto 0 auto; 
-    
-
+overflow-y: auto;
 }
+
+
+
+
+
+    
 
 .group li:hover {
     background-color: #effff0;
     color: #01080e;
     outline: 1px solid #2589d0;
+    
   }
 
 .group ul {
@@ -104,10 +120,10 @@ div p{
     bottom: 700px;
   }
 #MatchingButton{
-    position: relative;
-    left: 700px;
-    bottom: 1180px;
-    padding: 22px 315px 22px 315px;
+    position: absolute;
+    left: 1600px;
+    bottom: 500px;
+    padding: 20px 20px 20px 20px;
 }
 
 .multiselect{
@@ -123,8 +139,4 @@ html,body {
 #admin{
     position: relative;
     left: 600px;
-}
-
-#groupEditR{
-    
 }

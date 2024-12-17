@@ -1,6 +1,7 @@
 <?php 
- require_once 'helpers/userDAO.php';
-    require_once 'helpers/GroupDAO.php';
+require_once 'helpers/userDAO.php';
+require_once 'helpers/GroupDAO.php';
+require_once 'helpers/GenreSelectDAO.php';
    
     include "header.php"; 
   
@@ -14,6 +15,17 @@ if (isset($_SESSION['userInfo']) ) {
     $groupDAO = new NewGroupDAO();
     $groupInfo = $groupDAO->getNewGroup();
     
+    $groupDAO = new GroupDAO();
+
+// ジャンルを取得
+    $genreSelectDAO = new GenreSelectDAO();
+    $gameGenre = $genreSelectDAO->get_Game_SubGenre();
+    $musicGenre = $genreSelectDAO->get_Music_SubGenre();
+    $sportsGenre = $genreSelectDAO->get_Sports_SubGenre();
+    $studyGenre = $genreSelectDAO->get_Study_SubGenre();
+
+
+// グループ情報を取得
 ?>
 
 <!DOCTYPE html>
@@ -42,52 +54,88 @@ if (isset($_SESSION['userInfo']) ) {
     </ul>
 <!-- グループ作成ボタン -->
     <a href="groupCreate.php"><input type="submit" value="グループ作成" id="groupCreate"></a>  
-
 <!-- ジャンル選択 -->
+<form action="search.php" method="GET">
     <div class="genreSelect">
         <details class="accordion-004">
 <!-- ゲームジャンル -->
             <summary>ゲーム</summary>
-            <label for="checkbox1"><input type="checkbox" id="checkbox1">すべて選択</label>
-            <label for="checkbox2"><input type="checkbox" id="checkbox2">FPS</label>
-            <label for="checkbox3"><input type="checkbox" id="checkbox3">ソーシャルゲーム</label>
-            <label for="checkbox4"><input type="checkbox" id="checkbox4">ボードゲーム</label>
-            <label for="checkbox5"><input type="checkbox" id="checkbox5">RPG</label>
-            <label for="checkbox6"><input type="checkbox" id="checkbox6">カードゲーム</label>   
+            <label>
+                <input type="checkbox" class="select-all" data-target="game-checkboxes">
+                すべて選択
+            </label>
+            <?php foreach ($gameGenre as $genre): ?>
+                <label>
+                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="game-checkboxes">
+                    <?= $genre[1]?>
+                </label>
+            <?php endforeach; ?>
         </details>
         <details class="accordion-004">
 <!-- 音楽ジャンル -->
             <summary>音楽</summary>
-            <label for="checkbox7"><input type="checkbox" id="checkbox7">すべて選択</label>
-            <label for="checkbox8"><input type="checkbox" id="checkbox8">邦ロック</label>
-            <label for="checkbox9"><input type="checkbox" id="checkbox9">J-POP</label>
-            <label for="checkbox10"><input type="checkbox" id="checkbox10">K-POP</label>
-            <label for="checkbox11"><input type="checkbox" id="checkbox11">ボーカロイド</label>
+            <label>
+                <input type="checkbox" class="select-all" data-target="music-checkboxes">
+                すべて選択
+            </label>
+            <?php foreach ($musicGenre as $genre): ?>
+                <label>
+                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="music-checkboxes">
+                    <?= $genre[1] ?>
+                </label>
+            <?php endforeach; ?>
         </details>
         <details class="accordion-004"> 
 <!-- スポーツジャンル -->
             <summary>スポーツ</summary>
-            <label for="checkbox12"><input type="checkbox" id="checkbox12">すべて選択</label>
-            <label for="checkbox13"><input type="checkbox" id="checkbox13">サッカー</label>
-            <label for="checkbox14"><input type="checkbox" id="checkbox14">テニス</label>
-            <label for="checkbox15"><input type="checkbox" id="checkbox15">バスケットボール</label>
-            <label for="checkbox16"><input type="checkbox" id="checkbox16">野球</label>
-            <label for="checkbox17"><input type="checkbox" id="checkbox17">バレーボール</label>
-            <label for="checkbox18"><input type="checkbox" id="checkbox18">ラグビー</label>
-            <label for="checkbox19"><input type="checkbox" id="checkbox19">卓球</label>
-            <label for="checkbox20"><input type="checkbox" id="checkbox20">バトミントン</label>
-        </details>
+            <label>
+                <input type="checkbox" class="select-all" data-target="sports-checkboxes">
+                すべて選択
+            </label>
+            <?php foreach ($sportsGenre as $genre): ?>
+                <label>
+                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="sports-checkboxes">
+                    <?= $genre[1] ?>
+                </label>
+            <?php endforeach; ?>
+            </details>
         <details class="accordion-004">
-<!-- 音楽ジャンル -->
+<!-- 勉強ジャンル -->
             <summary>勉強</summary>
-            <label for="checkbox21"><input type="checkbox" id="checkbox21">すべて選択</label>
-            <label for="checkbox22"><input type="checkbox" id="checkbox22">資格勉強</label>
-            <label for="checkbox23"><input type="checkbox" id="checkbox23">テスト勉強</label>
-            <label for="checkbox24"><input type="checkbox" id="checkbox24">プログラミング</label>
+            <label>
+                <input type="checkbox" class="select-all" data-target="study-checkboxes">
+                すべて選択
+            </label>
+            <?php foreach ($studyGenre as $genre): ?>
+                <label>
+                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="study-checkboxes">
+                    <?= $genre[1] ?>
+                </label>
+            <?php endforeach; ?>
         </details>
     </div>
+    <button type="submit" id="Search">検索</button>
+</form>
 
-<!-- 検索ボタン 検索結果画面に遷移(search.html) -->
-<a href="search.html"><input type="submit" value="検索" id="Search"></a>
+
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // すべて選択チェックボックスにイベントリスナーを追加
+        const selectAllCheckboxes = document.querySelectorAll(".select-all");
+
+        selectAllCheckboxes.forEach(selectAll => {
+            selectAll.addEventListener("change", function () {
+                const targetClass = this.getAttribute("data-target");
+                const targetCheckboxes = document.querySelectorAll(`.${targetClass}`);
+
+                targetCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked; // すべて選択 or 解除
+                });
+            });
+        });
+    });
+</script>
     </body>
 </html>
