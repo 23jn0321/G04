@@ -82,7 +82,7 @@ foreach ($messages as $msg) {
           <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
         </a>
         <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
-         <input type="button" onclick="location.href='groupEdit.html'" id="groupEditR" value="グループ編集">
+         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集" >
           <?php endif; ?>
       </li>
       <?php endforeach; ?>
@@ -128,7 +128,7 @@ foreach ($messages as $msg) {
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <!-- メッセージ機能 (https://naruweb.com/coding/linechat/)から引用 -->
@@ -187,14 +187,56 @@ foreach ($messages as $msg) {
                     } else {
                         // 相手のメッセージ
                         html += `
-                        <liH class="chat you">
-                            <label for="btn08" class="mes">${msg.MessageDetail}</label>
+                        <liH class="chat you" data-user-id="${msg.SendUserID}">
+                            <label for="btn08" class="mes clickable">${msg.MessageDetail}</label>
                             <div class="status">${msg.SendUserName}<br>${msg.SendTime}</div>
                         </liH>`;
                     }
                 });
                 messageContainer.html(html);
+
+// 動的に追加される要素に対してイベントを設定
+$(document).off("click", ".clickable").on("click", ".clickable", function () {
+    const userID = $(this).closest(".chat").data("user-id");
+    if (userID) {
+        $.ajax({
+            url: "getUserInfo.php",
+            type: "GET",
+            data: { UserID: userID },
+            dataType: "json",
+            success: function (response) {
+                if (response.status === "success") {
+                    Swal.fire({
+                        title: response.userName, // 大文字小文字を合わせる
+                        html: `<p>${response.profileComment}<br><br><br><br><br></p> 
+                              <button id="reportButton">
+                                通報する
+                            </button>`,
+                            showConfirmButton: false,
+              
+                        didRender: () => {
+                            // 通報ボタンのイベント処理
+                            $("#reportButton").on("click", function () {
+                              console.log("通報画面に遷移中...");
+                                // report.php に遷移し、UserIDを渡す
+                                window.location.href = `report.php?UserID=${encodeURIComponent(userID)}`;
+                            });
+                          }
+                    });
+                } else {
+                    console.error(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching user info:", error);
             }
+        });
+    }
+});
+
+}
+
+            
 
             // 初期化
             fetchMessages();
@@ -223,28 +265,18 @@ foreach ($messages as $msg) {
         });
     </script> 
   </form>
-  <script>
 
-    $("#btn08").click(function () {
-      Swal.fire({
-        
-        html: '<br>電子花子<br>高度情報処理科<br><br>勉強が好きです。よろしくお願いします<br><br>',
-     
-        confirmButtonText: '通報',
-        showCloseButton : true,
-        confirmButtonColor : '#990606'
-      }).then((result) => {
-        if (result.value) {
-          window.location.href = 'report.html'
-        }
-      });
-    });
-</script>
+  <?php
+          $studentDAO = new StudentDAO();
+          $user = $studentDAO->get_newUserInfo($loggedInUser->UserID ?? '');
+  ?>
+
 
 <script>
   $("#btn09").click(function () {
     Swal.fire({
-      html: '<br>電子太郎<br>情報処理科<br><br>よろしくお願いします<br><br>',
+      title: '<?= $user[0]['UserName'] ?>',
+      html: '<br><?= $user[0]['ProfileComment'] ?><br><br>',
       showCloseButton : true
     })
   });
