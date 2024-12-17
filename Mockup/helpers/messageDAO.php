@@ -18,12 +18,13 @@ class messageDAO {
 
     public function getMessagesByGroup($groupID) {
         $dbh = DAO::get_db_connect();
-        $sql = "SELECT m.MessageID, m.GroupID, m.SendUserID, m.MessageDetail, m.SendTime, 
-                         u.UserName AS SendUserName
-                  FROM ChatMessage m
-                  JOIN GakuseiUser u ON m.SendUserID = u.UserID
-                  WHERE m.GroupID = :groupID
-                  ORDER BY m.SendTime ASC";
+        $sql = "SELECT m.MessageID, m.GroupID, m.SendUserID, m.MessageDetail, 
+       FORMAT(m.SendTime, 'MM/dd HH:mm') AS SendTime, 
+       u.UserName AS SendUserName
+        FROM ChatMessage m
+        JOIN GakuseiUser u ON m.SendUserID = u.UserID
+        WHERE m.GroupID = :groupID
+        ORDER BY m.SendTime ASC;";
     
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':groupID', $groupID, PDO::PARAM_INT);
