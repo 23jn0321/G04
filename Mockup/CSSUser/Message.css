@@ -12,7 +12,6 @@ label {
 S ul,
 liH {
   list-style: none;
-  
 }
 
 .room {
@@ -27,14 +26,15 @@ liH {
 
   max-width: 100%;
 
-
-
   flex-wrap: wrap;
   overflow-y: auto;
+
+
+
+
   position: absolute;
   left: 650px;
   top: 170px;
-  
 }
 
 .chat {
@@ -134,7 +134,18 @@ nav .drawer__nav{
   left: 1830px;
 }
 
+#reportButton{
+  color:#ffffff;
+  background-color: #FF0000;
+  font-size: 16px;
+  padding: 10px 10px 10px 10px;
+  position: absolute;
+    bottom: 20px;
+    right: 221px;
 
+}
+
+/*
 @media (max-width: 1800px) {
 
   #groupEdit,
@@ -195,7 +206,7 @@ nav .drawer__nav{
     padding: 0.5rem 1rem;
   }
 
-  /* ハンバーガーボタンのデザイン */
+
   .drawer__button {
     position: relative;
     top: -150px;
@@ -206,10 +217,10 @@ nav .drawer__nav{
     border: none;
     cursor: pointer;
     z-index: 999;
-    /* メニューを開いている時もクリックできるよう設定 */
+
   }
 
-  /* ハンバーガーボタン内の線 */
+
   .drawer__button>span {
     display: block;
     position: absolute;
@@ -236,7 +247,7 @@ nav .drawer__nav{
     transition: transform 0.3s ease;
   }
 
-  /* 展開時のデザイン */
+
   .drawer__button.active>span:first-child {
     transform: translate(-50%, -50%) rotate(-45deg);
   }
@@ -249,10 +260,9 @@ nav .drawer__nav{
     transform: translate(-50%, -50%) rotate(45deg);
   }
 
-  /* メニューのデザイン */
   .drawer__nav {
     position: absolute;
-    /* 追従ヘッダーなどでも表示できるよう設定しておく */
+
     top: 0;
     left: 0;
     width: 100%;
@@ -298,13 +308,13 @@ nav .drawer__nav{
     border-bottom: solid 1px lightgray;
   }
 
-  /* ハンバーガーメニュー展開時、背景を固定 */
+
   body.active {
     height: 100%;
     overflow: hidden;
   }
 
-  /* 見た目の調整 */
+
   section {
     width: 100%;
     height: 30vh;
