@@ -47,6 +47,8 @@ class GroupDAO
                       END ASC,
                       MAX(cm.SendTime) DESC";
 
+              
+             
     //
     $stmt = $dbh->prepare($sql);
 
@@ -113,6 +115,11 @@ class GroupDAO
     $stmt->bindValue(":groupID", $groupID, PDO::PARAM_INT);
     $stmt->execute();
   }
+
+
+
+
+
 }
 class NewGroupDAO
 {

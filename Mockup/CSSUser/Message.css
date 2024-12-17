@@ -12,7 +12,6 @@ label {
 S ul,
 liH {
   list-style: none;
-  
 }
 
 .room {
@@ -27,14 +26,15 @@ liH {
 
   max-width: 100%;
 
-
-
   flex-wrap: wrap;
   overflow-y: auto;
+
+
+
+
   position: absolute;
   left: 650px;
   top: 170px;
-  
 }
 
 .chat {
