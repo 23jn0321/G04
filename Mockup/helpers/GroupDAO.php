@@ -41,7 +41,7 @@ class GroupDAO
                     ORDER BY g.GroupName
 ";
 
-              //
+              
               $stmt = $dbh->prepare($sql);
 
               //
