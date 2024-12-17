@@ -13,7 +13,7 @@ class ChatGroup
     public int $MainGenreID;         //大ジャンルID
 }
 
-class GruopDetailDAO
+class GroupDetailDAO
 {
     public function get_GroupDetail1(int $GroupID)
     {
@@ -39,14 +39,14 @@ class GruopDetailDAO
                         INNER JOIN MainGenre mg ON g.MainGenreID = mg.MainGenreID 
                         INNER JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
                         LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID 
-                    WHERE g.GroupID = :groupid AND g.GroupDeleteFlag = 0 
+                    WHERE g.GroupID = :GroupID AND g.GroupDeleteFlag = 0 
                     GROUP BY 
                         g.GroupID, g.GroupName, g.MaxMember, mg.MainGenreName, sg.SubGenreName,g.GroupDetail
                     ORDER BY g.GroupName";
 
         $stmt = $dbh->prepare($sql);
 
-        $stmt->bindValue(':groupid', $GroupID, PDO::PARAM_INT);
+        $stmt->bindValue(':GroupID', $GroupID, PDO::PARAM_INT);
 
         //実行
         $stmt->execute();
@@ -58,19 +58,44 @@ class GruopDetailDAO
     }
 
     //参加者の情報を
-    public function get_groupDetail2()
+    public function get_groupDetail2(int $GroupID)
     {
         $dbh = DAO::get_db_connect();
+
+        $sql = "";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':GroupID',$GroupID,PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $data = [];
+        while($row = $stmt->fetchAll()){
+            $data[] =$row;
+        }
+
+        return $data;
+
+
+
     }
 
-    public function insert()
+
+
+    public function insert(int $userid, int $Groupid)
     {
         $dbh = DAO::get_db_connect();
 
         $sql="INSERT INTO GroupMember
-                VALUES(:UserID,:GroupID)";
+              VALUES(:UserID,:GroupID)";
 
-        
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':UserID', $userid, PDO::PARAM_INT);
+        $stmt->bindValue(':GroupID', $Groupid, PDO::PARAM_INT);
+
+        $stmt ->execute();
     }
 
 }

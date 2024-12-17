@@ -1,5 +1,5 @@
 <?php
-    require_once '\helpers\GroupDetailDAO.php';
+    require_once 'helpers/GroupDetailDAO.php';
     include "header.php";
 
     //セッションの開始
@@ -10,18 +10,12 @@
     //リクエストパラメータのgroupIDを取得する
     $groupID = $_GET['GroupID'];
 }
-  //を取得
-$groupCreateDAO=new GroupDetailDAO();
-$genreList = $groupCreateDAO->groupSelect();
-$genre_json = json_encode($genreList); //JSONエンコード
+  
+  $groupdetail = new GroupDetailDAO();
+  $group = $groupdetail->get_GroupDetail1($groupID);
+  //var_dump($group);
 
-  $groupDetailDAO=new GroupDetailDAO();
-  $groupDetailDAO->getGroup1($groupDetailDAO->groupName);
-  $groupDetailDAO->getGroup1($groupDetailDAO->MaxMember);
-  $groupDetailDAO->getGroup1($groupDetailDAO->Genre);
-  $groupDetailDAO->getGroup1($groupDetailDAO->Groupdetail);
-
-
+  
 ?>
 
 
@@ -35,10 +29,7 @@ $genre_json = json_encode($genreList); //JSONエンコード
   <link rel="stylesheet" href="CSSUser/GroupDetailBefor.css">
 
   <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-  <a href="home.html"><img src="jecMatching/Jec.jpg" width="450px"></a>
-  <input type="text" id="name" value="電子太郎 さん" placeholder="ニックネームを入力してください" readonly>
-  <a href="edit.html"><input type="button" value="編集" id="edit"></a>
-  <hr>
+
 </header>
 
 <div>
@@ -96,13 +87,15 @@ $genre_json = json_encode($genreList); //JSONエンコード
 </p>
 
 
-<p id="groupName">グループ名：</p><input type="text" value=<?= $groupDetailDAO->groupName ?> readonly>
-<p id=groupGenre>グループのジャンル</p><input type="text" id="txtGG" value=<?= $groupDetailDAO->MaxMember ?> 　readonly>
-<p id=groupMem>参加者</p><textarea id="txtGM" rows="5" cols="33" value=<?= $groupDetailDAO->Genre ?> 　readonly>
+<p id="groupName">グループ名：<?= $group[0]['GroupName'] ?> (<?= $group[0]['MemberInfo'] ?>)</p>
+<p id="groupGenre">グループのジャンル：<?= $group[0]['Genre'] ?> </p>
+
+<p id=groupMem>参加者</p><textarea id="txtGM" rows="5" cols="33" value=<?= $group->Genre ?> readonly>
 電子花子               情報処理科      １年
 ベンキョ・ジンセイ      情報処理科      ２年
 大橋雪乃成             情報処理科      ２年
 </textarea></p>
-<p id=groupEdit>グループ詳細</p><input type="text" id="txtGE" value=<?= $groupDetailDAO->Groupdetail ?> 　readonly>
+
+<p id=groupEdit>グループ詳細</p><input type="text" id="txtGE" value=<?= $group[0]['GroupDetail'] ?> readonly>
 
 

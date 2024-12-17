@@ -47,6 +47,8 @@ class GroupDAO
                       END ASC,
                       MAX(cm.SendTime) DESC";
 
+              
+             
     //
     $stmt = $dbh->prepare($sql);
 

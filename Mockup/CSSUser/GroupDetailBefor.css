@@ -57,9 +57,9 @@ body {
 }
 
 #groupGenre {
-    padding: 1px 1px 1px 1px;
+    padding: 1px 1000px 1px 1px;
     border: solid 1px;
-    width: 146px;
+    width: 400px;
     text-align: center;
     position: relative;
     bottom: 709px;
