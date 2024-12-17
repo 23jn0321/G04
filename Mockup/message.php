@@ -199,8 +199,8 @@ foreach ($messages as $msg) {
             // 初期化
             fetchMessages();
 
-            // 5秒ごとに更新
-            setInterval(fetchMessages, 5000);
+            // 3秒ごとに更新
+            setInterval(fetchMessages, 3000);
 
             // メッセージ送信
             $("#chatMessage").on("submit", function (e) {
