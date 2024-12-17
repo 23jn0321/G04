@@ -1,26 +1,23 @@
 <?php
 require_once 'DAO.php';
 
-class ChatGroup
+
+class joinMember
 {
-    public int $GroupID;             //グループID 
-    public string $GroupName;        //グループ名
-    public int $MaxMember;           // 最大人数
-    public string $Groupdetail;      //グループ詳細
-    public string $GroupDeleteFlag;  //グループ削除フラグ
-    public int $GroupAdminID;        //グループ管理者ID
-    public int $SubGenreID;          //中ジャンルID
-    public int $MainGenreID;         //大ジャンルID
+    public int $GroupID;             
+    public string $UserName;        
+    public string $GakkaName;     
 }
 
 class GroupDetailDAO
 {
+    //
     public function get_GroupDetail1(int $GroupID)
     {
         //DBに接続
         $dbh = DAO::get_db_connect();
 
-        //グループの内容(グループの名前、人数、ジャンル)を取得するSQL
+        //グループの内容(グループ名、グループ人数)を取得するSQL
         $sql="SELECT		
                         g.GroupID, 
                         g.GroupName, 
@@ -57,12 +54,22 @@ class GroupDetailDAO
 
     }
 
-    //参加者の情報を
+    //参加者の情報を取得するメソッド
     public function get_groupDetail2(int $GroupID)
     {
         $dbh = DAO::get_db_connect();
 
-        $sql = "";
+        $sql = "SELECT 
+	                GroupID,
+                    UserName,
+                    G.GakkaName
+                FROM 
+                    GroupMember GM
+                JOIN 
+                    GakuseiUser U ON GM.UserID = U.UserID
+                JOIN 
+                    Gakka G ON SUBSTRING(U.GakusekiNo, 3, 2) = G.GakkaCode
+                WHERE GroupID=:GroupID";
 
         $stmt = $dbh->prepare($sql);
 
@@ -71,8 +78,9 @@ class GroupDetailDAO
         $stmt->execute();
 
         $data = [];
-        while($row = $stmt->fetchAll()){
-            $data[] =$row;
+
+        while ($row = $stmt->fetchObject('joinMember')) {
+            $data[] = $row;
         }
 
         return $data;
