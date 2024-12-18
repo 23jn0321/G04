@@ -107,10 +107,10 @@
     <div class="send">
         <form id="chatMessage" method="POST">
             <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
-            <input type="submit" value="Send">
+            <input type="submit" value="Send" id="send">
         </form>
     </div>
-
+    <input type="button" id="btn09" class="secret" value="">
     <!-- JavaScript（メッセージ取得・表示、送信処理） -->
     <script>
         $(document).ready(function () {
@@ -146,7 +146,7 @@
                         // 自分のメッセージ表示
                         html += `
                             <liH class="chat me">
-                                <label class="mes">${msg.MessageDetail}</label>
+                                <label for="btn09" class="mes">${msg.MessageDetail}</label>
                                 <div class="status">あなた<br>${msg.SendTime}</div>
                             </liH>`;
                     } else {
@@ -174,7 +174,7 @@
                                 if (response.status === "success") {
                                     Swal.fire({
                                         title: response.userName,
-                                        html: `<p>${response.profileComment}</p>
+                                        html: `<p>${response.profileComment}</p><br><br><br><br>
                                               <button id="reportButton">通報する</button>`,
                                         showConfirmButton: false,
                                         didRender: () => {
@@ -210,5 +210,15 @@
             });
         });
     </script>
+
+<script>
+  $("#btn09").click(function () {
+    Swal.fire({
+      title: '<?= $user[0]['UserName'] ?>',
+      html: '<br><?= $user[0]['ProfileComment'] ?><br><br>',
+      showCloseButton : true
+    })
+  });
+</script>
 </body>
 </html>
