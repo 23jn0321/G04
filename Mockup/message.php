@@ -1,168 +1,133 @@
 <?php
-    require_once './helpers/messageDAO.php';
-    require_once 'helpers/userDAO.php';
-    require_once 'helpers/GroupDAO.php';
-    
+    // 必要なDAOファイルをインクルード（データベース操作用クラス）
+    require_once './helpers/messageDAO.php'; // メッセージ関連のDAO
+    require_once 'helpers/userDAO.php';     // ユーザー情報関連のDAO
+    require_once 'helpers/GroupDAO.php';    // グループ情報関連のDAO
+
+    // 共通ヘッダーを読み込み（セッション管理と共通UI表示用）
     include "header.php";
-     
-    //セッションの開始
-  if(session_status() === PHP_SESSION_NONE){
-      session_start();
 
-  }
+    // セッションが開始されていない場合は開始する
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-  if(isset($_GET['GroupID'])){
-    //リクエストパラメータのgroupIDを取得する
-    $groupID = $_GET['GroupID'];
-}
-$loggedInUser = null;
+    // GETパラメータからGroupIDを取得
+    if (isset($_GET['GroupID'])) {
+        $groupID = $_GET['GroupID'];
+    }
 
-if (isset($_SESSION['userInfo']) ) {
-    $userInfo = $_SESSION['userInfo'];
+    // ログイン中のユーザー情報を取得
+    $loggedInUser = null;
+    if (isset($_SESSION['userInfo'])) {
+        $loggedInUser = $_SESSION['userInfo'];
+    }
 
-    $loggedInUser = $_SESSION['userInfo'];
-}
+    // 所属グループ情報を取得
     $groupDAO = new GroupDAO();
-    $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
+    $groupInfo = $groupDAO->getGroup($loggedInUser->UserID); // ユーザーが所属しているグループを取得
 
-  if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_POST['message'])) {
-        $message = $_POST['message']; // テキストボックスのメッセージを受け取る
-        $userId = $_SESSION['userInfo']; // ユーザーIDなどをセッションから取得
-        $messageDAO=new messageDAO();
-        $messageDAO->messageInsert($groupID,$userId->UserID,$message);
+    // POSTリクエストが送信された場合（メッセージ送信処理）
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if (isset($_POST['message'])) {
+            $message = $_POST['message']; // テキストボックスからメッセージを取得
+            $userId = $_SESSION['userInfo']; // セッションからユーザーIDを取得
+
+            // メッセージをデータベースに挿入
+            $messageDAO = new messageDAO();
+            $messageDAO->messageInsert($groupID, $userId->UserID, $message);
+        }
     }
-}
 
-$messageDAO = new messageDAO();
-$messages = $messageDAO->getMessagesByGroup($groupID); // GroupIDでメッセージを取得
+    // グループ内のすべてのメッセージを取得
+    $messageDAO = new messageDAO();
+    $messages = $messageDAO->getMessagesByGroup($groupID);
 
-$myMessages = []; // 自分のメッセージ
-$otherMessages = []; // 他人のメッセージ
+    // メッセージを「自分のもの」と「他人のもの」に分類
+    $myMessages = []; // 自分のメッセージ用配列
+    $otherMessages = []; // 他人のメッセージ用配列
 
-foreach ($messages as $msg) {
-    if ($msg->SendUserID == $loggedInUser->UserID) {
-        $myMessages[] = $msg; // 自分のメッセージに分類
-    } else {
-        $otherMessages[] = $msg; // 他人のメッセージに分類
+    foreach ($messages as $msg) {
+        if ($msg->SendUserID == $loggedInUser->UserID) {
+            $myMessages[] = $msg; // 自分のメッセージ
+        } else {
+            $otherMessages[] = $msg; // 他人のメッセージ
+        }
     }
-}
-
 ?>
 
 <!DOCTYPE html>
 <html>
-  <meta charset="utf-8">
-  <header>
-<!-- CSS適応 -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="CSSUser/Home.css">
-    <link rel="stylesheet" href="CSSUser/Message.css">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSSスタイルシートの読み込み -->
+    <link rel="stylesheet" href="CSSUser/Home.css"> <!-- ホームページのスタイル -->
+    <link rel="stylesheet" href="CSSUser/Message.css"> <!-- メッセージ画面のスタイル -->
+
+    <!-- 外部ライブラリの読み込み -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2（モーダル表示用） -->
 </head>
 
-
-<input type="button" id="btn08" class="secret" value="">
-<input type="button" id="btn09" class="secret" value="">
-    
-  </header>
-  <div>
-  <p id="title">所属グループ一覧</p>
-</div>
-
-
-    <!-- グループ表示 -->
+<body>
+    <!-- 所属グループ一覧表示 -->
+    <div>
+        <p id="title">所属グループ一覧</p>
+    </div>
     <nav class="group">
-    <ul>
-    <?php foreach ($groupInfo as $var): ?>
-      <li>
-        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
-          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
-        </a>
-        <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
-         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集" >
-          <?php endif; ?>
-      </li>
-      <?php endforeach; ?>
-    </ul>
-</a>
-</p>
-
-
-<header class="header"></header>
-  <div class="header__inner">
- 
-    <buttom class="drawer__button">
-      <span></span>
-      <span></span>
-      <span></span>
-    </buttom>
-    <nav class="drawer__nav">
-      <div class="drawer__nav__inner">
-        <th class="drawer__nav__menu">
-          <tr class="drawer__nav__item">
-            <a class="drawer__nav__link" href="#"><nobr><p>所属グループ一覧　　<button onclick="location.href='groupEdit.html'">グループ編集</button></p></nobr></a>
-          </tr>
-          <tr class="drawer__nav__item">
-            <a class="drawer__nav__link" href="#"><ul><li><p>テスト期間がち勉強(4/5)<br>最終更新日：10/8<br>ジャンル：勉強 / テスト勉強</p></li></ul></a>
-          </tr>
-          <tr class="drawer__nav__item">
-            <a class="drawer__nav__link" href="#"><ul><li><p>プログラミング愛好家(3/4)<br>最終更新日：10/3<br>ジャンル：勉強 / プログラミング</p></li></ul></a>
-          </tr>
-          <tr class="drawer__nav__item">
-            <a class="drawer__nav__link" href="#"><ul><li><p>テスト勉強(4/4)<br>最終更新日：9/30<br>ジャンル：勉強 / テスト勉強</p></li></ul></a>
-          </tr>
-          <tr class="drawer__nav__item">
-            <a class="drawer__nav__link" href="#"><ul><li><p>資格勉強の集い(3/5)<br>最終更新日：10/13<br>ジャンル：勉強 / 資格勉強</p></li></ul></a>
-          </tr>
-      </th>
-      </div>
+        <ul>
+            <!-- ユーザーが所属するグループ一覧を動的に表示 -->
+            <?php foreach ($groupInfo as $var): ?>
+                <li>
+                    <!-- グループ情報（名前、メンバー数、最終更新日、ジャンル） -->
+                    <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+                        <?= $var->GroupName ?>（<?= $var->MemberInfo ?>）<br>
+                        最終更新日：<?= $var->LastUpdated ?><br>
+                        ジャンル：<?= $var->Genre ?>
+                    </a>
+                    <!-- グループ編集ボタン（管理者のみ表示） -->
+                    <?php if ($loggedInUser->UserID == $var->GroupAdminID): ?>
+                        <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" value="グループ編集">
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
     </nav>
-  </div>
-</header>
 
-<script src="./jquery-3.6.0.min.js"></script>
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-<!-- メッセージ機能 (https://naruweb.com/coding/linechat/)から引用 -->
-<form action="" method="POST" id="chatMessage">
-<div class="room">
+    <!-- チャットルーム（メッセージ表示エリア） -->
+    <div class="room">
         <ulH id="messageContainer">
-            <!-- メッセージが表示されます -->
+            <!-- メッセージが動的に挿入されます -->
         </ulH>
     </div>
 
-    <!-- Message Input -->
+    <!-- メッセージ送信用フォーム -->
     <div class="send">
         <form id="chatMessage" method="POST">
             <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
-            <input type="submit" value="Send" id="send">
+            <input type="submit" value="Send">
         </form>
     </div>
 
+    <!-- JavaScript（メッセージ取得・表示、送信処理） -->
     <script>
         $(document).ready(function () {
             const groupID = <?= json_encode($groupID) ?>; // PHPからGroupIDを取得
             const loggedInUserID = <?= json_encode($loggedInUser->UserID) ?>;
             const messageContainer = $("#messageContainer");
 
-            // メッセージを取得
+            // サーバーからメッセージを取得する関数
             function fetchMessages() {
                 $.ajax({
-                    url: "getMessage.php",
+                    url: "getMessage.php", // サーバー側でメッセージを取得
                     type: "GET",
                     data: { GroupID: groupID },
                     dataType: "json",
                     success: function (response) {
                         if (response.status === "success") {
-                            renderMessages(response.messages);
+                            renderMessages(response.messages); // メッセージを表示
                         } else {
                             console.error(response.message);
                         }
@@ -173,125 +138,77 @@ foreach ($messages as $msg) {
                 });
             }
 
-            // メッセージを表示
+            // メッセージを画面に表示する関数
             function renderMessages(messages) {
                 let html = "";
                 messages.forEach(msg => {
                     if (msg.SendUserID == loggedInUserID) {
-                        // 自分のメッセージ
+                        // 自分のメッセージ表示
                         html += `
-                        <liH class="chat me">
-                            <label for="btn09" class="mes">${msg.MessageDetail}</label>
-                            <div class="status">あなた<br>${msg.SendTime}</div>
-                        </liH>`;
+                            <liH class="chat me">
+                                <label class="mes">${msg.MessageDetail}</label>
+                                <div class="status">あなた<br>${msg.SendTime}</div>
+                            </liH>`;
                     } else {
-                        // 相手のメッセージ
+                        // 他人のメッセージ表示
                         html += `
-                        <liH class="chat you" data-user-id="${msg.SendUserID}">
-                            <label for="btn08" class="mes clickable">${msg.MessageDetail}</label>
-                            <div class="status">${msg.SendUserName}<br>${msg.SendTime}</div>
-                        </liH>`;
+                            <liH class="chat you" data-user-id="${msg.SendUserID}">
+                                <label class="mes clickable">${msg.MessageDetail}</label>
+                                <div class="status">${msg.SendUserName}<br>${msg.SendTime}</div>
+                            </liH>`;
                     }
                 });
                 messageContainer.html(html);
 
-// 動的に追加される要素に対してイベントを設定
-$(document).off("click", ".clickable").on("click", ".clickable", function () {
-    const userID = $(this).closest(".chat").data("user-id");
-    if (userID) {
-        $.ajax({
-            url: "getUserInfo.php",
-            type: "GET",
-            data: { UserID: userID },
-            dataType: "json",
-            success: function (response) {
-                if (response.status === "success") {
-                    Swal.fire({
-                        title: response.userName, // 大文字小文字を合わせる
-                        html: `<p>${response.profileComment}<br><br><br><br><br></p> 
-                              <button id="reportButton">
-                                通報する
-                            </button>`,
-                            showConfirmButton: false,
-              
-                        didRender: () => {
-                            // 通報ボタンのイベント処理
-                            $("#reportButton").on("click", function () {
-                              console.log("通報画面に遷移中...");
-                                // report.php に遷移し、UserIDを渡す
-                                window.location.href = `report.php?UserID=${encodeURIComponent(userID)}`;
-                            });
-                          }
-                    });
-                } else {
-                    console.error(response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error fetching user info:", error);
+                // メッセージクリック時のイベント（モーダル表示）
+                $(".clickable").on("click", function () {
+                    const userID = $(this).closest(".chat").data("user-id");
+                    if (userID) {
+                        // ユーザー情報取得と通報オプション表示
+                        $.ajax({
+                            url: "getUserInfo.php",
+                            type: "GET",
+                            data: { UserID: userID },
+                            dataType: "json",
+                            success: function (response) {
+                                if (response.status === "success") {
+                                    Swal.fire({
+                                        title: response.userName,
+                                        html: `<p>${response.profileComment}</p>
+                                              <button id="reportButton">通報する</button>`,
+                                        showConfirmButton: false,
+                                        didRender: () => {
+                                            $("#reportButton").on("click", function () {
+                                                window.location.href = `report.php?UserID=${userID}&GroupID=${groupID}`;
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
             }
-        });
-    }
-});
 
-}
-
-            
-
-            // 初期化
+            // 初期表示および3秒ごとのメッセージ更新
             fetchMessages();
-
-            // 3秒ごとに更新
             setInterval(fetchMessages, 3000);
 
-            // メッセージ送信
+            // メッセージ送信処理
             $("#chatMessage").on("submit", function (e) {
-                e.preventDefault(); // フォーム送信を阻止
+                e.preventDefault();
                 const message = $("#message").val();
-
                 $.ajax({
-                    url: "", // 現在のページで処理
+                    url: "", // 同じPHPファイルにPOST送信
                     type: "POST",
                     data: { message: message },
                     success: function () {
-                        $("#message").val(""); // 入力をクリア
-                        fetchMessages(); // メッセージを再取得
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error sending message:", error);
+                        $("#message").val(""); // 入力欄をクリア
+                        fetchMessages(); // 新しいメッセージを再取得
                     }
                 });
             });
         });
-    </script> 
-  </form>
-
-  <?php
-          $studentDAO = new StudentDAO();
-          $user = $studentDAO->get_newUserInfo($loggedInUser->UserID ?? '');
-  ?>
-
-
-<script>
-  $("#btn09").click(function () {
-    Swal.fire({
-      title: '<?= $user[0]['UserName'] ?>',
-      html: '<br><?= $user[0]['ProfileComment'] ?><br><br>',
-      showCloseButton : true
-    })
-  });
-</script>
-
-
-
-
-</html> 
-
-<script>$(function () {
-  // ハンバーガーボタンクリックで実行
-  $(".drawer__button").click(function () {
-    $(this).toggleClass("active");
-    $(".drawer__nav").toggleClass("active");
-  });
-  // function
-});</script>
+    </script>
+</body>
+</html>
