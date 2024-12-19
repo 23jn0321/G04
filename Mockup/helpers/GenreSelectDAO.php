@@ -67,22 +67,30 @@ class GenreSelectDAO
         $placeholders = implode(',', array_fill(0, count($genreIDs), '?'));
         $sql = "
         SELECT 
-    g.GroupID, 
-    g.GroupName, 
-    COUNT(DISTINCT gm.UserID) AS MemberCount,
-	g.MaxMember AS MaxMember,
-    FORMAT(MAX(cm.SendTime), 'MM/dd') AS LastChatTime ,
-    mg.MainGenreName AS MainGenre , 
-    sg.SubGenreName AS SubGenre
-FROM ChatGroup g
-LEFT JOIN GroupMember gm ON g.GroupID = gm.GroupID
-LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID
-LEFT JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
-LEFT JOIN MainGenre mg ON sg.MainGenreID = mg.MainGenreID
-WHERE sg.SubGenreID IN ($placeholders)
-GROUP BY 
-    g.GroupID, g.GroupName, mg.MainGenreName, sg.SubGenreName,g.MaxMember;
-";
+        g.GroupID, 
+        g.GroupName, 
+        COUNT(DISTINCT gm.UserID) AS MemberCount,
+        g.MaxMember AS MaxMember,
+        COALESCE(FORMAT(MAX(cm.SendTime), 'MM/dd'), '情報なし') AS LastChatTime,
+        mg.MainGenreName AS MainGenre, 
+        sg.SubGenreName AS SubGenre
+    FROM ChatGroup g
+    LEFT JOIN GroupMember gm ON g.GroupID = gm.GroupID
+    LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID
+    LEFT JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
+    LEFT JOIN MainGenre mg ON sg.MainGenreID = mg.MainGenreID
+    WHERE sg.SubGenreID IN ($placeholders)
+    GROUP BY 
+        g.GroupID, g.GroupName, mg.MainGenreName, sg.SubGenreName, g.MaxMember
+    HAVING 
+        COUNT(DISTINCT gm.UserID) < g.MaxMember
+         ORDER BY 
+        CASE 
+            WHEN MAX(cm.SendTime) IS NULL THEN 0 
+            ELSE 1
+            END ASC,
+        MAX(cm.SendTime) DESC";
+
     
         $stmt = $dbh->prepare($sql);
         $stmt->execute($genreIDs);
