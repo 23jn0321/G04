@@ -1,45 +1,84 @@
 #join {
     position: absolute;
-    left: 1500px;
-    top: 800px;
+    left: 1620px;
+    top: 840px;
     padding: 15px 50px 15px 50px;
 }
 
 #back {
     position: absolute;
-    left: 750px;
-    top: 790px;
+    left: 650px;
+    top: 840px;
     padding: 15px 30px 15px 30px;
 }
 
 #groupName {
     position: relative;
-    left: 750px;
-    padding: 100px 100px 100px 100px;
+    left: 650px;
+    top: -36px;
+    font-size: 40px;
+    border: 10px;
+    white-space: nowrap;
 }
 
 #groupGenre {
     position: absolute;
-    left: 750px;
-    top: 300px;
-    padding: 100px 100px 100px 100px;
+    top: 40px;
+    left: 650px;
+    font-size: 30px;
+    border: 10px;
+    white-space: nowrap;
 }
+
+#mem {
+    position: absolute;
+    top: 40px;
+    left: 650px;
+    font-size: 30px;
+    border: 10px;
+    white-space: nowrap;
+}
+
+.Sanka {
+    position: relative;
+    font-size: 24px;
+    border: 2px solid #000;
+    list-style: none;
+    padding: 0px 0px 0px 10px;
+    width: 50%;
+    float: center;
+    left: 34%;
+    top: 40px;
+}
+
 
 #txtGE {
-    position: relative;
-    left: 800px;
-    top: 500px;
-    padding: 100px 100px 100px 100px;
+    position: absolute;
+    left: 645px;
+    top: 400px;
+    padding: 10px 850px 200px 0px;
+    font-size: 20px;
+
+
 }
 
-.aaa {
-    position: absolute;
-    left: 750px;
-    top: 500px;
-    padding: 100px 100px 100px 100px;
+#groupEdit {
+    position: relative;
+    height: auto;
+    width: 200px;
+
+    line-height: 470px;
+    font-size: 20px;
+    padding-left: 1000px;
 }
+
 
 .group {
     position: absolute;
     top: 200px;
+}
+
+html,
+body {
+    overflow: hidden;
 }

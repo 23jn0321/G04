@@ -125,13 +125,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <p id="groupName">グループ名：<?= $group[0]['GroupName'] ?>(<?= $group[0]['MemberInfo'] ?>)</p>
 
   <p id="groupGenre">グループのジャンル：<?= $group[0]['Genre'] ?> </p>
-  <div class="aaa">
-    <ul1>
-      <?php foreach ($group_list as $var) : ?>
-        <li1><?= $var->UserName ?><br><?= $var->GakkaName ?></li1>
-      <?php endforeach; ?>
-    </ul1>
+  <p id="mem">参加者一覧</p>
+  <div class="Sanka">
+  <ul1>
+    <?php foreach ($group_list as $var) : ?>
+      <li1><?= $var->UserName ?> <?= $var->GakkaName ?> <br></li1>
+    <?php endforeach; ?>
+  </ul1>
   </div>
 
-
-  <p id=groupEdit>グループ詳細</p><input type="text" id="txtGE" value=<?= $group[0]['GroupDetail'] ?> readonly>
+  <p id="groupEdit">グループ詳細</p>
+  <input type="text" id="txtGE" value=<?= $group[0]['GroupDetail'] ?> readonly>
