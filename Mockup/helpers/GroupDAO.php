@@ -150,7 +150,11 @@ class NewGroupDAO
                 WHERE g.GroupDeleteFlag = 0
                 GROUP BY 
                     g.GroupID, g.GroupName, g.MaxMember, mg.MainGenreName, sg.SubGenreName
-                ORDER BY g.GroupID DESC;
+                HAVING 
+                    (SELECT COUNT(DISTINCT gm_sub.UserID) 
+                     FROM GroupMember gm_sub 
+                     WHERE gm_sub.GroupID = g.GroupID) < g.MaxMember -- メンバー数が最大人数未満
+                ORDER BY g.GroupID DESC
                 ";
 
     //

@@ -57,6 +57,6 @@ if (isset($_SESSION['userInfo']) ) {
 <!-- お知らせボックス -->
 
 <!-- マッチングボタン　ジャンル選択に遷移(genreSelect.html) -->
-<a href="genreSelect.php"><input type="submit" id="MatchingButton" value="マッチング"></a>
+<button id="MatchingButton" onclick="location.href='genreSelect.php'">マッチング</button>
 
 </html>

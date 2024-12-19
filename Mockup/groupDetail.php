@@ -1,6 +1,23 @@
 <?php
     require_once 'helpers/GroupDetailDAO.php';
-    include "header.php";
+    require_once 'helpers/userDAO.php';
+    require_once 'helpers/GroupDAO.php';
+   
+    include "header.php"; 
+  
+    $loggedInUser = null;
+
+if (isset($_SESSION['userInfo']) ) {
+    $userInfo = $_SESSION['userInfo'];
+
+    $loggedInUser = $_SESSION['userInfo'];
+}else{
+  header("Location: login.php");
+  exit;
+}
+    $groupDAO = new GroupDAO();
+   
+    $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
 
     //セッションの開始
     if(session_status() === PHP_SESSION_NONE){
@@ -13,9 +30,20 @@
   
   $groupdetail = new GroupDetailDAO();
   $group = $groupdetail->get_GroupDetail1($groupID);
-  //var_dump($group);
 
-  
+  $groupdetail2 = new GroupDetailDAO();
+  $group_list = $groupdetail2->get_groupDetail2($groupID);
+
+  if($_SERVER["REQUEST_METHOD"] === "POST"){
+    $groupdetail3 = new GroupDetailDAO();
+    $groupdetail3 -> insert($userInfo->UserID,$groupID);
+    var_dump($userInfo);
+
+    header('Location: message.php?GroupID='. urlencode($groupID));
+    exit;
+  }
+
+
 ?>
 
 
@@ -25,77 +53,82 @@
 <!--ヘッダー-->
 <header>
   <!-- CSS適応 -->
-  <link rel="stylesheet" href="CSSUser/Header.css">
+
   <link rel="stylesheet" href="CSSUser/GroupDetailBefor.css">
+  <link rel="stylesheet" href="CSSUser/Home.css">
 
   <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
 
 </header>
-
+<form id="joinButton" action="" method="POST">
 <div>
   <p id="group">所属グループ一覧</p>
-  <a href="groupEdit.html"><input type="button" value="グループ編集" id="groupEdit"></a>
-  <input type="button" value="参加" id="groupJoin">
-  <a href="genreSelect.html"><input type="button" value="ジャンル選択に戻る" id="back"></a>
+  <input type="hidden" name="deleteGroup" value="1">
+  <input type="submit" value="参加" id="join">
 </div>
-
-
+</form>
+<a href="genreSelect.html"><input type="button" value="ジャンル選択に戻る" id="back"></a>
 <script src="./jquery-3.6.0.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-  $("#groupJoin").click(function () {
-    Swal.fire({
-      html: '"資格勉強の集い"に参加しますか？',
-      showCancelButton: true,
-      confirmButtonText: 'OK',
-      type: 'info'
-    }).then((result) => {
-      if (result.value) {
-        window.location.href = 'message.html'
-      }
+$(document).ready(function() {
+    // フォームの送信イベントをカスタマイズ
+    $('#joinButton').on('submit', function(e) {
+        e.preventDefault(); // デフォルトの送信処理を防ぐ
+
+        const form = this; // フォーム要素を参照
+
+        // SweetAlert2を使って確認ダイアログを表示
+        Swal.fire({
+            title: '<?= $group[0]['GroupName'] ?>に参加しますか？', // ダイアログのタイトル
+            icon: 'question', // アイコン（質問マーク）
+            showCancelButton: true, // キャンセルボタンを表示
+            confirmButtonText: '確定', // 確定ボタンのテキスト
+            cancelButtonText: 'キャンセル', // キャンセルボタンのテキスト
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 確定ボタンが押された場合、フォームを送信
+                form.submit();
+            }
+        });
     });
-  });
-</script>
+});
+
+    </script>
 
 
 
 
-
-<a href="message.html">
-  <p>
-    <!-- グループ表示 -->
+<nav class="group">
     <ul>
+    <?php foreach ($groupInfo as $var): ?>
       <li>
-        <p>資格勉強の集い(3/5)<br>最終更新日：10/13<br>ジャンル：勉強 / 資格勉強</p>
+        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
+        </a>
+       
+        <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
+         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集">
+          <?php endif; ?>
       </li>
-      <li>
-        <p>テスト期間がち勉強(4/5)<br>最終更新日：10/8<br>ジャンル：勉強 / テスト勉強</p>
-      </li>
-      <li>
-        <p>プログラミング愛好家(3/4)<br>最終更新日：10/3<br>ジャンル：勉強 / プログラミング</p>
-      </li>
-      <li>
-        <p>テスト勉強(4/4)<br>最終更新日：9/30<br>ジャンル：勉強 / テスト勉強</p>
-      </li>
-      <li>
-        <p>K-POP愛(2/3)<br>最終更新日：9/22<br>ジャンル：音楽 / K-POP</p>
-      </li>
+      <?php endforeach; ?>
     </ul>
 </a>
-</p>
 
+  
 
 <p id="groupName">グループ名：<?= $group[0]['GroupName'] ?> (<?= $group[0]['MemberInfo'] ?>)</p>
 <p id="groupGenre">グループのジャンル：<?= $group[0]['Genre'] ?> </p>
+<div class="aaa">
+<ul1>
+<?php foreach($group_list as $var) : ?>
+  <li1><?= $var->UserName ?><br><?= $var->GakkaName ?></li1>
+<?php endforeach; ?>
+</ul1>
+</div>
 
-<p id=groupMem>参加者</p><textarea id="txtGM" rows="5" cols="33" value=<?= $group->Genre ?> readonly>
-電子花子               情報処理科      １年
-ベンキョ・ジンセイ      情報処理科      ２年
-大橋雪乃成             情報処理科      ２年
-</textarea></p>
 
 <p id=groupEdit>グループ詳細</p><input type="text" id="txtGE" value=<?= $group[0]['GroupDetail'] ?> readonly>
-
-

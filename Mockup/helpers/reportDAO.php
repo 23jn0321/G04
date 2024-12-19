@@ -18,19 +18,23 @@
         public string $ReportCategory;  //通報内容
     }
 
-    class GakuseiUser
+    class ReportDAO
     {
-        public string $UserName;  //ニックネーム
-    }
-
-    class aaa
-    {
-        public function insert(int $ReportID, int $ReportUserID,int $TargetUserID, int $GroupID, string $ReportCategory, string $UserName)
+        public function reportUser(int $ReportUserID,int $TargetUserID, int $GroupID, string $ReportCategory)
         {
+            //DBに接続
             $dbh = DAO::get_db_connect();
 
-            $sql="INSERT INTO Report(ReportID, ReportUserID, TargetUserID, GroupID,ReportCategory,UserName)
-                  VALUES (:ReportID, :ReportUserID, :TargetUserID, GroupID, :ReportCategory, :UserName)";
+            //Reportテーブルに通報情報をINSERTするSQL文
+            $sql="INSERT INTO Report(ReportUserID,TargetUserID,GroupID,ReportCategory) 
+	                VALUES(:reportUserID,:targetUserID,:groupID,:reportCategory)";
+
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':reportUserID', $ReportUserID, PDO::PARAM_INT);
+            $stmt->bindValue(':targetUserID', $TargetUserID, PDO::PARAM_INT);
+            $stmt->bindValue(':groupID', $GroupID, PDO::PARAM_INT);
+            $stmt->bindValue(':reportCategory', $ReportCategory, PDO::PARAM_STR);
+            $stmt->execute();
         }
 
         

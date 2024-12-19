@@ -26,25 +26,25 @@ if (!empty($selectedGenres)) {
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> 
+     <link rel="stylesheet" href="CSSUser/Search.css">
     <title>検索結果</title>
 </head>
 <body>
     <h1>検索結果</h1>
+    <nav class="group">
     <?php if (!empty($groups)): ?>
         <ul>
             <?php foreach ($groups as $group): ?>
-                <li class="group-item">
-                    <div class="group-title">
+                <li>
+                    <div>
                         <a href="groupDetail.php?GroupID=<?= htmlspecialchars($group->GroupID) ?>">
                             <?= htmlspecialchars($group->GroupName) ?>
-                        </a>
                         (<?= htmlspecialchars($group->MemberCount) ?>/<?= htmlspecialchars($group->MaxMember) ?>)
+                        <br>最終更新日: <?= htmlspecialchars($group->LastChatTime ?: '更新履歴なし') ?>
+                        <br>ジャンル: <?= htmlspecialchars($group->MainGenre) ?> / <?= htmlspecialchars($group->SubGenre) ?><br>
                     </div>
-                    <div class="group-details">
-                        最終更新日: <?= htmlspecialchars($group->LastChatTime ?: '更新履歴なし') ?><br>
-                        ジャンル: <?= htmlspecialchars($group->MainGenre) ?> / <?= htmlspecialchars($group->SubGenre) ?>
-                    </div>
+                    </a>
                 </li>
             <?php endforeach; ?>
         </ul>

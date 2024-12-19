@@ -34,7 +34,6 @@ if (isset($_SESSION['userInfo']) ) {
         <meta charset="utf-8">
         <header>
 <!-- CSS適応 -->
-        <link rel="stylesheet" href="CSSUser/Header.css">
         <link rel="stylesheet" href="CSSUser/GenreSelect.css">
  
 
@@ -46,14 +45,14 @@ if (isset($_SESSION['userInfo']) ) {
     <ul>
     <?php foreach ($groupInfo as $var): ?>
       <li>
-        <a href="groupDetailBefor.html?GroupID=<?= urlencode($var->GroupID) ?>">
+        <a href="groupDetail.php?GroupID=<?= urlencode($var->GroupID) ?>">
           <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
         </a>
       </li>
       <?php endforeach; ?>
     </ul>
 <!-- グループ作成ボタン -->
-    <a href="groupCreate.php"><input type="submit" value="グループ作成" id="groupCreate"></a>  
+    <button id="groupCreate" onclick="location.href='groupCreate.php'">グループ作成</button>
 <!-- ジャンル選択 -->
 <form action="search.php" method="GET">
     <div class="genreSelect">
