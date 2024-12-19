@@ -34,6 +34,15 @@ if (isset($_SESSION['userInfo']) ) {
   $groupdetail2 = new GroupDetailDAO();
   $group_list = $groupdetail2->get_groupDetail2($groupID);
 
+  if($_SERVER["REQUEST_METHOD"] === "POST"){
+    $groupdetail3 = new GroupDetailDAO();
+    $groupdetail3 -> insert($userInfo->UserID,$groupID);
+    var_dump($userInfo);
+
+    header('Location: message.php?GroupID='. urlencode($groupID));
+    exit;
+  }
+
 
 ?>
 
@@ -51,42 +60,43 @@ if (isset($_SESSION['userInfo']) ) {
   <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
 
 </header>
-
+<form id="joinButton" action="" method="POST">
 <div>
   <p id="group">所属グループ一覧</p>
-  <input type="button" value="参加" id="groupJoin">
-  <a href="genreSelect.html"><input type="button" value="ジャンル選択に戻る" id="back"></a>
+  <input type="hidden" name="deleteGroup" value="1">
+  <input type="submit" value="参加" id="join">
 </div>
-
-
+</form>
+<a href="genreSelect.html"><input type="button" value="ジャンル選択に戻る" id="back"></a>
 <script src="./jquery-3.6.0.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-        // 作成ボタンがクリックされたとき
-        $(document).ready(function() {
-            // フォームの送信処理をカスタマイズ
-            $('#sendbutton').on('submit', function(e) {
-                e.preventDefault(); // 通常の送信を防ぐ
+$(document).ready(function() {
+    // フォームの送信イベントをカスタマイズ
+    $('#joinButton').on('submit', function(e) {
+        e.preventDefault(); // デフォルトの送信処理を防ぐ
 
-                // SweetAlert2を使って確認ダイアログを表示
-                Swal.fire({
-                    title: '編集確認',
-                    text: '編集を確定しますか？',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: '確定',
-                    cancelButtonText: 'キャンセル',
-                    
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // 「送信」ボタンが押された場合、フォームを送信
-                        this.submit();
-                    }
-                });
-            });
+        const form = this; // フォーム要素を参照
+
+        // SweetAlert2を使って確認ダイアログを表示
+        Swal.fire({
+            title: '<?= $group[0]['GroupName'] ?>に参加しますか？', // ダイアログのタイトル
+            icon: 'question', // アイコン（質問マーク）
+            showCancelButton: true, // キャンセルボタンを表示
+            confirmButtonText: '確定', // 確定ボタンのテキスト
+            cancelButtonText: 'キャンセル', // キャンセルボタンのテキスト
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 確定ボタンが押された場合、フォームを送信
+                form.submit();
+            }
         });
+    });
+});
+
     </script>
 
 

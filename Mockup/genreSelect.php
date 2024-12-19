@@ -46,7 +46,7 @@ if (isset($_SESSION['userInfo']) ) {
     <ul>
     <?php foreach ($groupInfo as $var): ?>
       <li>
-        <a href="groupDetailBefor.html?GroupID=<?= urlencode($var->GroupID) ?>">
+        <a href="groupDetail.php?GroupID=<?= urlencode($var->GroupID) ?>">
           <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
         </a>
       </li>
