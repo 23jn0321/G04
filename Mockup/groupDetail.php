@@ -106,6 +106,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <nav class="group">
   <ul>
+  <?php if (empty($groupInfo)): ?>
+         <li>
+            所属グループがありません。<br>
+            グループに参加しましょう！
+          </li>
+          <?php else: ?>
     <?php foreach ($groupInfo as $var): ?>
       <li>
         <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
@@ -117,6 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php endif; ?>
       </li>
     <?php endforeach; ?>
+    <?php endif; ?>
   </ul>
   </a>
   </nav>

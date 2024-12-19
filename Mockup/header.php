@@ -31,7 +31,7 @@ if (isset($_SESSION['userInfo']) ) {
         $user = $studentDAO->get_newUserInfo($loggedInUser->UserID ?? '');
         //var_dump($user[0]['UserName']);
         ?>
-        <input type="text" id="name" value="<?= htmlspecialchars($user[0]['UserName'], ENT_QUOTES, 'UTF-8') ?>" readonly>
+        <input type="text" id="name" value="<?= htmlspecialchars($user[0]['UserName'], ENT_QUOTES, 'UTF-8') ?>" placeholder="ニックネームを決めよう！" readonly>
 
 
     <a href="edit.php"><input type="button" value="編集" id="edit"></a>

@@ -42,9 +42,7 @@ if (isset($_SESSION['userInfo']) ) {
     <ul>
     <?php if (empty($groupInfo)): ?>
          <li>
-            所属グループがありません。
-          </li>
-          <li>
+            所属グループがありません。<br>
             グループに参加しましょう！
           </li>
           <?php else: ?>
