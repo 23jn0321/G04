@@ -34,7 +34,6 @@ if (isset($_SESSION['userInfo']) ) {
         <meta charset="utf-8">
         <header>
 <!-- CSS適応 -->
-        <link rel="stylesheet" href="CSSUser/Header.css">
         <link rel="stylesheet" href="CSSUser/GenreSelect.css">
  
 
@@ -53,7 +52,7 @@ if (isset($_SESSION['userInfo']) ) {
       <?php endforeach; ?>
     </ul>
 <!-- グループ作成ボタン -->
-    <a href="groupCreate.php"><input type="submit" value="グループ作成" id="groupCreate"></a>  
+    <button id="groupCreate" onclick="location.href='groupCreate.php'">グループ作成</button>
 <!-- ジャンル選択 -->
 <form action="search.php" method="GET">
     <div class="genreSelect">
