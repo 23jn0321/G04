@@ -1,4 +1,45 @@
 #join {
+    position: absolute;
+    left: 1500px;
+    top: 800px;
+    padding: 15px 50px 15px 50px;
+}
+
+#back {
+    position: absolute;
+    left: 750px;
+    top: 790px;
+    padding: 15px 30px 15px 30px;
+}
+
+#groupName {
     position: relative;
-    left: 1000px;
+    left: 750px;
+    padding: 100px 100px 100px 100px;
+}
+
+#groupGenre {
+    position: absolute;
+    left: 750px;
+    top: 300px;
+    padding: 100px 100px 100px 100px;
+}
+
+#txtGE {
+    position: relative;
+    left: 800px;
+    top: 500px;
+    padding: 100px 100px 100px 100px;
+}
+
+.aaa {
+    position: absolute;
+    left: 750px;
+    top: 500px;
+    padding: 100px 100px 100px 100px;
+}
+
+.group {
+    position: absolute;
+    top: 200px;
 }

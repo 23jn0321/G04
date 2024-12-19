@@ -1,102 +1,103 @@
-
-#title{
+#title {
     outline-color: black;
     list-style: none;
-    border:solid 1px;
+    border: solid 1px;
     padding: 13px 220px 12px 203px;
     position: relative;
     left: 40px;
 
 }
+
 #groupEditR {
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease; /* アニメーションの設定 */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    /* アニメーションの設定 */
 }
+
 #groupEditR:hover {
-    transform: scale(1.1); /* ホバーしたら少し大きくなる */
+    transform: scale(1.1);
+    /* ホバーしたら少し大きくなる */
 }
+
 .group {
-width: 100%;
-margin: 0px auto 0 auto; 
-overflow-y: auto;
+    width: 100%;
+    margin: 0px auto 0 auto;
 }
 
 
 
-
-
-    
 
 .group li:hover {
     background-color: #effff0;
     color: #01080e;
     outline: 1px solid #2589d0;
-    
-  }
+
+}
 
 .group ul {
-overflow-y: auto;
-max-width: 550px;
-max-height: 680px;
-flex-wrap: wrap;
-display: flex;
-margin: auto;
-justify-content: space-around; 
-list-style: none;
-left: -625px;
-padding-left:0;
-border: solid 2px;
-position: absolute;
-left: 50px;
+    overflow-y: auto;
+    max-width: 550px;
+    max-height: 680px;
+    flex-wrap: wrap;
+    display: flex;
+    margin: auto;
+    justify-content: space-around;
+    list-style: none;
+    left: -625px;
+    padding-left: 0;
+    border: solid 2px;
+    position: absolute;
+    left: 50px;
 }
 
 .group ul li {
-text-align: center;
-list-style: none;
-border:solid 1px;
-width: 800px;
-list-style: none;
-border:solid 1px;
-padding-top: 10px;
-padding-bottom: 10px;
-text-align: center;
+    text-align: center;
+    list-style: none;
+    border: solid 1px;
+    width: 800px;
+    list-style: none;
+    border: solid 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
 }
 
 .group a {
-font-size: 18px;
-font-weight: bold;
-display: block;
-padding: 30px 0 30px 0;
-margin-bottom: 10px;
-text-decoration: none;
-position: relative;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    padding: 30px 0 30px 0;
+    margin-bottom: 10px;
+    text-decoration: none;
+    position: relative;
 }
 
 .group a::after {
-position: absolute;
-left: 0;
-bottom: 0;
-display: block;
-content: "";
-width: 0%;
-height: 2px;
-background: #000;
-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: block;
+    content: "";
+    width: 0%;
+    height: 2px;
+    background: #000;
+    transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 
 
 
-#groupEdit{
+#groupEdit {
     padding: 13px 10px 12px 10px;
     position: relative;
     left: 10px;
     bottom: 8px;
 }
-#group{
+
+#group {
     padding: 10px 10px 10px 10px;
     border: solid 1px;
     width: 300px;
@@ -105,39 +106,40 @@ transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     left: 50px;
 }
 
-div p{
+div p {
     display: inline-block;
 }
 
 
 .box {
-    width: 700px;               
-    height: 600px;             
-    border: 1px solid #000;     
+    width: 700px;
+    height: 600px;
+    border: 1px solid #000;
     overflow-y: scroll;
     position: relative;
     left: 700px;
     bottom: 700px;
-  }
+}
 
-  #MatchingButton{
+#MatchingButton {
     padding: 20px 500px 20px 500px;
     position: absolute;
     left: 700px;
     bottom: 40px;
 }
 
-.multiselect{
+.multiselect {
     position: relative;
     left: 900px;
 }
 
-html,body {
+html,
+body {
     overflow: hidden;
-  }
+}
 
 
-#admin{
+#admin {
     position: relative;
     left: 600px;
 }
