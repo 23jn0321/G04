@@ -23,6 +23,12 @@ foreach ($genres as $genre) {
         'subGenreNames' => $subGenreNames
     ];
 }
+if (isset($_GET['newSubGenreName'])) {
+    $newSubGenreNames = $_GET['newSubGenreName'];  // ここでnewSubGenreName[]が配列として取得される
+    foreach ($newSubGenreNames as $subGenre) {
+        echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -39,6 +45,7 @@ foreach ($genres as $genre) {
 
 <script>
     let inputCount = 4;
+    let newGenreCount = 0;
     let genres = [
         [],
         []
@@ -112,9 +119,28 @@ foreach ($genres as $genre) {
                 // 新しいinput要素をフォームに追加
                 var form = document.querySelector("form");
                 form.insertBefore(newInput, form.querySelector("button"));
-                console.log("add呼び出し");
+                console.log("自動追加");
             }
         }
+
+        function addNewSubGenreField() {
+            // 新しいinput要素を作成
+            if (inputCount >= 10) {
+                showAlert("一度に追加できる中ジャンルは10個までです！");
+            } else {
+                newGenreCount += 1;
+                inputCount += 1;
+                var newInput = document.createElement("input");
+                newInput.type = "text";
+                newInput.id = "newSubGenreName" + newGenreCount;
+                newInput.name = name = "newSubGenreName[]"
+                // 新しいinput要素をフォームに追加
+                var form = document.querySelector("form");
+                form.insertBefore(newInput, form.querySelector("button"));
+                console.log("ジャンル追加呼び出し");
+            }
+        }
+
 
         function showAlert(message) {
             const existingAlert = document.querySelector('.alert-fixed');
@@ -134,8 +160,8 @@ foreach ($genres as $genre) {
             }, 3000);
         }
 
-        const addButton = document.getElementById('addSubGenreButton');
-        addButton.addEventListener('click', addSubGenreField);
+        const addButton = document.getElementById('addNewSubGenreButton');
+        addButton.addEventListener('click', addNewSubGenreField);
     });
 
     function subGenresAdd(event) {
@@ -221,14 +247,14 @@ foreach ($genres as $genre) {
     </div>
 
     <div id="subGenreContainer">
-        <form onsubmit="subGenresAdd(event)" method="GET">
+        <form onsubmit="newSubGenresAdd(event)" method="GET" action="">
             <label for="subGenreName">中ジャンル名</label>
             <input type="text" id="subGenreName1" name="subGenreName1">
             <input type="text" id="subGenreName2" name="subGenreName2">
             <input type="text" id="subGenreName3" name="subGenreName3">
             <input type="text" id="subGenreName4" name="subGenreName4">
             <!-- 中ジャンル追加ボタン -->
-            <button type="button" id="addSubGenreButton">+中ジャンルを追加</button>
+            <button type="button" id="addNewSubGenreButton">+中ジャンルを追加</button>
             <br>
 
             <button type="submit">ジャンルを追加する</button>
