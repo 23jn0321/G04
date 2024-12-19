@@ -39,7 +39,7 @@ if (isset($_SESSION['userInfo']) ) {
     $groupdetail3 -> insert($userInfo->UserID,$groupID);
     var_dump($userInfo);
 
-    header('Location: home.php');
+    header('Location: message.php?GroupID='. urlencode($groupID));
     exit;
   }
 
@@ -70,7 +70,7 @@ if (isset($_SESSION['userInfo']) ) {
 <a href="genreSelect.html"><input type="button" value="ジャンル選択に戻る" id="back"></a>
 <script src="./jquery-3.6.0.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 $(document).ready(function() {
@@ -78,22 +78,25 @@ $(document).ready(function() {
     $('#joinButton').on('submit', function(e) {
         e.preventDefault(); // デフォルトの送信処理を防ぐ
 
+        const form = this; // フォーム要素を参照
+
         // SweetAlert2を使って確認ダイアログを表示
         Swal.fire({
-            title: '編集確認', // ダイアログのタイトル
-            text: '編集を確定しますか？', // ダイアログの内容
+            title: '<?= $group[0]['GroupName'] ?>に参加しますか？', // ダイアログのタイトル
             icon: 'question', // アイコン（質問マーク）
             showCancelButton: true, // キャンセルボタンを表示
             confirmButtonText: '確定', // 確定ボタンのテキスト
             cancelButtonText: 'キャンセル', // キャンセルボタンのテキスト
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 // 確定ボタンが押された場合、フォームを送信
-                this.submit();
+                form.submit();
             }
         });
     });
 });
+
     </script>
 
 
