@@ -13,7 +13,8 @@ if (isset($_SESSION['userInfo']) ) {
     $loggedInUser = $_SESSION['userInfo'];
 }
     $groupDAO = new NewGroupDAO();
-    $groupInfo = $groupDAO->getNewGroup();
+ 
+    $groupInfo = $groupDAO->getNewGroup($loggedInUser->UserID);
     
     $groupDAO = new GroupDAO();
 
