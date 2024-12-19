@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["groupName"])) {
 
     $GroupCreateDAO = new GroupDAO();
     $GroupCreateDAO->groupInfoUpdate($groupID, $GroupName, $GroupDetial);
-    header('Location: groupEdit.php?GroupID=' . urlencode($groupID));
+    header('Location: message.php?GroupID=<?= urlencode($groupID)?>');
     exit;
 }
 
