@@ -15,26 +15,29 @@
 #groupName {
     position: relative;
     left: 650px;
-    top: -36px;
+    top: -50px;
     font-size: 40px;
     border: 10px;
     white-space: nowrap;
 }
-
-#groupGenre {
+.group {
     position: absolute;
-    top: 40px;
-    left: 650px;
+    top: 200px;
+}
+#groupGenre {
+    position: relative;
+    left: 651px;
+    top: -80px;
     font-size: 30px;
     border: 10px;
     white-space: nowrap;
 }
 
 #mem {
-    position: absolute;
-    top: 40px;
+    position: relative;
+    top: -100px;
     left: 650px;
-    font-size: 30px;
+    font-size: 24px;
     border: 10px;
     white-space: nowrap;
 }
@@ -48,36 +51,27 @@
     width: 50%;
     float: center;
     left: 34%;
-    top: 40px;
-}
-
-
-#txtGE {
-    position: absolute;
-    left: 645px;
-    top: 400px;
-    padding: 10px 850px 200px 0px;
-    font-size: 20px;
-
-
+    top: -120px;
 }
 
 #groupEdit {
     position: relative;
-    height: auto;
-    width: 200px;
-
-    line-height: 470px;
+    width: 74%;
+    top: -120px;
+    left: 650px;
+    font-size: 24px;
+    border: 10px;
+    text-align: center;
+ 
+}
+  
+#txtGE {
+    position: relative;
+    left: 645px;
+    top: -150px;
+    padding: 10px 850px 200px 0px;
     font-size: 20px;
-    padding-left: 1000px;
 }
-
-
-.group {
-    position: absolute;
-    top: 200px;
-}
-
 html,
 body {
     overflow: hidden;

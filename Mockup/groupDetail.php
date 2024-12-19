@@ -101,9 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   });
 </script>
 
-
-
-
 <nav class="group">
   <ul>
   <?php if (empty($groupInfo)): ?>
@@ -127,11 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </ul>
   </a>
   </nav>
-
-
-
+  
   <p id="groupName">グループ名：<?= $group[0]['GroupName'] ?>(<?= $group[0]['MemberInfo'] ?>)</p>
-
   <p id="groupGenre">グループのジャンル：<?= $group[0]['Genre'] ?> </p>
   <p id="mem">参加者一覧</p>
   <div class="Sanka">
@@ -141,6 +135,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endforeach; ?>
   </ul1>
   </div>
-
-  <p id="groupEdit">グループ詳細</p>
+  <p id="groupEdit">  グループ詳細</p>
   <input type="text" id="txtGE" value=<?= $group[0]['GroupDetail'] ?> readonly>
