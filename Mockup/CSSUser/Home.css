@@ -50,8 +50,8 @@
     left: -625px;
     padding-left: 0;
     border: solid 2px;
-    position: absolute;
-    left: 50px;
+    float: left;
+    margin-left: 40px;
 }
 
 .group ul li {
@@ -73,7 +73,7 @@
     padding: 30px 0 30px 0;
     margin-bottom: 10px;
     text-decoration: none;
-    position: relative;
+
 }
 
 .group a::after {
@@ -93,9 +93,6 @@
 
 #groupEdit {
     padding: 13px 10px 12px 10px;
-    position: relative;
-    left: 10px;
-    bottom: 8px;
 }
 
 #group {
@@ -103,8 +100,6 @@
     border: solid 1px;
     width: 300px;
     text-align: center;
-    position: relative;
-    left: 50px;
 }
 
 div p {
@@ -124,9 +119,9 @@ div p {
 
 #MatchingButton {
     padding: 20px 500px 20px 500px;
-    position: absolute;
-    left: 700px;
-    bottom: 40px;
+    float: left;
+    margin-top: 615px;
+    margin-left: 40px;
 }
 
 .multiselect {
