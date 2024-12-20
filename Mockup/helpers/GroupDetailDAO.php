@@ -93,7 +93,7 @@ class GroupDetailDAO
     {
         $dbh = DAO::get_db_connect();
 
-        $sql="INSERT FROM GroupMember
+        $sql="INSERT INTO GroupMember
               VALUES(:UserID,:GroupID)";
 
         $stmt = $dbh->prepare($sql);

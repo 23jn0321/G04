@@ -46,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
   <header>
 <!-- CSS適応 -->
     
-    <link rel="stylesheet" href="CSSUser/home.css">
-    <link rel="stylesheet" href="CSSUser/groupEdit.css">
+    <link rel="stylesheet" href="CSSUser/GroupEdit.css">
 
   </header>
   <div>
@@ -71,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
       <?php endforeach; ?>
     </ul>
 </a>
+</nav>  
 <!-- グループ編集 -->
  <form id="myForm" action="" method="POST">
  <div class="groupEdit">
@@ -95,9 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2ライブラリを読み込み -->
 
 
-<!-- グループ詳細更新ボタン ??に遷移(??.html) -->
-
-
 <script>
 $(document).ready(function() {
     // フォームの送信イベントをカスタマイズ
@@ -112,6 +109,7 @@ $(document).ready(function() {
             showCancelButton: true, // キャンセルボタンを表示
             confirmButtonText: '確定', // 確定ボタンのテキスト
             cancelButtonText: 'キャンセル', // キャンセルボタンのテキスト
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 // 確定ボタンが押された場合、フォームを送信
@@ -142,6 +140,7 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonText: '本当に削除する',
             cancelButtonText: 'キャンセル',
+        
             customClass: {
               title: 'custom-title',
               content: 'custom-content',

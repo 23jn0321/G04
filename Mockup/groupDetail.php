@@ -38,6 +38,9 @@ $isJoined = $groupdetail3->get_join($loggedInUser->UserID, $groupID);
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
  
   $action = isset($_POST['action']) ? $_POST['action'] : null;
+  if ($groupID === null) {
+    die('GroupIDが指定されていません。');
+  }
 
   $groupdetail4 = new GroupDetailDAO();
 
@@ -49,9 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     exit;}
 
    elseif ($action === 'join') { 
-    header('Location: message.php?GroupID=' . urlencode($groupID));// actionパラメータを追加
     $groupdetail4->insert($loggedInUser->UserID, $groupID);
     var_dump($userInfo); 
+    header('Location: message.php?GroupID=' . urlencode($groupID));// actionパラメータを追加
+
     exit;}
    }
 
@@ -133,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   });
 </script>
 
-<form id="actionForm" method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+<form id="actionForm" method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) . '?GroupID=' . urlencode($groupID) ?>">
 <input type="hidden" name="action" value="">
   <button id="actionButton" type="button" class="btn <?= $isJoined ? 'btn-danger' : 'btn-primary' ?>">
     <?= $isJoined ? '退会する' : '参加する' ?>

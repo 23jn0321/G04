@@ -1,3 +1,113 @@
+#title {
+    outline-color: black;
+    list-style: none;
+    border: solid 1px;
+    padding: 13px 220px 12px 203px;
+    position: relative;
+    left: 40px;
+
+}
+
+#groupEditR {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    /* アニメーションの設定 */
+}
+
+#groupEditR:hover {
+    transform: scale(1.1);
+    /* ホバーしたら少し大きくなる */
+}
+
+.group {
+    width: 100%;
+    margin: 0px auto 0 auto;
+}
+
+
+
+
+
+.group li:hover {
+    background-color: #effff0;
+    color: #01080e;
+    outline: 1px solid #2589d0;
+
+}
+
+.group ul {
+    overflow-y: auto;
+    max-width: 550px;
+    max-height: 680px;
+    flex-wrap: wrap;
+    display: flex;
+    margin: auto;
+    justify-content: space-around;
+    list-style: none;
+    left: -625px;
+    padding-left: 0;
+    border: solid 2px;
+    float: left;
+    margin-left: 40px;
+}
+
+.group ul li {
+    text-align: center;
+    list-style: none;
+    border: solid 1px;
+    width: 800px;
+    list-style: none;
+    border: solid 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.group a {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    padding: 30px 0 30px 0;
+    margin-bottom: 10px;
+    text-decoration: none;
+
+}
+
+.group a::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: block;
+    content: "";
+    width: 0%;
+    height: 2px;
+    background: #000;
+    transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+
+
+
+
+
+.multiselect {
+    position: relative;
+    left: 900px;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+
+#admin {
+    position: relative;
+    left: 600px;
+}
 div p{
     font-size: 20px;
     position: absolute;
@@ -10,23 +120,31 @@ div p{
     left: 800px;    
 }
 #textbox-2{
-    position: absolute;
-    left: 800px;
-    bottom: 540px;
+    float: left;
+    margin-left: 200px;
+    margin-top: 240px;
 }
 #editDetail{
     padding: 10px 10px 10px 10px;
-    position: absolute;
-    left: 800px;
-    bottom: 450px;
+    float: right;
+    margin-right: 1610px;
+    margin-top: 20px;
 }
 #Exit{
     padding: 10px 10px 10px 10px;
     color: rgb(153, 0, 0);
-    position: absolute;
-    left: 1000px;
-    bottom: 450px;
+    float: left;
+    margin-left: 1000px;
 }
 #groupName{
     padding: 7px 7px;
+}
+#sanka{
+
+}
+#mainGenre{
+
+}
+#subGenre{
+
 }

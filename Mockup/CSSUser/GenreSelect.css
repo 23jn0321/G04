@@ -1,3 +1,9 @@
+/* すべての ul 要素と li 要素に適用 */
+ul, li {
+    margin: 0; /* 外側の余白をリセット */
+    padding: 0; /* 内側の余白をリセット */
+}
+
 
 #title{
     outline-color: black;
@@ -13,9 +19,9 @@
 width: 100%;
 margin: 0px auto 0 auto; 
 overflow-y: auto; 
-
-position: absolute;
-top: 250px;
+float: left;
+margin-left: 55px;
+margin-top: 100px;
 
 }
 
@@ -31,20 +37,18 @@ max-width: 550px;
 max-height: 680px;
 flex-wrap: wrap;
 display: flex;
-margin: auto;
 justify-content: space-around; 
 list-style: none;
 left: -625px;
-padding-left:0;
 border: solid 2px;
-position: relative;
+
 }
 
 .newGroup ul li {
 text-align: center;
-list-style: none;
+list-style: none;   
 border:solid 1px;
-width: 800px;
+width: 800px;   
 list-style: none;
 border:solid 1px;
 padding-top: 10px;
@@ -150,9 +154,9 @@ html,body {
 
 #groupCreate{
     padding: 10px 10px 10px 10px;
-    position: absolute;
-    top: 500px;
-    left: 1300px;
+    float: right;
+    margin-right: 2500px;
+    
 }
 
 #Search{
