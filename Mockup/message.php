@@ -220,5 +220,8 @@
     })
   });
 </script>
+
+
+<input type="button" onclick="location.href='groupDetail.php?GroupID=<?= $groupID ?>'" id="groupDetail" value="詳細">
 </body>
 </html>
