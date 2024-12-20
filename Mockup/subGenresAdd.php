@@ -25,10 +25,16 @@ foreach ($genres as $genre) {
 }
 if (isset($_GET['newSubGenreName'])) {
     $newSubGenreNames = $_GET['newSubGenreName'];  // ここでnewSubGenreName[]が配列として取得される
+    $genreID=$_GET["selectedOptionId"];
+    $subGenreDAO = new subGenreDAO();
+    echo "Genre ID: " . htmlspecialchars($genreID, ENT_QUOTES, 'UTF-8') . "<br>";
     foreach ($newSubGenreNames as $subGenre) {
+        echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
+        $subGenreDAO->insert($genreID,$subGenre);
         echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
     }
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -55,6 +61,9 @@ if (isset($_GET['newSubGenreName'])) {
         const subGenreContainer = document.getElementById('subGenreContainer');
         genres = <?php echo json_encode($genreWithSubGenres); ?>;
         console.log(genres);
+        const selectedOption = mainGenreSelect.options[mainGenreSelect.selectedIndex];
+        const initialOptionId = selectedOption.id;
+        hiddenLabelDiv.value = initialOptionId; // 隠し入力にoptionIdを設定
         // 初期状態でのサブジャンル表示処理
         const genreName = mainGenreSelect.value;
         updateSubGenreFields(genreName);
@@ -63,6 +72,9 @@ if (isset($_GET['newSubGenreName'])) {
         mainGenreSelect.addEventListener('change', (event) => {
             const selectedGenre = event.target.value;
             updateSubGenreFields(selectedGenre);
+            //変更されたジャンルIDにoptionIDを変更
+            const selectedOption = event.target.options[event.target.selectedIndex];
+            hiddenLabelDiv.value = selectedOption.id; // 隠し入力に新しいoptionIdを設定
         });
 
         function updateSubGenreFields(genreName) {
@@ -248,6 +260,7 @@ if (isset($_GET['newSubGenreName'])) {
 
     <div id="subGenreContainer">
         <form onsubmit="newSubGenresAdd(event)" method="GET" action="">
+            <input type="hidden" id="hiddenLabelDiv" name="selectedOptionId" value="">
             <label for="subGenreName">中ジャンル名</label>
             <input type="text" id="subGenreName1" name="subGenreName1">
             <input type="text" id="subGenreName2" name="subGenreName2">
