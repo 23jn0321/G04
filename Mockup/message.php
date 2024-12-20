@@ -23,9 +23,15 @@
         $loggedInUser = $_SESSION['userInfo'];
     }
 
-    // 所属グループ情報を取得
-    $groupDAO = new GroupDAO();
-    $groupInfo = $groupDAO->getGroup($loggedInUser->UserID); // ユーザーが所属しているグループを取得
+        // 所属グループ情報を取得
+        $groupDAO = new GroupDAO();
+        $groupInfo = $groupDAO->getGroup($loggedInUser->UserID); // ユーザーが所属しているグループを取得
+
+        // グループ管理者判定（追加部分）
+        $groupAdminID = $groupInfo->GroupAdminID ?? null;
+
+        $isGroupAdmin = ($loggedInUser->UserID === $groupAdminID); // 現在のログインユーザーが管理者かどうか判定
+
 
     // POSTリクエストが送信された場合（メッセージ送信処理）
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -222,6 +228,26 @@
 </script>
 
 
-<input type="button" onclick="location.href='groupDetail.php?GroupID=<?= $groupID ?>'" id="groupDetail" value="詳細">
+<script>
+    $(document).ready(function() {
+        const isGroupAdmin = <?= json_encode($isGroupAdmin) ?>; // PHPから管理者判定を受け取る
+        const groupID = <?= json_encode($groupID) ?>; // 現在のGroupIDを取得
+
+        // 詳細ボタンのクリックイベント
+        $("#groupDetail").on("click", function() {
+            if (isGroupAdmin) {
+                // 管理者の場合はグループ編集ページにリダイレクト
+                window.location.href = `groupEdit.php?GroupID=${encodeURIComponent(groupID)}`;
+            } else {
+                // 一般メンバーの場合はグループ詳細ページにリダイレクト
+                window.location.href = `groupDetail.php?GroupID=${encodeURIComponent(groupID)}`;
+            }
+        });
+    });
+</script>
+
+<!-- 詳細ボタン -->
+<input type="button" id="groupDetail" value="詳細">
+
 </body>
 </html>
