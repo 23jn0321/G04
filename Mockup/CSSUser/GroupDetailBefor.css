@@ -1,40 +1,62 @@
-#join {
-    position: absolute;
-    left: 1620px;
-    top: 840px;
+#actionButton {
+    position: relative;
+    left: 1585px;
+    top: 578px;
     padding: 15px 50px 15px 50px;
 }
+.btn-danger {
+    color: #ff0000; /* デフォルトの文字色（白） */
+   
+    
+  }
 
+.btn-danger span {
+    color: red; /* 退会ボタンの文字部分を赤くする */
+  }
+
+  .btn-primary {
+    color: #000000; /* デフォルトの文字色（白） */
+ 
+  
+  }
+  
+  .btn-primary span {
+    color: rgb(0, 0, 0); /* 参加ボタンの文字部分を白に固定 */
+  }
+  
 #back {
-    position: absolute;
+    position: relative;
     left: 650px;
-    top: 840px;
+    top: 630px;
     padding: 15px 30px 15px 30px;
 }
 
 #groupName {
     position: relative;
     left: 650px;
-    top: -36px;
+    top: -160px;
     font-size: 40px;
     border: 10px;
     white-space: nowrap;
 }
-
-#groupGenre {
+.group {
     position: absolute;
-    top: 40px;
-    left: 650px;
+    top: 200px;
+}
+#groupGenre {
+    position: relative;
+    left: 651px;
+    top: -180px;
     font-size: 30px;
     border: 10px;
     white-space: nowrap;
 }
 
 #mem {
-    position: absolute;
-    top: 40px;
+    position: relative;
+    top: -195px;
     left: 650px;
-    font-size: 30px;
+    font-size: 24px;
     border: 10px;
     white-space: nowrap;
 }
@@ -48,36 +70,27 @@
     width: 50%;
     float: center;
     left: 34%;
-    top: 40px;
-}
-
-
-#txtGE {
-    position: absolute;
-    left: 645px;
-    top: 400px;
-    padding: 10px 850px 200px 0px;
-    font-size: 20px;
-
-
+    top: -210px;
 }
 
 #groupEdit {
     position: relative;
-    height: auto;
-    width: 200px;
-
-    line-height: 470px;
+    width: 74%;
+    top: -220px;
+    left: 650px;
+    font-size: 24px;
+    border: 10px;
+    text-align: center;
+ 
+}
+  
+#txtGE {
+    position: relative;
+    left: 645px;
+    top: -255px;
+    padding: 10px 850px 200px 0px;
     font-size: 20px;
-    padding-left: 1000px;
 }
-
-
-.group {
-    position: absolute;
-    top: 200px;
-}
-
 html,
 body {
     overflow: hidden;
