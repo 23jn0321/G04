@@ -133,9 +133,3 @@ html,
 body {
     overflow: hidden;
 }
-
-
-#admin {
-    position: relative;
-    left: 600px;
-}
