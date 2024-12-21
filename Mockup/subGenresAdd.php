@@ -209,16 +209,7 @@ if (isset($_GET['newSubGenreName'])) {
                     const existingInputs = document.querySelectorAll('input[type="text"]');
                     console.log(existingInputs.length);
                     console.log(document.getElementById('subGenreName' + i).value);
-                    for (let i = genreData.subGenreNames.length + 1; i < existingInputs.length + 1; i++) {
-
-                        //insert
-                    }
-
-
                 }
-
-
-
                 Swal.fire("ジャンルを追加しました", {
                     icon: "success",
                 });
@@ -259,7 +250,7 @@ if (isset($_GET['newSubGenreName'])) {
     </div>
 
     <div id="subGenreContainer">
-        <form onsubmit="newSubGenresAdd(event)" method="GET" action="">
+        <form onsubmit="SubGenresAdd(event)" method="GET" action="">
             <input type="hidden" id="hiddenLabelDiv" name="selectedOptionId" value="">
             <label for="subGenreName">中ジャンル名</label>
             <input type="text" id="subGenreName1" name="subGenreName1">
