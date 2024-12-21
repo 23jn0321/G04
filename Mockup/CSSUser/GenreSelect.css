@@ -9,10 +9,9 @@ ul, li {
     outline-color: black;
     list-style: none;
     border:solid 1px;
-    padding: 13px 220px 12px 203px;
-    position: absolute;
-    top: 150px;
-    left: 70px;
+    padding: 12px 210px 12px 210px;
+    float: left;
+    margin-left: 55px;
 }
 
 .newGroup {
@@ -21,7 +20,7 @@ margin: 0px auto 0 auto;
 overflow-y: auto; 
 float: left;
 margin-left: 55px;
-margin-top: 100px;
+margin-top: 20px;
 
 }
 
@@ -39,9 +38,7 @@ flex-wrap: wrap;
 display: flex;
 justify-content: space-around; 
 list-style: none;
-left: -625px;
 border: solid 2px;
-
 }
 
 .newGroup ul li {
@@ -63,26 +60,15 @@ display: block;
 padding: 30px 0 30px 0;
 margin-bottom: 10px;
 text-decoration: none;
-position: relative;
 }
 
 .newGroup a::after {
-position: absolute;
-left: 0;
-bottom: 0;
 display: block;
 content: "";
 width: 0%;
 height: 2px;
 background: #000;
 transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
-
-
-#groupEdit{
-    padding: 13px 10px 12px 10px;
-    position: relative;
-    left: 121px;
 }
 
 div p{
@@ -100,7 +86,6 @@ div p{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
     padding: 1em 2em;
     color: #333333;
     font-weight: 600;
@@ -142,30 +127,26 @@ div p{
 
 .genreSelect{
     width: 1000px;
-    position: absolute;
-    left: 700px;
-    top: 200px;
-   
+    float: left;
+    margin-left: 800px;
+    margin-top: -685px;
 }
 
 html,body {
     overflow: hidden;
   }
 
-#groupCreate{
+#GroupSakusei{
     padding: 10px 10px 10px 10px;
-    float: right;
-    margin-right: 2500px;
-    
+    float: left;
+    margin-left: 800px; 
+    margin-top: -100px;
 }
 
 #Search{
-    padding: 15px 20px 15px 20px;
-    position: relative;
-    bottom: 200px;
-    left: 1750px;
-    
-
-    position: fixed;
+    padding: 10px 37px 10px 37px;
+    float: left;
+    margin-left: 1480px;
+    margin-top: -100px;
 }
 

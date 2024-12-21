@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
     <link rel="stylesheet" href="CSSUser/GroupEdit.css">
 
   </header>
-  <div>
+  <div class="JoinGroup">
   <p id="title">所属グループ一覧</p>
 </div>
 <a href="message.html"></a>
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
     <p>中ジャンル：<input type="text" name="subGenre" id="subGenre" value="<?= $my_group['SubGenreName']; ?>"readonly></p>  
 
     <p id="SETUMEI">グループの説明：</p><br>
-    <input type="text" name="groupDetail" id="textbox-2" value="<?= $my_group['GroupDetail']; ?>"/>
+    <textarea id="textbox-2" name="groupDetail" rows="5" cols="30"><?= $my_group['GroupDetail']; ?></textarea>
 </div>
 <br><br><br><br><br>
 <input type="submit" id="editDetail" value="編集内容を確定する">

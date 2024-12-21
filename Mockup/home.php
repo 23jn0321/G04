@@ -32,7 +32,7 @@ if (isset($_SESSION['userInfo']) ) {
 </header>
 
 
-<div>
+<div class="JoinGroup">
   <p id="title">所属グループ一覧</p>
 </div>
 
