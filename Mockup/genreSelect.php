@@ -39,7 +39,7 @@ if (isset($_SESSION['userInfo']) ) {
  
 
   <div>
-    <p id="title">最新のグループ</p>
+    <p id="title">最新のグループ　</p>
   </div>
 <!-- 所属グループ -->
 <nav class="newGroup">
@@ -60,7 +60,7 @@ if (isset($_SESSION['userInfo']) ) {
     </ul>
 </nav>
 <!-- グループ作成ボタン -->
-    <button id="groupCreate" onclick="location.href='groupCreate.php'">グループ作成</button>
+    <button id="GroupSakusei" onclick="location.href='groupCreate.php'">グループ作成</button>
 <!-- ジャンル選択 -->
 <form action="search.php" method="GET">
     <div class="genreSelect">

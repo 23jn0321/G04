@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
     <link rel="stylesheet" href="CSSUser/GroupEdit.css">
 
   </header>
-  <div>
-  <p id="group">所属グループ一覧</p>
+  <div class="JoinGroup">
+  <p id="title">所属グループ一覧</p>
 </div>
 <a href="message.html"></a>
 <p>
@@ -74,15 +74,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
 <!-- グループ編集 -->
  <form id="myForm" action="" method="POST">
  <div class="groupEdit">
-    <p>グループ名：<input type="text" name="groupName" id="groupName"value="<?= $my_group['GroupName']; ?>"></p><br>
-    <p>参加人数：<input type="text" name="sanka" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p><br>
-    <p>大ジャンル<input type="text" name="mainGenre" id="mainGenre" value="<?= $my_group['MainGenreName']; ?>"readonly></p><br>
-    <p>中ジャンル：<input type="text" name="subGenre" id="subGenre" value="<?= $my_group['SubGenreName']; ?>"readonly></p><br>
+    <p>グループ名：<input type="text" name="groupName" id="groupName"value="<?= $my_group['GroupName']; ?>"></p>
+    <p>最大人数：<input type="text" name="sanka" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p>
+    <p>大ジャンル：<input type="text" name="mainGenre" id="mainGenre" value="<?= $my_group['MainGenreName']; ?>"readonly></p>
+    <p>中ジャンル：<input type="text" name="subGenre" id="subGenre" value="<?= $my_group['SubGenreName']; ?>"readonly></p>  
 
     <p id="SETUMEI">グループの説明：</p><br>
-    <input type="text" name="groupDetail" id="textbox-2" value="<?= $my_group['GroupDetail']; ?>"/>
+    <textarea id="textbox-2" name="groupDetail" rows="5" cols="30"><?= $my_group['GroupDetail']; ?></textarea>
 </div>
+<br><br><br><br><br>
 <input type="submit" id="editDetail" value="編集内容を確定する">
+</form>
+
+<form id="deleteForm" action="" method="POST" >
+  <input type="hidden" name="deleteGroup" value="1">
+  <input type="submit" id="Exit" value="グループを削除する">
 </form>
 
 
@@ -121,11 +127,6 @@ $(document).ready(function() {
 </script>
 
 
-<!-- 削除ボタン専用フォーム -->
-<form id="deleteForm" action="" method="POST" >
-  <input type="hidden" name="deleteGroup" value="1">
-  <input type="submit" id="Exit" value="グループを削除する">
-</form>
 
 
 <script>

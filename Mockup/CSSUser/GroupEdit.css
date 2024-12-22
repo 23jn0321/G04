@@ -1,11 +1,18 @@
+ul, li {
+    margin: 0; /* 外側の余白をリセット */
+    padding: 0; /* 内側の余白をリセット */
+}
 #title {
     outline-color: black;
     list-style: none;
     border: solid 1px;
-    padding: 13px 220px 12px 203px;
-    position: relative;
-    left: 40px;
-
+    padding: 12px 210px 12px 210px;
+    text-align: left;
+    margin-left: 55px;
+    margin-top: 24px;
+}
+.JoinGroup p {
+    display: inline-block;
 }
 
 #groupEditR {
@@ -16,28 +23,16 @@
     transition: transform 0.3s ease, background-color 0.3s ease;
     /* アニメーションの設定 */
 }
-
 #groupEditR:hover {
     transform: scale(1.1);
     /* ホバーしたら少し大きくなる */
 }
-
-.group {
-    width: 100%;
-    margin: 0px auto 0 auto;
-}
-
-
-
-
-
 .group li:hover {
     background-color: #effff0;
     color: #01080e;
     outline: 1px solid #2589d0;
 
 }
-
 .group ul {
     overflow-y: auto;
     max-width: 550px;
@@ -51,7 +46,8 @@
     padding-left: 0;
     border: solid 2px;
     float: left;
-    margin-left: 40px;
+    margin-left: 55px;
+    margin-top: 4px;
 }
 
 .group ul li {
@@ -77,9 +73,7 @@
 }
 
 .group a::after {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+
     display: block;
     content: "";
     width: 0%;
@@ -91,60 +85,53 @@
 
 
 
-
-
-.multiselect {
-    position: relative;
-    left: 900px;
-}
-
 html,
 body {
     overflow: hidden;
 }
 
 
-#admin {
-    position: relative;
-    left: 600px;
-}
-div p{
-    font-size: 20px;
-    position: absolute;
-    left: 800px;
-    margin: 0px auto 0 auto; 
-    position: absolute;
-}
-#SETUMEI    {
-    position: absolute;
-    left: 800px;    
+
+.groupEdit p{
+    font-size: 25px;
+    text-align: left;
+    padding-left: 650px;
+
 }
 #textbox-2{
+    font-size: 20px;
+    width: 700px;
     float: left;
-    margin-left: 200px;
-    margin-top: 240px;
+    margin-left: 60px;
+    margin-top: -45px;
+    resize: none;
 }
 #editDetail{
     padding: 10px 10px 10px 10px;
-    float: right;
-    margin-right: 1610px;
-    margin-top: 20px;
+    float: left;
+    margin-top: 16px;
+    margin-left: 60px;
+    
 }
 #Exit{
     padding: 10px 10px 10px 10px;
     color: rgb(153, 0, 0);
     float: left;
-    margin-left: 1000px;
+    margin-left: 415px;
 }
 #groupName{
     padding: 7px 7px;
+    font-size: 20px;
 }
 #sanka{
-
+    padding: 7px 7px;
+    font-size: 20px;
 }
 #mainGenre{
-
+    padding: 7px 7px;
+    font-size: 20px;
 }
 #subGenre{
-
+    padding: 7px 7px;
+    font-size: 20px;
 }
