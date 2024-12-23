@@ -58,39 +58,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     exit;}
    }
-
-
 ?>
-
-
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
 <!--ヘッダー-->
 <header>
   <!-- CSS適応 -->
-
   <link rel="stylesheet" href="CSSUser/GroupDetailBefor.css">
-  <link rel="stylesheet" href="CSSUser/Home.css">
-
-  <!-- ロゴ周り表示 ロゴマークを押すとホーム画面に遷移(Home.html) -->
-
 </header>
   <div>
-
     <body>
       <p id="group">所属グループ一覧</p>
     </body>
   </div>
 
-<a href="genreSelect.php"><input type="button" value="ジャンル選択に戻る" id="back"></a>
-<script src="./jquery-3.6.0.min.js"></script>
+  <button id="back" onclick="location.href='genreSelect.php'">ジャンル選択に戻る</button>
 
+<script src="./jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 <script>
-
   $(document).ready(function() {
     // ボタンのクリックイベントを設定
     $('#actionButton').on('click', function(e) {
@@ -144,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </button>
 </form>
 
-
+<div>
 <nav class="group">
   <ul>
   <?php if (empty($groupInfo)): ?>
@@ -158,7 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
           <?= $var->GroupName ?>（<?= $var->MemberInfo ?>）<br>最終更新日：<?= $var->LastUpdated ?><br>ジャンル：<?= $var->Genre ?>
         </a>
-
         <?php if ($loggedInUser->UserID == $var->GroupAdminID) : ?>
           <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
         <?php endif; ?>
@@ -166,9 +154,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endforeach; ?>
     <?php endif; ?>
   </ul>
-  </a>
-  </nav>
-
+</nav>
+</div>
+<div>
   <p id="groupName">グループ名：<?= $group[0]['GroupName'] ?>(<?= $group[0]['MemberInfo'] ?>)</p>
   <p id="groupGenre">グループのジャンル：<?= $group[0]['Genre'] ?> </p>
   <p id="mem">参加者一覧</p>
@@ -181,3 +169,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
   <p id="groupEdit">  グループ詳細</p>
   <input type="text" id="txtGE" value=<?= $group[0]['GroupDetail'] ?> readonly>
+  </div>

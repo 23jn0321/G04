@@ -12,9 +12,15 @@
         session_start();
     }
 
+
+    $groupDAO = new GroupDAO();
+    $messageDAO = new messageDAO();
+
+
     // GETパラメータからGroupIDを取得
     if (isset($_GET['GroupID'])) {
         $groupID = $_GET['GroupID'];
+        $nowGroup = $messageDAO->NowGroup($groupID);
     }
 
     // ログイン中のユーザー情報を取得
@@ -24,7 +30,7 @@
     }
 
         // 所属グループ情報を取得
-        $groupDAO = new GroupDAO();
+
         $groupInfo = $groupDAO->getGroup($loggedInUser->UserID); // ユーザーが所属しているグループを取得
 
         // グループ管理者判定（追加部分）
@@ -69,7 +75,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSSスタイルシートの読み込み -->
-    <link rel="stylesheet" href="CSSUser/Home.css"> <!-- ホームページのスタイル -->
     <link rel="stylesheet" href="CSSUser/Message.css"> <!-- メッセージ画面のスタイル -->
 
     <!-- 外部ライブラリの読み込み -->
@@ -79,9 +84,11 @@
 
 <body>
     <!-- 所属グループ一覧表示 -->
-    <div>
+    <div class="JoinGroup">
         <p id="title">所属グループ一覧</p>
     </div>
+
+    
     <nav class="group">
         <ul>
             <!-- ユーザーが所属するグループ一覧を動的に表示 -->
@@ -95,12 +102,18 @@
                     </a>
                     <!-- グループ編集ボタン（管理者のみ表示） -->
                     <?php if ($loggedInUser->UserID == $var->GroupAdminID): ?>
-                        <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" value="グループ編集">
+                        <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
                     <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
     </nav>
+
+    <div class="NowGroup">
+        <h2>現在のグループ：<?= $nowGroup["GroupName"]; ?>　　<input type="button" id="Detail" value="詳細"></h2>
+        <!-- 詳細ボタン -->
+       
+    </div>
 
     <!-- チャットルーム（メッセージ表示エリア） -->
     <div class="room">
@@ -234,7 +247,7 @@
         const groupID = <?= json_encode($groupID) ?>; // 現在のGroupIDを取得
 
         // 詳細ボタンのクリックイベント
-        $("#groupDetail").on("click", function() {
+        $("#Detail").on("click", function() {
             if (isGroupAdmin) {
                 // 管理者の場合はグループ編集ページにリダイレクト
                 window.location.href = `groupEdit.php?GroupID=${encodeURIComponent(groupID)}`;
@@ -246,8 +259,7 @@
     });
 </script>
 
-<!-- 詳細ボタン -->
-<input type="button" id="groupDetail" value="詳細">
+
 
 </body>
 </html>

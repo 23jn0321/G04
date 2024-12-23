@@ -36,7 +36,6 @@ if (isset($_SESSION['userInfo']) ) {
   <p id="title">所属グループ一覧</p>
 </div>
 
-
     <!-- グループ表示 -->
     <nav class="group">
     <ul>

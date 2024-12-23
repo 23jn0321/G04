@@ -120,18 +120,24 @@ body {
 グループ名、最大人数、大、中ジャンル、説明
 --------------------------------------*/
 #groupName{
+    width: 250px;
     padding: 7px 7px;
     font-size: 20px;
+    margin-left: 558px;
+    margin-top: 60px;
 }
 #sanka{
+    width: 250px;
     padding: 7px 7px;
     font-size: 20px;
 }
 #mainGenre{
+    width: 250px;
     padding: 7px 7px;
     font-size: 20px;
 }
 #subGenre{
+    width: 250px;   
     padding: 7px 7px;
     font-size: 20px;
 }

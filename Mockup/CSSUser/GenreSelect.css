@@ -30,26 +30,27 @@ margin-top: 100px;
   }
 
 .newGroup ul {
-overflow-y: auto;
-max-width: 550px;
-max-height: 680px;
-flex-wrap: wrap;
-display: flex;
-justify-content: space-around; 
-list-style: none;
-border: solid 2px;
+    overflow-y: auto; /* 縦スクロールを有効化 */
+    overflow-x: hidden; /* 横スクロールを無効化 */
+    max-width: 550px; /* 最大幅を指定 */
+    height: 680px; /* 高さを固定 */
+    flex-wrap: nowrap; /* 子要素の折り返しを無効化 */
+    display: flex; /* フレックスボックスを有効化 */
+    flex-direction: column; /* 縦方向に子要素を並べる */
+    justify-content: flex-start; /* 上詰めに設定 */
+    list-style: none;
+    border: solid 2px;
+    padding: 0; /* 不要な余白をリセット */
+    margin: 0 auto; /* 中央揃え */
 }
 
 .newGroup ul li {
-text-align: center;
-list-style: none;   
-border:solid 1px;
-width: 800px;   
-list-style: none;
-border:solid 1px;
-padding-top: 10px;
-padding-bottom: 10px;
-text-align: center;
+    text-align: center;
+    list-style: none;
+    border: solid 1px;
+    width: 100%; /* 横幅を親要素に合わせる */
+    padding: 10px 130px; /* 上下の余白を統一 */
+    box-sizing: border-box; /* パディングとボーダーを幅に含める */
 }
 
 .newGroup a {
@@ -79,7 +80,8 @@ div p{
     margin-bottom: 7px;
     border: 2px solid #d0d0d0;
     border-radius: 5px;
-    position: relative;
+    position: relative; /* 親要素の基準を固定 */
+    overflow: hidden; /* アコーディオンが広がっても外側に影響を与えない */
 }
 
 .accordion-004 summary {
@@ -117,12 +119,15 @@ div p{
     margin: 0;
     padding: .3.5em 2.7em 1.9em;
     color: #333333;
+    position: absolute; /* 絶対配置に変更 */
+    width: 100%; /* 親要素の幅を基準に広げる */
     transition: transform .5s, opacity .5s;
 }
 
 .accordion-004[open] p {
     transform: none;
     opacity: 1;
+    position: absolute; /* 開いた際も絶対配置を維持 */
 }
 
 .genreSelect{
@@ -149,8 +154,9 @@ html,body {
         　　  "検索"ボタン
 --------------------------------------*/
 #Search{
-    padding: 10px 37px 10px 37px;
-    position: fixed;
-    left: 300px;
+    padding: 11px 37px 10px 37px;
+    position: fixed; /* ボタンを画面内で固定 */
+    left: 1050px;
+    top: 887px; /* 必要に応じて調整 */
 }
 
