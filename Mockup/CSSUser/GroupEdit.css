@@ -2,6 +2,9 @@ ul, li {
     margin: 0; /* 外側の余白をリセット */
     padding: 0; /* 内側の余白をリセット */
 }
+/*-------------------------------------
+        　　"所属グループ一覧"
+--------------------------------------*/
 #title {
     outline-color: black;
     list-style: none;
@@ -73,7 +76,6 @@ ul, li {
 }
 
 .group a::after {
-
     display: block;
     content: "";
     width: 0%;
@@ -81,44 +83,42 @@ ul, li {
     background: #000;
     transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
-
-
-
-
+/*-------------------------------------
+        　　    画面固定
+--------------------------------------*/
 html,
 body {
     overflow: hidden;
 }
-
-
-
+/*-------------------------------------
+        　　グループ詳細の文字
+--------------------------------------*/
 .groupEdit p{
     font-size: 25px;
     text-align: left;
     padding-left: 650px;
-
 }
-#textbox-2{
-    font-size: 20px;
-    width: 700px;
-    float: left;
-    margin-left: 60px;
-    margin-top: -45px;
-    resize: none;
-}
+/*-------------------------------------
+       "編集内容を確定する"ボタン
+--------------------------------------*/
 #editDetail{
     padding: 10px 10px 10px 10px;
     float: left;
     margin-top: 16px;
     margin-left: 60px;
-    
 }
+/*-------------------------------------
+       "グループを削除する"ボタン
+--------------------------------------*/
 #Exit{
     padding: 10px 10px 10px 10px;
     color: rgb(153, 0, 0);
     float: left;
     margin-left: 415px;
 }
+/*-------------------------------------
+グループ名、最大人数、大、中ジャンル、説明
+--------------------------------------*/
 #groupName{
     padding: 7px 7px;
     font-size: 20px;
@@ -134,4 +134,12 @@ body {
 #subGenre{
     padding: 7px 7px;
     font-size: 20px;
+}
+#textbox-2{
+    font-size: 20px;
+    width: 700px;
+    float: left;
+    margin-left: 60px;
+    margin-top: -45px;
+    resize: none;
 }

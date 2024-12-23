@@ -15,12 +15,11 @@ ul, li {
 }
 
 .newGroup {
-width: 100%;
 margin: 0px auto 0 auto; 
 overflow-y: auto; 
 float: left;
-margin-left: 55px;
-margin-top: 20px;
+margin-left: -550px;
+margin-top: 100px;
 
 }
 
@@ -80,6 +79,7 @@ div p{
     margin-bottom: 7px;
     border: 2px solid #d0d0d0;
     border-radius: 5px;
+    position: relative;
 }
 
 .accordion-004 summary {
@@ -126,27 +126,31 @@ div p{
 }
 
 .genreSelect{
-    width: 1000px;
-    float: left;
-    margin-left: 800px;
-    margin-top: -685px;
+    max-width: 100%;
+    height: auto; 
+    width: 500px;
+    margin-left: 750px;
+    margin-top: 100px;
 }
-
+/*-------------------------------------
+        　　   画面固定
+--------------------------------------*/
 html,body {
     overflow: hidden;
   }
-
+/*-------------------------------------
+        　  "グループ作成"ボタン
+--------------------------------------*/
 #GroupSakusei{
     padding: 10px 10px 10px 10px;
-    float: left;
-    margin-left: 800px; 
-    margin-top: -100px;
+    transform: translate(200px, 750px);
 }
-
+/*-------------------------------------
+        　　  "検索"ボタン
+--------------------------------------*/
 #Search{
     padding: 10px 37px 10px 37px;
-    float: left;
-    margin-left: 1480px;
-    margin-top: -100px;
+    position: fixed;
+    left: 300px;
 }
 
