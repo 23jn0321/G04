@@ -1,3 +1,30 @@
+<?php
+require_once 'helpers/GenreDAO.php';
+// $_GET['genreName'] と $_GET['subGenreName'] が存在するか確認
+if (isset($_GET['genreName']) && isset($_GET['subGenreName'])) {
+  $genreName = $_GET['genreName'];  // genreNameを取得
+  $subGenreNames = (array) $_GET['subGenreName']; // subGenreName[] を配列として取得（配列でない場合も配列に変換）
+  $genreDAO = new GenreDAO();
+
+  $mainGenreID = $genreDAO->insert_Genre($genreName);  //メインジャンルを挿入
+  // サブジャンルを挿入
+  echo $mainGenreID;
+  $subGenreDAO = new SubGenreDAO();
+  foreach ($subGenreNames as $subGenreName) {
+    echo $subGenreName;  // サブジャンル名を表示
+    $subGenreDAO->insert_SubGenre($mainGenreID, $subGenreName);  // サブジャンルを挿入
+
+  }
+
+  // 確認のため、genreNameとsubGenreNameを表示
+  echo '<br>大ジャンル名: ' . $genreName . '<br>';
+  echo '<pre>';
+  print_r($subGenreNames);  // 配列を表示
+  echo '</pre>';
+} else {
+  echo "ジャンル名または中ジャンル名が不足しています。";
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -12,22 +39,23 @@
 </head>
 <script>
   let inputCount = 4;
+
   function addSubGenreField() {
     // 新しいinput要素を作成
     if (inputCount >= 10) {
       showAlert("一度に追加できる中ジャンルは10個までです！")
-    }
-    else {
+    } else {
       inputCount += 1
       var newInput = document.createElement("input");
       newInput.type = "text";
       newInput.id = "subGenreName" + inputCount;
-      newInput.name = "subGenreName" + inputCount;
+      newInput.name = "subGenreName[]";
       // 新しいinput要素をフォームに追加
       var form = document.querySelector("form");
       form.insertBefore(newInput, form.querySelector("button"));
     }
   }
+
   function showAlert(message) {
     var existingAlert = document.querySelector(".alert-fixed");
     if (existingAlert) {
@@ -43,10 +71,11 @@
     document.body.insertBefore(alertDiv, document.body.firstChild);
 
     // 3秒後にアラートを非表示にする
-    setTimeout(function () {
+    setTimeout(function() {
       alertDiv.style.display = "none";
     }, 3000);
   }
+
   function genresAdd(event) {
     event.preventDefault()
 
@@ -88,7 +117,6 @@
       }
     });
   }
-
 </script>
 
 <body>
@@ -100,15 +128,15 @@
     <hr>
   </header>
 
-  <form onsubmit="genresAdd(event)">
+  <form onsubmit="genresAdd(event)" method="GET" action="">
     <label for="genreName">大ジャンル名</label>
     <input type="text" id="genreName" name="genreName">
 
     <label for="subGenreName">中ジャンル名</label>
-    <input type="text" id="subGenreName1" name="subGenreName1">
-    <input type="text" id="subGenreName2" name="subGenreName2">
-    <input type="text" id="subGenreName3" name="subGenreName3">
-    <input type="text" id="subGenreName4" name="subGenreName4">
+    <input type="text" id="subGenreName1" name="subGenreName[]">
+    <input type="text" id="subGenreName2" name="subGenreName[]">
+    <input type="text" id="subGenreName3" name="subGenreName[]">
+    <input type="text" id="subGenreName4" name="subGenreName[]">
     <!-- 中ジャンル追加ボタン -->
     <button type="button" onclick="addSubGenreField()">+中ジャンルを追加</button>
     <br>

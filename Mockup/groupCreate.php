@@ -53,10 +53,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 <body>
     <!-- グループ名 -->
-    <p>グループ名 ：<input type="text" id="groupName" name="groupName"></p>
+    <p><lavel id="groupNamelavel">グループ名　：</label></p>
+    <p><input type="text" id="groupName" name="groupName"></p>
 
     <!-- 参加人数 -->
-    <p>参加人数　：
+    <p><lavel id="groupJoinlavel">参加人数　：</lavel>
         <label class="selectbox-6">
             <select name="joinNum">
                 <option value="3">3</option>
@@ -68,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     <!-- メインジャンルとサブジャンル -->
     <div class="dropdown-container">
-        <label for="maingenreName">大ジャンル名</label>
+        <label for="maingenreName" id="maingenreNamelavel">大ジャンル名　：</label>
         <select id="maingenreName" name="maingenreName">
             <?php foreach($genreList as $genre): ?>
             <option value="<?= $genre[0] ?>">
@@ -79,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         <!-- サブジャンル選択 -->
         <a>
-            <label for="subGenreName">中ジャンル名</label>
+            <label for="subGenreName" id="subGenreNamelavel">中ジャンル名　：</label>
             <select id="subGenreName" name="subGenreName">
                 <option hidden>選択してください</option>
             </select>
@@ -142,14 +143,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     <!--グループ詳細-->
     <label>
-        <span class="textbox-1-label">グループの説明：</span>
-        <input type="text" class="textbox-1" id="textbox-2" name="groupDetail" />
+        <span class="textbox-1-label" >グループの説明：</span>
+        <textarea class="textbox-3" id="textbox-2" name="groupDetail" rows="5" cols="20"></textarea>
     </label>
 
     <!--　グループ作成ボタン --> 
     <button type="submit" id="submitButton">作成</button>
     </table>
 </form>    
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -179,7 +182,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     </script>
 
     <!--検索画面に戻る-->
-<a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
+<a href="genreSelect.php"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
 
     
 </body>

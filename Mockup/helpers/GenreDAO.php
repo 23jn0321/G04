@@ -36,7 +36,7 @@ class GenreDAO
 
         return $genres;
     }
-    public function insert_Genre(string $mainGenreName, string $subGenreName)
+    public function insert_Genre(string $mainGenreName)
     {
 
         $dbh = DAO::get_db_connect();
@@ -50,15 +50,7 @@ class GenreDAO
         $stmt->execute();
 
         $mainGenreId = $dbh->lastInsertId();
-
-        $sql = "INSERT INTO subgenre (subGenreName, mainGenreID) VALUES (:subGenreName, :mainGenreID)";
-
-        $stmt = $dbh->prepare($sql);
-
-        $stmt->bindValue(':subGenreName', $subGenreName);
-        $stmt->bindValue(':mainGenreID', $mainGenreId);
-
-        $stmt->execute();
+        return $mainGenreId;
     }
 }
 class subGenreDAO
@@ -83,7 +75,7 @@ class subGenreDAO
         }
         return $subGenres;
     }
-    public function insert(int $mainGenreID, string $subGenreName)
+    public function insert_SubGenre(int $mainGenreID, string $subGenreName)
     {
         $dbh = DAO::get_db_connect();
 
