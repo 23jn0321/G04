@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["groupName"])) {
 
     $GroupCreateDAO = new GroupDAO();
     $GroupCreateDAO->groupInfoUpdate($groupID, $GroupName, $GroupDetial);
-    header('Location: message.php?GroupID=<?= urlencode($groupID)?>');
+    header('Location: message.php?GroupID='. urlencode($groupID));
     exit;
 }
 
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
         </a>
        
         <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
-         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集">
+         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
           <?php endif; ?>
       </li>
       <?php endforeach; ?>
@@ -74,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
 <!-- グループ編集 -->
  <form id="myForm" action="" method="POST">
  <div class="groupEdit">
-    <p>グループ名：<input type="text" name="groupName" id="groupName"value="<?= $my_group['GroupName']; ?>"></p>
-    <p>最大人数：<input type="text" name="sanka" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p>
+    <p>グループ名：<input type="text" name="groupName" id="groupName" value="<?= $my_group['GroupName']; ?>"></p>
+    <p>最大人数　：<input type="text" name="sanka" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p>
     <p>大ジャンル：<input type="text" name="mainGenre" id="mainGenre" value="<?= $my_group['MainGenreName']; ?>"readonly></p>
     <p>中ジャンル：<input type="text" name="subGenre" id="subGenre" value="<?= $my_group['SubGenreName']; ?>"readonly></p>  
 

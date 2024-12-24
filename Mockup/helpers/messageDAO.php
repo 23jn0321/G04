@@ -31,6 +31,16 @@ class messageDAO {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ); // 結果をオブジェクト形式で返す
     }
-    
+
+    public function NowGroup($GroupID) {
+        $dbh = DAO::get_db_connect();
+        $sql = "SELECT GroupName FROM ChatGroup WHERE GroupID = :groupID";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue("groupID", $GroupID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
 ?>
