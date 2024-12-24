@@ -174,7 +174,7 @@ ul, li {
     position: relative;
     width: 74%;
     top: -220px;
-    left: 650px;
+    left: 20px;
     font-size: 24px;
     border: 10px;
     text-align: center;
@@ -184,7 +184,7 @@ ul, li {
 #txtGE {
     position: relative;
     left: 645px;
-    top: -255px;
+    top: -240px;
     padding: 10px 850px 200px 0px;
     font-size: 20px;
 }
