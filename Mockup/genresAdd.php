@@ -11,19 +11,17 @@ if (isset($_GET['genreName']) && isset($_GET['subGenreName'])) {
   echo $mainGenreID;
   $subGenreDAO = new SubGenreDAO();
   foreach ($subGenreNames as $subGenreName) {
-    echo $subGenreName;  // サブジャンル名を表示
+    //echo $subGenreName;  // サブジャンル名を表示
     $subGenreDAO->insert_SubGenre($mainGenreID, $subGenreName);  // サブジャンルを挿入
 
   }
 
   // 確認のため、genreNameとsubGenreNameを表示
-  echo '<br>大ジャンル名: ' . $genreName . '<br>';
-  echo '<pre>';
-  print_r($subGenreNames);  // 配列を表示
-  echo '</pre>';
-} else {
-  echo "ジャンル名または中ジャンル名が不足しています。";
-}
+  //echo '<br>大ジャンル名: ' . $genreName . '<br>';
+  //echo '<pre>';
+  //print_r($subGenreNames);  // 配列を表示
+  //echo '</pre>';
+} 
 ?>
 <!DOCTYPE html>
 <html lang="ja">
