@@ -545,6 +545,25 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #groupNamelavel {
     position: absolute;
     font-size: 20px;
@@ -619,7 +638,7 @@
 
 .textbox-3 {
     position: absolute;
-    font-size: 20px;
+    font-size: 25px;
     top: 560px;
     left: 30px;
     padding: 0px 0px 0px 0px;

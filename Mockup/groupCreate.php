@@ -10,7 +10,7 @@ if(!empty($_SESSION['userInfo'])){
     //セッション変数の会員情報を取得する
     $user = $_SESSION['userInfo'];
 }
-//を取得
+//DAOを取得
 $groupCreateDAO=new GruopDetailDAO();
 $genreList = $groupCreateDAO->groupSelect();
 $genre_json = json_encode($genreList); //JSONエンコード
@@ -18,10 +18,6 @@ $genre_json = json_encode($genreList); //JSONエンコード
 
 //POSTメソッドでリクエストされたとき
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-        //作成ボタンが押されたとき
-          //グループの内容が空ではなければ
-         
-    
             //入力されたグループの内容を受け取る
             $GroupName = $_POST['groupName'];
             $MaxMember = $_POST['joinNum'];
@@ -46,7 +42,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <html lang="ja">
 <meta charset="utf-8">
 
-    <!-- 作成ボタン -->
 
 <form id="sendbutton" action="" method="POST">
 <table id="profileTable" class="box">
@@ -156,16 +151,37 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
         // 作成ボタンがクリックされたとき
         $(document).ready(function() {
             // フォームの送信処理をカスタマイズ
             $('#sendbutton').on('submit', function(e) {
                 e.preventDefault(); // 通常の送信を防ぐ
 
-                // SweetAlert2を使って確認ダイアログを表示
+                var groupNameValue = $('#groupName').val(); // グループ名のテキスト内容
+                var subGenreNameValue = $('#subGenreName').val(); // 中ジャンルのテキスト内容
+
+                // グループ名と中ジャンルが空かどうかをチェック
+                if (groupNameValue === "" || subGenreNameValue === "選択してください") {
+                // 空の場合、警告を表示
                 Swal.fire({
-                    title: '編集確認',
-                    text: '編集を確定しますか？',
+                    title: '入力エラー',
+                    text: 'グループ名または中ジャンルが選択されていません',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+
+                //空のテキストを赤く表記させる
+                $('#groupName').css('border', '2px solid red');
+                $('#subGenreName').css('border', '2px solid red');
+
+                return; // フォーム送信を中止
+            }
+
+                // SweetAlert2を使って確認ポップアップを表示
+                Swal.fire({
+                    title: '確認',
+                    text: 'グループを作成しますか？',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: '確定',
@@ -173,7 +189,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // 「送信」ボタンが押された場合、フォームを送信
+                        // 「確定」ボタンが押された場合、フォームを送信
                         this.submit();
                     }
                 });
