@@ -26,6 +26,7 @@ if (isset($_SESSION['userInfo']) ) {
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+
 <header>
   <!-- CSS適応 -->
   <link rel="stylesheet" href="CSSUser/Home.css">

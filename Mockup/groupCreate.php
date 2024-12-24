@@ -216,7 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!--検索画面に戻る-->
 <a href="genreSelect.php"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
 
-
+<!--今日はクリスマスイブ-->
 </body>
 
 </html>

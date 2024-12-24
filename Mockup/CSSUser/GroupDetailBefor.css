@@ -194,8 +194,8 @@ li {
     position: relative;
     left: 645px;
     top: -240px;
-    padding: 10px 850px 200px 0px;
     font-size: 20px;
+    resize: none;
 }
 
 html,
