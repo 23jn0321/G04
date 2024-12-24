@@ -11,3 +11,13 @@
     width: 500px;
     height: 30px;
 }
+
+#admin{
+    padding: 10px 10px 10px 10px;
+    float: right;
+}
+#logout{
+    padding: 10px 10px 10px 10px;
+    float: right;
+
+}

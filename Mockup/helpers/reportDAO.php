@@ -71,6 +71,39 @@
     }
     return $userChats;
 }
+        public function getReportedUsers() {
+            $dbh = DAO::get_db_connect();
+            $sql = "SELECT gu.UserID, gu.GakusekiNo, gu.UserName, tr.ReportCategory
+                        FROM GakuseiUser gu INNER JOIN Report tr 
+                            ON gu.UserID = tr.ReportUserID;";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+    
+        public function getUserGroups($userID) {
+            $dbh = DAO::get_db_connect();
+            $sql = "SELECT g.GroupName 
+                    FROM GroupMember gm 
+                    JOIN ChatGroup g ON gm.GroupID = g.GroupID
+                    WHERE gm.UserID = :userID";
+        
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+        
+        public function getUserChatHistory($userID) {
+            $dbh = DAO::get_db_connect();
+            $sql = "SELECT cm.MessageDetail, cm.SendTime, cg.GroupName
+                    FROM ChatMessage cm
+                    INNER JOIN ChatGroup cg ON cm.GroupID = cg.GroupID
+                    WHERE cm.SendUserID = ?";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute([$userID]);
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
 
         
     }

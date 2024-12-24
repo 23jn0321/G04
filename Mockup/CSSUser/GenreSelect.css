@@ -1,21 +1,25 @@
+/* すべての ul 要素と li 要素に適用 */
+ul, li {
+    margin: 0; /* 外側の余白をリセット */
+    padding: 0; /* 内側の余白をリセット */
+}
+
 
 #title{
     outline-color: black;
     list-style: none;
     border:solid 1px;
-    padding: 13px 220px 12px 203px;
-    position: absolute;
-    top: 150px;
-    left: 70px;
+    padding: 12px 210px 12px 210px;
+    float: left;
+    margin-left: 55px;
 }
 
 .newGroup {
-width: 100%;
 margin: 0px auto 0 auto; 
 overflow-y: auto; 
-
-position: absolute;
-top: 250px;
+float: left;
+margin-left: -550px;
+margin-top: 100px;
 
 }
 
@@ -26,30 +30,27 @@ top: 250px;
   }
 
 .newGroup ul {
-overflow-y: auto;
-max-width: 550px;
-max-height: 680px;
-flex-wrap: wrap;
-display: flex;
-margin: auto;
-justify-content: space-around; 
-list-style: none;
-left: -625px;
-padding-left:0;
-border: solid 2px;
-position: relative;
+    overflow-y: auto; /* 縦スクロールを有効化 */
+    overflow-x: hidden; /* 横スクロールを無効化 */
+    max-width: 550px; /* 最大幅を指定 */
+    height: 680px; /* 高さを固定 */
+    flex-wrap: nowrap; /* 子要素の折り返しを無効化 */
+    display: flex; /* フレックスボックスを有効化 */
+    flex-direction: column; /* 縦方向に子要素を並べる */
+    justify-content: flex-start; /* 上詰めに設定 */
+    list-style: none;
+    border: solid 2px;
+    padding: 0; /* 不要な余白をリセット */
+    margin: 0 auto; /* 中央揃え */
 }
 
 .newGroup ul li {
-text-align: center;
-list-style: none;
-border:solid 1px;
-width: 800px;
-list-style: none;
-border:solid 1px;
-padding-top: 10px;
-padding-bottom: 10px;
-text-align: center;
+    text-align: center;
+    list-style: none;
+    border: solid 1px;
+    width: 100%; /* 横幅を親要素に合わせる */
+    padding: 10px 130px; /* 上下の余白を統一 */
+    box-sizing: border-box; /* パディングとボーダーを幅に含める */
 }
 
 .newGroup a {
@@ -59,26 +60,15 @@ display: block;
 padding: 30px 0 30px 0;
 margin-bottom: 10px;
 text-decoration: none;
-position: relative;
 }
 
 .newGroup a::after {
-position: absolute;
-left: 0;
-bottom: 0;
 display: block;
 content: "";
 width: 0%;
 height: 2px;
 background: #000;
 transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
-
-
-#groupEdit{
-    padding: 13px 10px 12px 10px;
-    position: relative;
-    left: 121px;
 }
 
 div p{
@@ -90,13 +80,14 @@ div p{
     margin-bottom: 7px;
     border: 2px solid #d0d0d0;
     border-radius: 5px;
+    position: relative; /* 親要素の基準を固定 */
+    overflow: hidden; /* アコーディオンが広がっても外側に影響を与えない */
 }
 
 .accordion-004 summary {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
     padding: 1em 2em;
     color: #333333;
     font-weight: 600;
@@ -128,39 +119,44 @@ div p{
     margin: 0;
     padding: .3.5em 2.7em 1.9em;
     color: #333333;
+    position: absolute; /* 絶対配置に変更 */
+    width: 100%; /* 親要素の幅を基準に広げる */
     transition: transform .5s, opacity .5s;
 }
 
 .accordion-004[open] p {
     transform: none;
     opacity: 1;
+    position: absolute; /* 開いた際も絶対配置を維持 */
 }
 
 .genreSelect{
-    width: 1000px;
-    position: absolute;
-    left: 700px;
-    top: 20px;
+    max-width: 100%;
+    height: auto; 
+    width: 500px;
+    margin-left: 750px;
+    margin-top: 100px;
 }
-
+/*-------------------------------------
+        　　   画面固定
+--------------------------------------*/
 html,body {
     overflow: hidden;
   }
-
-#groupCreate{
+/*-------------------------------------
+        　  "グループ作成"ボタン
+--------------------------------------*/
+#GroupSakusei{
     padding: 10px 10px 10px 10px;
-    position: absolute;
-    top: 500px;
-    left: 1300px;
+    transform: translate(200px, 750px);
 }
-
+/*-------------------------------------
+        　　  "検索"ボタン
+--------------------------------------*/
 #Search{
-    padding: 15px 20px 15px 20px;
-    position: relative;
-    bottom: 200px;
-    left: 1750px;
-    
-
-    position: fixed;
+    padding: 11px 37px 10px 37px;
+    position: fixed; /* ボタンを画面内で固定 */
+    left: 1050px;
+    top: 887px; /* 必要に応じて調整 */
 }
 

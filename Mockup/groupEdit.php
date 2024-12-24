@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["groupName"])) {
 
     $GroupCreateDAO = new GroupDAO();
     $GroupCreateDAO->groupInfoUpdate($groupID, $GroupName, $GroupDetial);
-    header('Location: message.php?GroupID=<?= urlencode($groupID)?>');
+    header('Location: message.php?GroupID='. urlencode($groupID));
     exit;
 }
 
@@ -46,12 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
   <header>
 <!-- CSS適応 -->
     
-    <link rel="stylesheet" href="CSSUser/home.css">
-    <link rel="stylesheet" href="CSSUser/groupEdit.css">
+    <link rel="stylesheet" href="CSSUser/GroupEdit.css">
 
   </header>
-  <div>
-  <p id="group">所属グループ一覧</p>
+  <div class="JoinGroup">
+  <p id="title">所属グループ一覧</p>
 </div>
 <a href="message.html"></a>
 <p>
@@ -65,24 +64,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
         </a>
        
         <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
-         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集">
+         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
           <?php endif; ?>
       </li>
       <?php endforeach; ?>
     </ul>
 </a>
+</nav>  
 <!-- グループ編集 -->
  <form id="myForm" action="" method="POST">
  <div class="groupEdit">
-    <p>グループ名：<input type="text" name="groupName" id="groupName"value="<?= $my_group['GroupName']; ?>"></p><br>
-    <p>参加人数：<input type="text" name="sanka" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p><br>
-    <p>大ジャンル<input type="text" name="mainGenre" id="mainGenre" value="<?= $my_group['MainGenreName']; ?>"readonly></p><br>
-    <p>中ジャンル：<input type="text" name="subGenre" id="subGenre" value="<?= $my_group['SubGenreName']; ?>"readonly></p><br>
+    <p>グループ名：<input type="text" name="groupName" id="groupName" value="<?= $my_group['GroupName']; ?>"></p>
+    <p>最大人数　：<input type="text" name="sanka" id="sanka" value="<?= $my_group['MaxMember']; ?>" readonly></p>
+    <p>大ジャンル：<input type="text" name="mainGenre" id="mainGenre" value="<?= $my_group['MainGenreName']; ?>"readonly></p>
+    <p>中ジャンル：<input type="text" name="subGenre" id="subGenre" value="<?= $my_group['SubGenreName']; ?>"readonly></p>  
 
     <p id="SETUMEI">グループの説明：</p><br>
-    <input type="text" name="groupDetail" id="textbox-2" value="<?= $my_group['GroupDetail']; ?>"/>
+    <textarea id="textbox-2" name="groupDetail" rows="5" cols="30"><?= $my_group['GroupDetail']; ?></textarea>
 </div>
+<br><br><br><br><br>
 <input type="submit" id="editDetail" value="編集内容を確定する">
+</form>
+
+<form id="deleteForm" action="" method="POST" >
+  <input type="hidden" name="deleteGroup" value="1">
+  <input type="submit" id="Exit" value="グループを削除する">
 </form>
 
 
@@ -93,9 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
 
 <script src="./jquery-3.6.0.min.js"></script> <!-- jQueryライブラリを読み込み -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2ライブラリを読み込み -->
-
-
-<!-- グループ詳細更新ボタン ??に遷移(??.html) -->
 
 
 <script>
@@ -112,6 +115,7 @@ $(document).ready(function() {
             showCancelButton: true, // キャンセルボタンを表示
             confirmButtonText: '確定', // 確定ボタンのテキスト
             cancelButtonText: 'キャンセル', // キャンセルボタンのテキスト
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 // 確定ボタンが押された場合、フォームを送信
@@ -123,11 +127,6 @@ $(document).ready(function() {
 </script>
 
 
-<!-- 削除ボタン専用フォーム -->
-<form id="deleteForm" action="" method="POST" >
-  <input type="hidden" name="deleteGroup" value="1">
-  <input type="submit" id="Exit" value="グループを削除する">
-</form>
 
 
 <script>
@@ -142,6 +141,7 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonText: '本当に削除する',
             cancelButtonText: 'キャンセル',
+        
             customClass: {
               title: 'custom-title',
               content: 'custom-content',

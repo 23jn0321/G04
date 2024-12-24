@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 require_once 'helpers/DAO.php';
 require_once 'helpers/reportDAO.php';
 
@@ -6,104 +7,96 @@ require_once 'helpers/reportDAO.php';
 
 $a=new ReportDAO();
 $userChats = $a->getUserChats();
+=======
+require_once 'helpers/ReportDAO.php';
+
+$reportDAO = new ReportDAO();
+$reportedUsers = $reportDAO->getReportedUsers();
+>>>>>>> 38c49d43493cdd29f5c9aecd5d95953662672239
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="utf-8">
-    <title>ユーザーごとのチャット表示</title>
-    <link rel="stylesheet" href="CSSUser/Header.css">
-    <link rel="stylesheet" href="CSSAdmin/reportView.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <meta charset="utf-8">
+  <title>通報管理画面</title>
+  <link rel="stylesheet" href="CSSUser/Header.css">
+  <link rel="stylesheet" href="CSSAdmin/reportView.css">
 </head>
-
 <body>
-
 <header>
-    <a href="admin.html"><img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Matching"></a>
-    <hr>
+  <a href="admin.html"><img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Matching"></a>
+  <hr>
 </header>
-
 <div class="content">
-    <ul id="userList">
-        <?php foreach ($userChats as $userID => $userData): ?>
-            <li onclick="showUserChats(<?php echo $userID; ?>)">
-                <div class="user-info">
-                    <p><?php echo $userData['userName'] . ' ' . $userData['department']; ?></p>
-                    <button class="freeze-btn" data-user-name="<?php echo $userData['userName']; ?>" onclick="freezeUser(this)">凍結</button>
-                </div>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
-    <div class="box">
-        <div id="userChats"></div>
-    </div>
+  <ul>
+    <?php foreach ($reportedUsers as $user): ?>
+      <li onclick="showUserDetails(<?= htmlspecialchars(json_encode($user)) ?>)">
+        <div class="user-info">
+          <p><?= $user->GakusekiNo ?> <?= $user->UserName ?><br><?= $user->ReportCategory ?></p>
+          <button class="freeze-btn" data-user-id="<?= $user->UserID ?>" onclick="freezeUser(this)">凍結</button>
+        </div>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+  <div class="box">
+    <div id="userDetails"></div>
+  </div>
 </div>
 
 <script>
-    // PHPから取得したデータをJavaScriptに渡す
-    const userChats = <?php echo json_encode($userChats, JSON_UNESCAPED_UNICODE); ?>;
+function showUserDetails(user) {
+  const userDetailsContainer = document.getElementById('userDetails');
 
-    // ユーザーごとのチャットを表示する
-    function showUserChats(userID) {
-        const userChatContainer = document.getElementById('userChats');
-        userChatContainer.innerHTML = ''; // 既存の内容をクリア
+  // 初期化
+  userDetailsContainer.innerHTML = `<h2>${user.UserName} の詳細</h2><p>ロード中...</p>`;
 
-        const selectedUserChats = userChats[userID];
-        if (!selectedUserChats) return;
+  // サーバーからデータを取得
+  fetch(`getUserDetail.php?userID=${user.UserID}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        userDetailsContainer.innerHTML = `<p>${data.error}</p>`;
+        return;
+      }
 
-        Object.entries(selectedUserChats.groups).forEach(([groupName, chats]) => {
-            const groupDiv = document.createElement('div');
-            groupDiv.className = 'group-chat';
+      // グループ情報の表示
+      let groupDetails = `<p>所属グループ:</p>`;
+      data.groups.forEach(group => {
+        groupDetails += `<p>・${group.GroupName}</p>`;
+      });
 
-            const groupTitle = document.createElement('p');
-            groupTitle.className = 'group-name';
-            groupTitle.textContent = `${groupName} グループ`;
-            groupDiv.appendChild(groupTitle);
+      // グループ内チャットの表示
+      let chatDetails = `<p>グループ内での発言:</p>`;
+      data.chats.forEach(chat => {
+        chatDetails += `
+          <div class="chat-log">
+            <p><strong>${chat.GroupName} グループ:</strong></p>
+            <p>${chat.MessageDetail}</p>
+            <p><em>${chat.SendTime}</em></p>
+          </div>`;
+      });
 
-            chats.forEach(chat => {
-                const chatDiv = document.createElement('p');
-                chatDiv.textContent = chat;
-                groupDiv.appendChild(chatDiv);
-            });
+      // 詳細をHTMLに挿入
+      userDetailsContainer.innerHTML = `
+        <h2>${user.UserName} の詳細</h2>
+        <p>学籍番号: ${user.GakusekiNo}</p>
+        <p>通報理由: ${user.ReportCategory}</p>
+        ${groupDetails}
+        ${chatDetails}
+      `;
+    })
+    .catch(error => {
+      console.error('エラー:', error);
+      userDetailsContainer.innerHTML = `<p>データ取得中にエラーが発生しました。</p>`;
+    });
+}
 
-            userChatContainer.appendChild(groupDiv);
-        });
-    }
 
-    // 初期状態で最初のユーザーのチャットを表示
-    window.onload = function () {
-        const firstUserID = Object.keys(userChats)[0];
-        if (firstUserID) showUserChats(firstUserID);
-    };
-
-    function freezeUser(button) {
-        const userName = button.getAttribute("data-user-name");
-
-        Swal.fire({
-            html: `<h1>ユーザー「${userName}」を凍結しますか？</h1>`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'OK',
-            cancelButtonText: 'キャンセル',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire("ユーザーを凍結しました", {
-                    icon: "success",
-                });
-                // APIリクエストなどの処理をここに追加
-            } else {
-                Swal.fire("凍結がキャンセルされました。", {
-                    icon: "info",
-                });
-            }
-        });
-    }
+function freezeUser(button) {
+  const userID = button.getAttribute("data-user-id");
+  alert(`ユーザーID: ${userID} を凍結します`);
+}
 </script>
-
 </body>
 </html>
