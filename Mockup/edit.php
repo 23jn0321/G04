@@ -2,6 +2,7 @@
     // 必要なDAO（データアクセスオブジェクト）ファイルを読み込み
     require_once 'helpers/userDAO.php';
     require_once 'helpers/studentDAO.php';
+    include "header.php";
 
     // セッションの開始（まだ開始されていない場合のみ開始）
     if(session_status() === PHP_SESSION_NONE){
@@ -62,9 +63,8 @@
 <meta charset="utf-8">
 <header>
   <!-- 外部CSSファイルを適用 -->
-  <link rel="stylesheet" href="CSSUser/Header.css">
+  <link rel="stylesheet" href="CSSUser/edit.css">
 </header>
-<?php include "header.php"; ?> <!-- ヘッダー部分を別ファイルからインクルード -->
 
 <?php
     // セッションからログインユーザー情報を取得
@@ -94,7 +94,7 @@
             <td>ひとことコメント</td>
             <td>
                 <!-- 現在のコメントを初期値として表示 -->
-                <input type="text" required name="comment" class="input" value="<?= $user->ProfileComment ?>" autofocus>
+                <textarea class="input" name="comment" id="my" rows="4" cols="30" autofocus><?= $user->ProfileComment ?></textarea>
             </td>
         </tr>
         <tr>

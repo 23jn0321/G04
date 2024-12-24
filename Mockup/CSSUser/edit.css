@@ -1,9 +1,14 @@
-#submit {
+#submitButton {
     padding:7px 15px 7px 15px;
-    border: solid 1px;
-    position: relative;
+    float: left;
+    margin-left: -500px;
+    margin-bottom: 600px;
+    
 
   }
   #my{
     resize: none;
+  }
+  .input{
+    font-size: 18px;
   }
