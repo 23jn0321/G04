@@ -88,8 +88,8 @@ foreach ($genres as $genre) {
 
         // 「ゲーム」を選んだときのサブジャンルを表示
         const selectedGenre = genreSelect.value;
-        sourceGenreSelect.innerHTML = '<option value="">選択してください</option>';
-        targetGenreSelect.innerHTML = '<option value="">選択してください</option>';
+        sourceGenreSelect.innerHTML = '<option value="" disabled selected hidden>選択してください</option>';
+        targetGenreSelect.innerHTML = '<option value="" disabled selected hidden>選択してください</option>';
 
         if (selectedGenre) {
             const selectedGenreData = genre.find(g => g.mainGenreName === selectedGenre);
@@ -116,8 +116,8 @@ foreach ($genres as $genre) {
         // ジャンル変更時のイベント
         genreSelect.addEventListener("change", function() {
             const selectedGenre = genreSelect.value; // 選択されたジャンル
-            sourceGenreSelect.innerHTML = '<option value="">選択してください</option>';
-            targetGenreSelect.innerHTML = '<option value="">選択してください</option>';
+            sourceGenreSelect.innerHTML = '<option value="" disabled selected hidden>選択してください</option>';
+            targetGenreSelect.innerHTML = '<option value="" disabled selected hidden>選択してください</option>';
 
             if (selectedGenre) {
                 const selectedGenreData = genre.find(g => g.mainGenreName === selectedGenre);
