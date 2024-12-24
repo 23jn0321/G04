@@ -2,7 +2,7 @@
     // 必要なDAO（データアクセスオブジェクト）ファイルを読み込み
     require_once 'helpers/userDAO.php';
     require_once 'helpers/studentDAO.php';
-    include "header.php";
+    
 
     // セッションの開始（まだ開始されていない場合のみ開始）
     if(session_status() === PHP_SESSION_NONE){
@@ -64,6 +64,7 @@
 <header>
   <!-- 外部CSSファイルを適用 -->
   <link rel="stylesheet" href="CSSUser/edit.css">
+  <?php include "header.php"; ?>
 </header>
 
 <?php
@@ -87,14 +88,14 @@
             <td>ニックネーム</td>
             <td>
                 <!-- 現在のニックネームを初期値として表示 -->
-                <input type="text" required name="nickName" class="input" value="<?= $user->UserName ?>" autofocus>
+                <input type="text" required name="nickName" class="input" value="<?= $userName[0]['UserName'] ?>" autofocus>
             </td>
         </tr>
         <tr>
             <td>ひとことコメント</td>
             <td>
                 <!-- 現在のコメントを初期値として表示 -->
-                <textarea class="input" name="comment" id="my" rows="4" cols="30" autofocus><?= $user->ProfileComment ?></textarea>
+                <textarea class="input" name="comment" id="my" rows="4" cols="30" autofocus><?= $userName[0]['ProfileComment'] ?></textarea>
             </td>
         </tr>
         <tr>
@@ -133,6 +134,7 @@ $(document).ready(function() {
             showCancelButton: true, // キャンセルボタンを表示
             confirmButtonText: '確定', // 確定ボタンのテキスト
             cancelButtonText: 'キャンセル', // キャンセルボタンのテキスト
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 // 確定ボタンが押された場合、フォームを送信
