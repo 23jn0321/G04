@@ -43,34 +43,30 @@ ul, li {
 }
 
 .group ul {
-  overflow-y: auto;
-  max-width: 550px;
-  max-height: 680px;
-  flex-wrap: wrap;
-  display: flex;
-  margin: auto;
-  justify-content: space-around;
+  overflow-y: auto; /* 縦スクロールを有効化 */
+  overflow-x: hidden; /* 横スクロールを無効化 */
+  max-width: 550px; /* 最大幅を指定 */
+  height: 680px; /* 高さを固定 */
+  flex-wrap: nowrap; /* 子要素の折り返しを無効化 */
+  display: flex; /* フレックスボックスを有効化 */
+  flex-direction: column; /* 縦方向に子要素を並べる */
+  justify-content: flex-start; /* 上詰めに設定 */
   list-style: none;
-  left: -625px;
-  padding-left: 0;
   border: solid 2px;
+  padding: 0; /* 不要な余白をリセット */
+  margin: 0 auto; /* 中央揃え */
   float: left;
-  margin-left: 55px;
-  margin-top: 20px;
+  margin-left: 52px;
 }
 
 .group ul li {
   text-align: center;
   list-style: none;
   border: solid 1px;
-  width: 800px;
-  list-style: none;
-  border: solid 1px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align: center;
+  width: 100%; /* 横幅を親要素に合わせる */
+  padding: 10px 106px; /* 上下の余白を統一 */
+  box-sizing: border-box; /* パディングとボーダーを幅に含める */
 }
-
 .group a {
   font-size: 18px;
   font-weight: bold;
