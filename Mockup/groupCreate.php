@@ -10,7 +10,7 @@ if(!empty($_SESSION['userInfo'])){
     //セッション変数の会員情報を取得する
     $user = $_SESSION['userInfo'];
 }
-//を取得
+//DAOを取得
 $groupCreateDAO=new GruopDetailDAO();
 $genreList = $groupCreateDAO->groupSelect();
 $genre_json = json_encode($genreList); //JSONエンコード
@@ -18,10 +18,6 @@ $genre_json = json_encode($genreList); //JSONエンコード
 
 //POSTメソッドでリクエストされたとき
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-        //作成ボタンが押されたとき
-          //グループの内容が空ではなければ
-         
-    
             //入力されたグループの内容を受け取る
             $GroupName = $_POST['groupName'];
             $MaxMember = $_POST['joinNum'];
@@ -46,17 +42,17 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <html lang="ja">
 <meta charset="utf-8">
 
-    <!-- 作成ボタン -->
 
 <form id="sendbutton" action="" method="POST">
 <table id="profileTable" class="box">
 
 <body>
     <!-- グループ名 -->
-    <p>グループ名 ：<input type="text" id="groupName" name="groupName"></p>
+    <p><lavel id="groupNamelavel">グループ名　：</label></p>
+    <p><input type="text" id="groupName" name="groupName"></p>
 
     <!-- 参加人数 -->
-    <p>参加人数　：
+    <p><lavel id="groupJoinlavel">参加人数　：</lavel>
         <label class="selectbox-6">
             <select name="joinNum">
                 <option value="3">3</option>
@@ -68,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     <!-- メインジャンルとサブジャンル -->
     <div class="dropdown-container">
-        <label for="maingenreName">大ジャンル名</label>
+        <label for="maingenreName" id="maingenreNamelavel">大ジャンル名　：</label>
         <select id="maingenreName" name="maingenreName">
             <?php foreach($genreList as $genre): ?>
             <option value="<?= $genre[0] ?>">
@@ -79,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         <!-- サブジャンル選択 -->
         <a>
-            <label for="subGenreName">中ジャンル名</label>
+            <label for="subGenreName" id="subGenreNamelavel">中ジャンル名　：</label>
             <select id="subGenreName" name="subGenreName">
                 <option hidden>選択してください</option>
             </select>
@@ -142,27 +138,50 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     <!--グループ詳細-->
     <label>
-        <span class="textbox-1-label">グループの説明：</span>
-        <input type="text" class="textbox-1" id="textbox-2" name="groupDetail" />
+        <span class="textbox-1-label" >グループの説明：</span>
+        <textarea class="textbox-3" id="textbox-2" name="groupDetail" rows="5" cols="20"></textarea>
     </label>
 
     <!--　グループ作成ボタン --> 
     <button type="submit" id="submitButton">作成</button>
     </table>
 </form>    
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
         // 作成ボタンがクリックされたとき
         $(document).ready(function() {
             // フォームの送信処理をカスタマイズ
             $('#sendbutton').on('submit', function(e) {
                 e.preventDefault(); // 通常の送信を防ぐ
 
-                // SweetAlert2を使って確認ダイアログを表示
+                var groupNameValue = $('#groupName').val(); // グループ名のテキスト内容
+                var subGenreNameValue = $('#subGenreName').val(); // 中ジャンルのテキスト内容
+
+                // グループ名と中ジャンルが空かどうかをチェック
+                if (groupNameValue === "" || subGenreNameValue === "選択してください") {
+                // 空の場合、警告を表示
                 Swal.fire({
-                    title: '編集確認',
-                    text: '編集を確定しますか？',
+                    title: '入力エラー',
+                    text: 'グループ名または中ジャンルが選択されていません',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+
+                //空のテキストを赤く表記させる
+                $('#groupName').css('border', '2px solid red');
+                $('#subGenreName').css('border', '2px solid red');
+
+                return; // フォーム送信を中止
+            }
+
+                // SweetAlert2を使って確認ポップアップを表示
+                Swal.fire({
+                    title: '確認',
+                    text: 'グループを作成しますか？',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: '確定',
@@ -170,7 +189,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // 「送信」ボタンが押された場合、フォームを送信
+                        // 「確定」ボタンが押された場合、フォームを送信
                         this.submit();
                     }
                 });
@@ -179,7 +198,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     </script>
 
     <!--検索画面に戻る-->
-<a href="genreSelect.html"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
+<a href="genreSelect.php"><input type="button" value="検索画面に戻る" id="searchBack" class="searchBack"></a>
 
     
 </body>

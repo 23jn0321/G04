@@ -26,7 +26,12 @@ foreach ($genres as $genre) {
 if (isset($_GET['newSubGenreName'])) {
     $newSubGenreNames = $_GET['newSubGenreName'];  // ここでnewSubGenreName[]が配列として取得される
 
+    $genreID = $_GET["selectedOptionId"];
+    $subGenreDAO = new subGenreDAO();
+    echo "Genre ID: " . htmlspecialchars($genreID, ENT_QUOTES, 'UTF-8') . "<br>";
     foreach ($newSubGenreNames as $subGenre) {
+        echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
+        $subGenreDAO->insert_SubGenre($genreID, $subGenre);
         echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
     }
 }
@@ -40,6 +45,7 @@ if (isset($_GET['genreNameID'])) {
     $selectGenreID = $_GET['genreNameID'];
     echo htmlspecialchars($selectGenreID, ENT_QUOTES, 'UTF-8');
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -68,6 +74,9 @@ if (isset($_GET['genreNameID'])) {
         const hiddenGenreIDInput = document.getElementById('hiddenGenreID');
         genres = <?php echo json_encode($genreWithSubGenres); ?>;
         console.log(genres);
+        const selectedOption = mainGenreSelect.options[mainGenreSelect.selectedIndex];
+        const initialOptionId = selectedOption.id;
+        hiddenLabelDiv.value = initialOptionId; // 隠し入力にoptionIdを設定
         // 初期状態でのサブジャンル表示処理
         const genreName = mainGenreSelect.value;
         updateSubGenreFields(genreName);
@@ -82,6 +91,9 @@ if (isset($_GET['genreNameID'])) {
             console.log("選択されたID:", selectedOptionID); // IDの確認
 
             updateSubGenreFields(selectedGenre);
+            //変更されたジャンルIDにoptionIDを変更
+            const selectedOption = event.target.options[event.target.selectedIndex];
+            hiddenLabelDiv.value = selectedOption.id; // 隠し入力に新しいoptionIdを設定
         });
 
 
@@ -218,16 +230,7 @@ if (isset($_GET['genreNameID'])) {
                     const existingInputs = document.querySelectorAll('input[type="text"]');
                     console.log(existingInputs.length);
                     console.log(document.getElementById('subGenreName' + i).value);
-                    for (let i = genreData.subGenreNames.length + 1; i < existingInputs.length + 1; i++) {
-
-                        //insert
-                    }
-
-
                 }
-
-
-
                 Swal.fire("ジャンルを追加しました", {
                     icon: "success",
                 });
@@ -268,9 +271,8 @@ if (isset($_GET['genreNameID'])) {
     </div>
 
     <div id="subGenreContainer">
-        <form onsubmit="newSubGenresAdd(event)" method="GET" action="">
-            <input type="hidden" id="hiddenGenreName" name="genreName" value="">
-            <input type="hidden" id=selec name="genreNameID" value="">
+        <form onsubmit="SubGenresAdd(event)" method="GET" action="">
+            <input type="hidden" id="hiddenLabelDiv" name="selectedOptionId" value="">
             <label for="subGenreName">中ジャンル名</label>
             <input type="text" id="subGenreName1" name="subGenreName1">
             <input type="text" id="subGenreName2" name="subGenreName2">

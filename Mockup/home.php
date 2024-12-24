@@ -32,14 +32,19 @@ if (isset($_SESSION['userInfo']) ) {
 </header>
 
 
-<div>
+<div class="JoinGroup">
   <p id="title">所属グループ一覧</p>
 </div>
-
 
     <!-- グループ表示 -->
     <nav class="group">
     <ul>
+    <?php if (empty($groupInfo)): ?>
+         <li>
+            所属グループがありません。<br>
+            グループに参加しましょう！
+          </li>
+          <?php else: ?>
     <?php foreach ($groupInfo as $var): ?>
       <li>
         <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
@@ -51,6 +56,7 @@ if (isset($_SESSION['userInfo']) ) {
           <?php endif; ?>
       </li>
       <?php endforeach; ?>
+      <?php endif; ?>
     </ul>
 </a>
 

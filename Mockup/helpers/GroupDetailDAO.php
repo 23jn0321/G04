@@ -89,8 +89,6 @@ class GroupDetailDAO
 
     }
 
-
-
     public function insert(int $userid, int $Groupid)
     {
         $dbh = DAO::get_db_connect();
@@ -106,4 +104,34 @@ class GroupDetailDAO
         $stmt ->execute();
     }
 
+    public function delete(int $userid, int $Groupid)
+    {
+        $dbh = DAO::get_db_connect();
+
+        $sql = "DELETE FROM GroupMember 
+        WHERE UserID = :UserID AND GroupID = :GroupID";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':UserID', $userid, PDO::PARAM_INT);
+        $stmt->bindValue(':GroupID', $Groupid, PDO::PARAM_INT);
+
+        $stmt ->execute();
+    }
+    public function get_join(int $userid, int $Groupid){
+
+        $dbh = DAO::get_db_connect();
+
+        $sql = "SELECT COUNT(*) AS count 
+        FROM GroupMember 
+        WHERE UserID = :UserID AND GroupID = :GroupID";
+
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':UserID', $userid, PDO::PARAM_INT);
+        $stmt->bindValue(':GroupID', $Groupid, PDO::PARAM_INT);
+        $stmt ->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['count'] > 0;
+    }
 }

@@ -1,13 +1,27 @@
+ul, li {
+    margin: 0; /* 外側の余白をリセット */
+    padding: 0; /* 内側の余白をリセット */
+}
+
+/*-------------------------------------
+            "所属グループ 一覧"
+--------------------------------------*/
 #title {
     outline-color: black;
     list-style: none;
     border: solid 1px;
-    padding: 13px 220px 12px 203px;
-    position: relative;
-    left: 40px;
-
+    padding: 12px 210px 12px 210px;
+    text-align: left;
+    margin-left: 55px;
+    margin-top: 24px;
 }
 
+.JoinGroup p {
+    display: inline-block;
+}
+/*-------------------------------------
+            グループ一覧表示
+--------------------------------------*/
 #groupEditR {
     border: none;
     padding: 10px 20px;
@@ -26,9 +40,6 @@
     width: 100%;
     margin: 0px auto 0 auto;
 }
-
-
-
 
 .group li:hover {
     background-color: #effff0;
@@ -49,8 +60,9 @@
     left: -625px;
     padding-left: 0;
     border: solid 2px;
-    position: absolute;
-    left: 50px;
+    float: left;
+    margin-left: 55px;
+    margin-top: 20px;
 }
 
 .group ul li {
@@ -72,13 +84,10 @@
     padding: 30px 0 30px 0;
     margin-bottom: 10px;
     text-decoration: none;
-    position: relative;
+
 }
 
 .group a::after {
-    position: absolute;
-    left: 0;
-    bottom: 0;
     display: block;
     content: "";
     width: 0%;
@@ -87,59 +96,22 @@
     transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
-
-
-
-#groupEdit {
-    padding: 13px 10px 12px 10px;
-    position: relative;
-    left: 10px;
-    bottom: 8px;
-}
-
-#group {
-    padding: 10px 10px 10px 10px;
-    border: solid 1px;
-    width: 300px;
-    text-align: center;
-    position: relative;
-    left: 50px;
-}
-
-div p {
-    display: inline-block;
-}
-
-
-.box {
-    width: 700px;
-    height: 600px;
-    border: 1px solid #000;
-    overflow-y: scroll;
-    position: relative;
-    left: 700px;
-    bottom: 700px;
-}
+/*-------------------------------------
+            マッチングボタン
+--------------------------------------*/
 
 #MatchingButton {
-    padding: 20px 500px 20px 500px;
-    position: absolute;
-    left: 700px;
-    bottom: 40px;
+    padding: 20px 400px 20px 400px;
+    float: left;
+    margin-top: 635px;
+    margin-left: 90px;
 }
 
-.multiselect {
-    position: relative;
-    left: 900px;
-}
 
+/*-------------------------------------
+                画面固定
+--------------------------------------*/
 html,
 body {
     overflow: hidden;
-}
-
-
-#admin {
-    position: relative;
-    left: 600px;
 }

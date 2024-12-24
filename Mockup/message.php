@@ -12,9 +12,15 @@
         session_start();
     }
 
+
+    $groupDAO = new GroupDAO();
+    $messageDAO = new messageDAO();
+
+
     // GETパラメータからGroupIDを取得
     if (isset($_GET['GroupID'])) {
         $groupID = $_GET['GroupID'];
+        $nowGroup = $messageDAO->NowGroup($groupID);
     }
 
     // ログイン中のユーザー情報を取得
@@ -23,9 +29,15 @@
         $loggedInUser = $_SESSION['userInfo'];
     }
 
-    // 所属グループ情報を取得
-    $groupDAO = new GroupDAO();
-    $groupInfo = $groupDAO->getGroup($loggedInUser->UserID); // ユーザーが所属しているグループを取得
+        // 所属グループ情報を取得
+
+        $groupInfo = $groupDAO->getGroup($loggedInUser->UserID); // ユーザーが所属しているグループを取得
+
+        // グループ管理者判定（追加部分）
+        $groupAdminID = $groupInfo->GroupAdminID ?? null;
+
+        $isGroupAdmin = ($loggedInUser->UserID === $groupAdminID); // 現在のログインユーザーが管理者かどうか判定
+
 
     // POSTリクエストが送信された場合（メッセージ送信処理）
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -63,7 +75,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSSスタイルシートの読み込み -->
-    <link rel="stylesheet" href="CSSUser/Home.css"> <!-- ホームページのスタイル -->
     <link rel="stylesheet" href="CSSUser/Message.css"> <!-- メッセージ画面のスタイル -->
 
     <!-- 外部ライブラリの読み込み -->
@@ -73,9 +84,11 @@
 
 <body>
     <!-- 所属グループ一覧表示 -->
-    <div>
+    <div class="JoinGroup">
         <p id="title">所属グループ一覧</p>
     </div>
+
+    
     <nav class="group">
         <ul>
             <!-- ユーザーが所属するグループ一覧を動的に表示 -->
@@ -89,12 +102,18 @@
                     </a>
                     <!-- グループ編集ボタン（管理者のみ表示） -->
                     <?php if ($loggedInUser->UserID == $var->GroupAdminID): ?>
-                        <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" value="グループ編集">
+                        <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
                     <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
     </nav>
+
+    <div class="NowGroup">
+        <h2>現在のグループ：<?= $nowGroup["GroupName"]; ?>　　<input type="button" id="Detail" value="詳細"></h2>
+        <!-- 詳細ボタン -->
+       
+    </div>
 
     <!-- チャットルーム（メッセージ表示エリア） -->
     <div class="room">
@@ -220,5 +239,27 @@
     })
   });
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        const isGroupAdmin = <?= json_encode($isGroupAdmin) ?>; // PHPから管理者判定を受け取る
+        const groupID = <?= json_encode($groupID) ?>; // 現在のGroupIDを取得
+
+        // 詳細ボタンのクリックイベント
+        $("#Detail").on("click", function() {
+            if (isGroupAdmin) {
+                // 管理者の場合はグループ編集ページにリダイレクト
+                window.location.href = `groupEdit.php?GroupID=${encodeURIComponent(groupID)}`;
+            } else {
+                // 一般メンバーの場合はグループ詳細ページにリダイレクト
+                window.location.href = `groupDetail.php?GroupID=${encodeURIComponent(groupID)}`;
+            }
+        });
+    });
+</script>
+
+
+
 </body>
 </html>

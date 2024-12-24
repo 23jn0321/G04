@@ -19,7 +19,7 @@ $selectedGenres = isset($_GET['genre']) ? $_GET['genre'] : [];
 $groups = [];
 
 if (!empty($selectedGenres)) {
-    $groups = $genreSelectDAO->getGroupsByGenres($selectedGenres);
+    $groups = $genreSelectDAO->getGroupsByGenres($selectedGenres,$loggedInUser->UserID);
 }
 ?>
 

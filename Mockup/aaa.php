@@ -72,6 +72,7 @@ function showUserDetails(user) {
         <h2>${user.UserName} の詳細</h2>
         <p>学籍番号: ${user.GakusekiNo}</p>
         <p>通報理由: ${user.ReportCategory}</p>
+        ${groupDetails}
         ${chatDetails}
       `;
     })
