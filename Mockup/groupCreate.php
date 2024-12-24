@@ -169,6 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     text: 'グループ名または中ジャンルが選択されていません',
                     icon: 'error',
                     confirmButtonText: 'OK'
+                    
                 });
 
                 //空のテキストを赤く表記させる
@@ -179,13 +180,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             // SweetAlert2を使って確認ポップアップを表示
-            Swal.fire({
+            ({
                 title: '確認',
                 text: 'グループを作成しますか？',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: '確定',
                 cancelButtonText: 'キャンセル',
+                reverseButtons: true
 
             }).then((result) => {
                 if (result.isConfirmed) {
