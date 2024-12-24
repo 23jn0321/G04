@@ -37,6 +37,41 @@
             $stmt->execute();
         }
 
+        function getUserChats()
+        {
+            $dbh = DAO::get_db_connect();
+            $sql = "
+                SELECT 
+                    u.UserID, u.UserName,  g.GroupName, m.MessageDetail 
+                FROM 
+                    GakuseiUser u
+                INNER JOIN 
+                    GroupMember gm ON u.UserID = gm.UserID
+                INNER JOIN 
+                    ChatGroup g ON gm.GroupID = g.GroupID
+                INNER JOIN 
+                    ChatMessage m ON g.GroupID = m.GroupID
+                ORDER BY 
+                    u.UserID, g.GroupID, m.SendTime ASC";
+                        $stmt = $dbh->prepare($sql);
+                $userChats = [];
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $userID = $row['UserID'];
+                    if (!isset($userChats[$userID])) {
+            $userChats[$userID] = [
+                'userName' => $row['UserName'],
+                'ChatGroup' => []
+            ];
+        }
+        $groupName = $row['GroupName'];
+        if (!isset($userChats[$userID]['ChatGroup'][$groupName])) {
+            $userChats[$userID]['ChatGroup'][$groupName] = [];
+        }
+        $userChats[$userID]['ChatGroup'][$groupName][] = $row['MessageDetail'];
+    }
+    return $userChats;
+}
+
         
     }
 
