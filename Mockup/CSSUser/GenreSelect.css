@@ -48,8 +48,8 @@ margin-top: 100px;
     text-align: center;
     list-style: none;
     border: solid 1px;
-    width: 100%; /* 横幅を親要素に合わせる */
-    padding: 10px 130px; /* 上下の余白を統一 */
+    width: 550px; /* 横幅を親要素に合わせる */
+    padding: 10px; /* 上下の余白を統一 */
     box-sizing: border-box; /* パディングとボーダーを幅に含める */
 }
 

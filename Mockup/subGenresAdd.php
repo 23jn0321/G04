@@ -29,12 +29,10 @@ if (isset($_GET['newSubGenreName'])) {
     $genreID=$_GET["selectedOptionId"];
     $genreID = $_GET["selectedOptionId"];
     $subGenreDAO = new subGenreDAO();
-    echo "Genre ID: " . htmlspecialchars($genreID, ENT_QUOTES, 'UTF-8') . "<br>";
+    //echo "Genre ID: " . htmlspecialchars($genreID, ENT_QUOTES, 'UTF-8') . "<br>";
     foreach ($newSubGenreNames as $subGenre) {
-        echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
-        $subGenreDAO->insert($genreID,$subGenre);
+        //echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
         $subGenreDAO->insert_SubGenre($genreID, $subGenre);
-        echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
     }
 }
 
@@ -231,7 +229,7 @@ if (isset($_GET['newSubGenreName'])) {
 
     <header>
         <a href="admin.html">
-            <img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Logo">
+            <img src="jecMatching/Jec.jpg" width="450px" alt="Jec Logo">
         </a>
         <hr>
     </header>

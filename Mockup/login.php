@@ -32,7 +32,7 @@
             //DBから学籍番号・パスワードが一致する会員データを取り出す
             $studentDAO = new StudentDAO();
             $userInfo = $studentDAO->get_member($gakusekiNo,$password);
-            $admin = $studentDAO->get_admin($gakusekiNo,$password);
+            //$admin = $studentDAO->get_admin($gakusekiNo,$password);
 
             //会員データを取り出せたとき
             if($userInfo !== false){
@@ -45,13 +45,13 @@
                 //index.phpに移動
                 header('Location: home.php');
                 exit;
-            }else if($admin !== false){
+            }//else if($admin !== false){
 
 
 
-                $_SESSION['admin'] = $admin;
-                header('Location: admin.html');
-            }
+              //  $_SESSION['admin'] = $admin;
+                //header('Location: admin.html');
+           // }
             //会員データが取り出せなかった時
             else{
                 $errs[] = '学籍番号またはパスワードに誤りがあります。';

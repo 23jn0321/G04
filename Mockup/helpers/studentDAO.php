@@ -65,7 +65,7 @@ class StudentDAO
         }
         return false;
     }
-    public function get_admin(string $gakusekiNo, string $password)
+    /*public function get_admin(string $gakusekiNo, string $password)
     {
         $dbh = DAO::get_db_connect();
 
@@ -92,7 +92,7 @@ class StudentDAO
             }
         }
         return false;
-    }
+    }*/
     public function get_newUserInfo(string $userID)
     {
 
