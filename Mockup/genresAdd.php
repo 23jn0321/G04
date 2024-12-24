@@ -121,7 +121,7 @@ if (isset($_GET['genreName']) && isset($_GET['subGenreName'])) {
 
   <header>
     <a href="admin.html">
-      <img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Logo">
+      <img src="jecMatching/Jec.jpg" width="450px" alt="Jec Logo">
     </a>
     <hr>
   </header>

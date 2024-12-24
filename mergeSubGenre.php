@@ -1,3 +1,20 @@
+<?php
+require_once 'DAO.php';
+
+class Genre
+{
+    public int $mainGenreID;        //メインジャンルID
+    public string $mainGenreName;   //メインジャンルネーム
+}
+class SubGenre
+{
+    public int $subGenreID;         //サブジャンルID
+    public int $mainGenreID;        //メインジャンルID
+    public string $subGenreName;    //サブジャンルネーム
+    public bool $deleteFlag;         //サブジャンルのdeleteflag
+}
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -52,7 +69,7 @@
 
     <header>
         <a href="admin.html">
-            <img src="jecMatching/Jec.jpg" width="450px" alt="Jec Logo">
+            <img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Logo">
         </a>
         <hr>
     </header>

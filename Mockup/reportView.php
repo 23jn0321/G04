@@ -15,7 +15,7 @@ $reportedUsers = $reportDAO->getReportedUsers();
 </head>
 <body>
 <header>
-  <a href="admin.html"><img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Matching"></a>
+  <a href="admin.html"><img src="jecMatching/Jec.jpg" width="450px" alt="Jec Matching"></a>
   <hr>
 </header>
 <div class="content">
