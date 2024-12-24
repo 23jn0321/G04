@@ -131,35 +131,40 @@ class NewGroupDAO
 
     //DBからグループ内容を取得くするSQL
     $sql = "SELECT TOP 8
-                g.GroupID, 
-                g.GroupName, 
-                CONCAT(
-                    (SELECT COUNT(DISTINCT gm_sub.UserID) 
-                    FROM GroupMember gm_sub 
-                    WHERE gm_sub.GroupID = g.GroupID), 
-                    ' / ', 
-                    g.MaxMember
-                ) AS MemberInfo, 
-                COALESCE(FORMAT(MAX(cm.SendTime), 'MM/dd'), '情報なし') AS LastUpdated, 
-                CONCAT(mg.MainGenreName, ' / ', sg.SubGenreName) AS Genre 
-            FROM ChatGroup g
-                INNER JOIN MainGenre mg ON g.MainGenreID = mg.MainGenreID 
-                INNER JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
-                LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID 
-            WHERE 
-                g.GroupDeleteFlag = 0
-                AND g.GroupID NOT IN (
-                    SELECT GroupID 
-                    FROM GroupMember 
-                    WHERE UserID = :UserID
-                ) -- 指定したUserIDが参加しているグループを除外
-            GROUP BY 
-                g.GroupID, g.GroupName, g.MaxMember, mg.MainGenreName, sg.SubGenreName
-            HAVING 
-                (SELECT COUNT(DISTINCT gm_sub.UserID) 
-                 FROM GroupMember gm_sub 
-                 WHERE gm_sub.GroupID = g.GroupID) < g.MaxMember -- メンバー数が最大人数未満
-            ORDER BY g.GroupID DESC
+    g.GroupID, 
+    g.GroupName, 
+    CONCAT(
+        (SELECT COUNT(DISTINCT gm_sub.UserID) 
+         FROM GroupMember gm_sub 
+         WHERE gm_sub.GroupID = g.GroupID), 
+        ' / ', 
+        g.MaxMember
+    ) AS MemberInfo, 
+    COALESCE(FORMAT(MAX(cm.SendTime), 'MM/dd'), '情報なし') AS LastUpdated, 
+    CONCAT(mg.MainGenreName, ' / ', sg.SubGenreName) AS Genre 
+FROM ChatGroup g
+    INNER JOIN MainGenre mg ON g.MainGenreID = mg.MainGenreID 
+    INNER JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
+    LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID 
+WHERE 
+    g.GroupDeleteFlag = 0
+    AND g.GroupID NOT IN (
+        SELECT GroupID 
+        FROM GroupMember 
+        WHERE UserID = :UserID
+    ) -- 指定したUserIDが参加しているグループを除外
+GROUP BY 
+    g.GroupID, g.GroupName, g.MaxMember, mg.MainGenreName, sg.SubGenreName
+HAVING 
+    (SELECT COUNT(DISTINCT gm_sub.UserID) 
+     FROM GroupMember gm_sub 
+     WHERE gm_sub.GroupID = g.GroupID) < g.MaxMember -- メンバー数が最大人数未満
+ORDER BY 
+    CASE 
+        WHEN COALESCE(FORMAT(MAX(cm.SendTime), 'MM/dd'), '情報なし') = '情報なし' THEN 0 
+        ELSE 1 
+    END ASC, -- 情報なしを優先
+    g.GroupID DESC
             ";
     //
     $stmt = $dbh->prepare($sql);

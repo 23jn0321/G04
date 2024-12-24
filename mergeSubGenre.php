@@ -1,3 +1,20 @@
+<?php
+require_once 'DAO.php';
+
+class Genre
+{
+    public int $mainGenreID;        //メインジャンルID
+    public string $mainGenreName;   //メインジャンルネーム
+}
+class SubGenre
+{
+    public int $subGenreID;         //サブジャンルID
+    public int $mainGenreID;        //メインジャンルID
+    public string $subGenreName;    //サブジャンルネーム
+    public bool $deleteFlag;         //サブジャンルのdeleteflag
+}
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -52,7 +69,7 @@
 
     <header>
         <a href="admin.html">
-            <img src="jecMatching/Jec.jpg" width="450px" alt="Jec Logo">
+            <img src="jecMatching/JecMatchingAdmin.jpg" width="450px" alt="Jec Logo">
         </a>
         <hr>
     </header>
@@ -73,19 +90,19 @@
             <label for="subGenreName">統合元ジャンルㅤㅤㅤㅤ統合先ジャンル</label>
             <div class="merge-genre">
                 <select name="sourceGenre" class="genre-select" id="sourceGenre">
-                    <option>サッカー</option>
-                    <option>バスケ</option>
-                    <option>野球</option>
-                    <option>フットボール</option>
+                    <option>a</option>
+                    <option>b</option>
+                    <option>c</option>
+                    <option>d</option>
                 </select>
 
                 <span class="arrow">➡</span>
 
                 <select name="targetGenre" class="genre-select" id="targetGenre">
-                    <option>サッカー</option>
-                    <option>バスケ</option>
-                    <option>野球</option>
-                    <option>フットボール</option>
+                    <option>a</option>
+                    <option>b</option>
+                    <option>c</option>
+                    <option>d</option>
                 </select>
             </div>
         </div>
