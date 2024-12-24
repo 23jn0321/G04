@@ -1,3 +1,4 @@
+
 <?php
 require_once 'helpers/GenreDAO.php';
 
@@ -25,11 +26,13 @@ foreach ($genres as $genre) {
 }
 if (isset($_GET['newSubGenreName'])) {
     $newSubGenreNames = $_GET['newSubGenreName'];  // ここでnewSubGenreName[]が配列として取得される
+    $genreID=$_GET["selectedOptionId"];
     $genreID = $_GET["selectedOptionId"];
     $subGenreDAO = new subGenreDAO();
     echo "Genre ID: " . htmlspecialchars($genreID, ENT_QUOTES, 'UTF-8') . "<br>";
     foreach ($newSubGenreNames as $subGenre) {
         echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
+        $subGenreDAO->insert($genreID,$subGenre);
         $subGenreDAO->insert_SubGenre($genreID, $subGenre);
         echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
     }
@@ -266,5 +269,4 @@ if (isset($_GET['newSubGenreName'])) {
     </div>
 
 </body>
-
-</html>
+<html>
