@@ -168,5 +168,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </ul1>
   </div>
   <p id="groupEdit">  グループ詳細</p>
-  <input type="text" id="txtGE" value=<?= $group[0]['GroupDetail'] ?> readonly>
+  <input type="text" id="txtGE" value="<?= $group[0]['GroupDetail'] ?>" readonly>
   </div>
