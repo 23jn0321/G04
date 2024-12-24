@@ -166,5 +166,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </ul1>
   </div>
   <p id="groupEdit">  グループ詳細</p>
-  <input type="text" id="txtGE" value="<?= $group[0]['GroupDetail'] ?>" readonly>
+  <textarea class="input" name="comment" id="txtGE" rows="13" cols="95" readonly autofocus><?= $group[0]['GroupDetail'] ?></textarea>
   </div>

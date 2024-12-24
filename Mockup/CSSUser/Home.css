@@ -3,6 +3,13 @@ ul, li {
     padding: 0; /* 内側の余白をリセット */
 }
 
+.hachi-maru-pop-regular {
+    font-family: "Hachi Maru Pop", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  
 /*-------------------------------------
             "所属グループ 一覧"
 --------------------------------------*/
@@ -14,6 +21,9 @@ ul, li {
     text-align: left;
     margin-left: 55px;
     margin-top: 24px;
+    font-family: "Hachi Maru Pop", serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .JoinGroup p {
