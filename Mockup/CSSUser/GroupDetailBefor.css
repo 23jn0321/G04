@@ -1,6 +1,9 @@
-ul, li {
-    margin: 0; /* 外側の余白をリセット */
-    padding: 0; /* 内側の余白をリセット */
+ul,
+li {
+    margin: 0;
+    /* 外側の余白をリセット */
+    padding: 0;
+    /* 内側の余白をリセット */
 }
 
 /*-------------------------------------
@@ -19,6 +22,7 @@ ul, li {
 .JoinGroup p {
     display: inline-block;
 }
+
 /*-------------------------------------
             グループ一覧表示
 --------------------------------------*/
@@ -36,9 +40,7 @@ ul, li {
     /* ホバーしたら少し大きくなる */
 }
 
-.group {
-    margin: 0px auto 0 auto;
-}
+
 
 .group li:hover {
     background-color: #effff0;
@@ -101,26 +103,31 @@ ul, li {
     top: 578px;
     padding: 15px 50px 15px 50px;
 }
+
 .btn-danger {
-    color: #ff0000; /* デフォルトの文字色（白） */
-   
-    
-  }
+    color: #ff0000;
+    /* デフォルトの文字色（白） */
+
+
+}
 
 .btn-danger span {
-    color: red; /* 退会ボタンの文字部分を赤くする */
-  }
+    color: red;
+    /* 退会ボタンの文字部分を赤くする */
+}
 
-  .btn-primary {
-    color: #000000; /* デフォルトの文字色（白） */
- 
-  
-  }
-  
-  .btn-primary span {
-    color: rgb(0, 0, 0); /* 参加ボタンの文字部分を白に固定 */
-  }
-  
+.btn-primary {
+    color: #000000;
+    /* デフォルトの文字色（白） */
+
+
+}
+
+.btn-primary span {
+    color: rgb(0, 0, 0);
+    /* 参加ボタンの文字部分を白に固定 */
+}
+
 #back {
     position: relative;
     left: 650px;
@@ -131,15 +138,17 @@ ul, li {
 #groupName {
     position: relative;
     left: 650px;
-    top: -160px;
+    top: -175px;
     font-size: 40px;
     border: 10px;
     white-space: nowrap;
 }
+
 .group {
     position: absolute;
     top: 200px;
 }
+
 #groupGenre {
     position: relative;
     left: 651px;
@@ -178,9 +187,9 @@ ul, li {
     font-size: 24px;
     border: 10px;
     text-align: center;
- 
+
 }
-  
+
 #txtGE {
     position: relative;
     left: 645px;
@@ -188,7 +197,22 @@ ul, li {
     padding: 10px 850px 200px 0px;
     font-size: 20px;
 }
+
 html,
 body {
     overflow: hidden;
+}
+
+#group {
+    outline-color: black;
+    list-style: none;
+    border: solid 1px;
+    padding: 8px 210px 8px 210px;
+    position: relative;
+    top: 3px;
+    left: 55px;
+}
+
+.grouplist p {
+    display: inline-block;
 }

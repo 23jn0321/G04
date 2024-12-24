@@ -67,10 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <!-- CSS適応 -->
   <link rel="stylesheet" href="CSSUser/GroupDetailBefor.css">
 </header>
-  <div>
-    <body>
+  <div class="grouplist">
       <p id="group">所属グループ一覧</p>
-    </body>
   </div>
 
   <button id="back" onclick="location.href='genreSelect.php'">ジャンル選択に戻る</button>
