@@ -1,3 +1,4 @@
+
 <?php
 require_once 'helpers/GenreDAO.php';
 
@@ -25,25 +26,16 @@ foreach ($genres as $genre) {
 }
 if (isset($_GET['newSubGenreName'])) {
     $newSubGenreNames = $_GET['newSubGenreName'];  // ここでnewSubGenreName[]が配列として取得される
-
+    $genreID=$_GET["selectedOptionId"];
     $genreID = $_GET["selectedOptionId"];
     $subGenreDAO = new subGenreDAO();
     echo "Genre ID: " . htmlspecialchars($genreID, ENT_QUOTES, 'UTF-8') . "<br>";
     foreach ($newSubGenreNames as $subGenre) {
         echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
+        $subGenreDAO->insert($genreID,$subGenre);
         $subGenreDAO->insert_SubGenre($genreID, $subGenre);
         echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
     }
-}
-if (isset($_GET['genreName'])) {
-    $selectGenre = $_GET['genreName'];
-    echo htmlspecialchars($selectGenre, ENT_QUOTES, 'UTF-8');
-} else {
-    echo "ジャンルが選択されていません。";
-}
-if (isset($_GET['genreNameID'])) {
-    $selectGenreID = $_GET['genreNameID'];
-    echo htmlspecialchars($selectGenreID, ENT_QUOTES, 'UTF-8');
 }
 
 
@@ -70,8 +62,6 @@ if (isset($_GET['genreNameID'])) {
     document.addEventListener('DOMContentLoaded', () => {
         const mainGenreSelect = document.getElementById('genreName');
         const subGenreContainer = document.getElementById('subGenreContainer');
-        const hiddenGenreNameInput = document.getElementById('hiddenGenreName');
-        const hiddenGenreIDInput = document.getElementById('hiddenGenreID');
         genres = <?php echo json_encode($genreWithSubGenres); ?>;
         console.log(genres);
         const selectedOption = mainGenreSelect.options[mainGenreSelect.selectedIndex];
@@ -84,19 +74,11 @@ if (isset($_GET['genreNameID'])) {
         // メインジャンル変更時の処理
         mainGenreSelect.addEventListener('change', (event) => {
             const selectedGenre = event.target.value;
-            const selectedOption = event.target.selectedOptions[0]; // 選択されたoptionを取得
-            const selectedOptionID = selectedOption.id; // 選択されたoptionのidを取得
-
-            hiddenGenreNameInput.value = selectedGenre; // 選択されたジャンル名を隠しフィールドにセット
-            console.log("選択されたID:", selectedOptionID); // IDの確認
-
             updateSubGenreFields(selectedGenre);
             //変更されたジャンルIDにoptionIDを変更
             const selectedOption = event.target.options[event.target.selectedIndex];
             hiddenLabelDiv.value = selectedOption.id; // 隠し入力に新しいoptionIdを設定
         });
-
-
 
         function updateSubGenreFields(genreName) {
             resetSubGenreInputs();
@@ -278,13 +260,13 @@ if (isset($_GET['genreNameID'])) {
             <input type="text" id="subGenreName2" name="subGenreName2">
             <input type="text" id="subGenreName3" name="subGenreName3">
             <input type="text" id="subGenreName4" name="subGenreName4">
+            <!-- 中ジャンル追加ボタン -->
             <button type="button" id="addNewSubGenreButton">+中ジャンルを追加</button>
             <br>
+
             <button type="submit">ジャンルを追加する</button>
         </form>
-
     </div>
 
 </body>
-
-</html>
+<html>
