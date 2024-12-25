@@ -55,11 +55,13 @@ ul, li {
     background-color: #effff0;
     color: #01080e;
     outline: 1px solid #2589d0;
+    transform: scale(1.05);
 
 }
 
 .group ul {
     overflow-y: auto;
+    overflow-x: hidden;
     max-width: 550px;
     max-height: 680px;
     flex-wrap: wrap;
@@ -85,6 +87,7 @@ ul, li {
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .group a {
@@ -93,8 +96,8 @@ ul, li {
     display: block;
     padding: 30px 0 30px 0;
     margin-bottom: 10px;
-    text-decoration: none;
-
+    text-decoration-line: none;
+    color: black;
 }
 
 .group a::after {
@@ -110,11 +113,11 @@ ul, li {
             マッチングボタン
 --------------------------------------*/
 
-#MatchingButton {
-    padding: 20px 400px 20px 400px;
+.MachingButton{
+    padding: 20px 100px 20px 100px;
     float: left;
-    margin-top: 635px;
-    margin-left: 90px;
+    margin-left: 200px;
+    margin-top: 630px;
 }
 
 
@@ -125,3 +128,4 @@ html,
 body {
     overflow: hidden;
 }
+/* From Uiverse.io by eduardo-amaro-maciel */ 

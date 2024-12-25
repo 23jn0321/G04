@@ -47,15 +47,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <body>
             <!-- グループ名 -->
             <p>
-                <lavel id="groupNamelavel">グループ名　：</label>
+                <lavel id="groupNamelavel" maxlength="30">グループ名　：</label>
             </p>
             <p><input type="text" id="groupName" name="groupName"></p>
 
             <!-- 参加人数 -->
             <p>
-                <lavel id="groupJoinlavel">参加人数　：</lavel>
-                <label class="selectbox-6">
-                    <select name="joinNum">
+                <lavel id="groupJoinlavel" >参加人数　：</lavel>
+                <label for="joinNum" class="selectbox-6" name="joinNum">
+                    <select name="joinNum" id="joinNum">
                         <option value="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
@@ -86,8 +86,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-
-            <script src="jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
                     const mainGenreSelect = document.getElementById('maingenreName');
@@ -140,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <!--グループ詳細-->
             <label>
                 <span class="textbox-1-label">グループの説明：</span>
-                <textarea class="textbox-3" id="textbox-2" name="groupDetail" rows="5" cols="20"></textarea>
+                <textarea class="textbox-3" id="textbox-2" name="groupDetail" rows="5" cols="20" maxlength="200"></textarea>
             </label>
 
             <!--　グループ作成ボタン -->
@@ -159,7 +159,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             e.preventDefault(); // 通常の送信を防ぐ
 
             var groupNameValue = $('#groupName').val(); // グループ名のテキスト内容
+            var mainGenreNameValue = $('#maingenreName').val();
             var subGenreNameValue = $('#subGenreName').val(); // 中ジャンルのテキスト内容
+            var joinNumValue = $('#joinNum').val();
 
             // グループ名と中ジャンルが空かどうかをチェック
             if (groupNameValue === "" || subGenreNameValue === "選択してください") {
@@ -180,9 +182,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             // SweetAlert2を使って確認ポップアップを表示
-            ({
-                title: '確認',
-                text: 'グループを作成しますか？',
+            Swal.fire({
+                title: 'グループを作成しますか？',
+                html:  'グループ名：'+groupNameValue+'<br>ジャンル：'+mainGenreNameValue+' / '+subGenreNameValue+'<br>最大人数：'+joinNumValue,
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: '確定',

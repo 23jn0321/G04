@@ -27,6 +27,7 @@ margin-top: 100px;
     background-color: #effff0;
     color: #01080e;
     outline: 1px solid #2589d0;
+    transform: scale(1.05);
   }
 
 .newGroup ul {
@@ -51,6 +52,7 @@ margin-top: 100px;
     width: 550px; /* 横幅を親要素に合わせる */
     padding: 10px; /* 上下の余白を統一 */
     box-sizing: border-box; /* パディングとボーダーを幅に含める */
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .newGroup a {
@@ -60,6 +62,8 @@ display: block;
 padding: 30px 0 30px 0;
 margin-bottom: 10px;
 text-decoration: none;
+text-decoration-line: none;
+color: black;
 }
 
 .newGroup a::after {

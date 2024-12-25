@@ -52,7 +52,10 @@ if (isset($_SESSION['userInfo']) ) {
     <?php foreach ($groupInfo as $var): ?>
       <li>
         <a href="groupDetail.php?GroupID=<?= urlencode($var->GroupID) ?>">
-          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
+        グループ名：<?= htmlspecialchars($var->GroupName) ?><br>
+        所属人数：<?= htmlspecialchars($var->MemberInfo) ?><br>
+        最終更新日：<?= htmlspecialchars($var->LastUpdated) ?><br>
+        ジャンル：<?= htmlspecialchars($var->Genre) ?>
         </a>
       </li>
       <?php endforeach; ?>

@@ -96,9 +96,10 @@
                 <li>
                     <!-- グループ情報（名前、メンバー数、最終更新日、ジャンル） -->
                     <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
-                        <?= $var->GroupName ?>（<?= $var->MemberInfo ?>）<br>
-                        最終更新日：<?= $var->LastUpdated ?><br>
-                        ジャンル：<?= $var->Genre ?>
+                        グループ名：<?= htmlspecialchars($var->GroupName) ?><br>
+                        所属人数 ：<?= htmlspecialchars($var->MemberInfo) ?><br>
+                        最終更新日：<?= htmlspecialchars($var->LastUpdated) ?><br>
+                        ジャンル：<?= htmlspecialchars($var->Genre) ?>
                     </a>
                     <!-- グループ編集ボタン（管理者のみ表示） -->
                     <?php if ($loggedInUser->UserID == $var->GroupAdminID): ?>
