@@ -23,7 +23,7 @@ if (isset($_SESSION['userInfo']) ) {
 
 
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <meta charset="utf-8">
 
@@ -39,31 +39,43 @@ if (isset($_SESSION['userInfo']) ) {
 
     <!-- グループ表示 -->
     <nav class="group">
-    <ul>
-    <?php if (empty($groupInfo)): ?>
-         <li>
-            所属グループがありません。<br>
-            グループに参加しましょう！
-          </li>
-          <?php else: ?>
-    <?php foreach ($groupInfo as $var): ?>
-      <li>
-        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
-          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
-        </a>
-       
-        <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
-         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID)?>'" id="groupEditR" value="グループ編集">
-          <?php endif; ?>
+<ul>
+<?php if (empty($groupInfo)): ?>
+     <li>
+        所属グループがありません。<br>
+        グループに参加しましょう！
       </li>
-      <?php endforeach; ?>
-      <?php endif; ?>
-    </ul>
-</a>
+<?php else: ?>
+<?php foreach ($groupInfo as $var): ?>
+  <li>
+    <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+      グループ名：<?= htmlspecialchars($var->GroupName) ?><br>
+      所属人数 ：<?= htmlspecialchars($var->MemberInfo) ?><br>
+      最終更新日：<?= htmlspecialchars($var->LastUpdated) ?><br>
+      ジャンル：<?= htmlspecialchars($var->Genre) ?>
+  </a>
+    <?php if ($loggedInUser->UserID == $var->GroupAdminID) : ?>
+      <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
+    <?php endif; ?>
+  </li>
+<?php endforeach; ?>
+<?php endif; ?>
+</ul>
+</nav>
 
 <!-- お知らせボックス -->
 
 <!-- マッチングボタン　ジャンル選択に遷移(genreSelect.html) -->
-<button id="MatchingButton" onclick="location.href='genreSelect.php'">マッチング</button>
+
+
+
+
+
+
+<div class="btn">
+  <button class="MachingButton" onclick="location.href='genreSelect.php'">マッチング</button>
+</div>
+
+
 
 </html>

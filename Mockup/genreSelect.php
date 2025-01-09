@@ -18,12 +18,27 @@ if (isset($_SESSION['userInfo']) ) {
     
     $groupDAO = new GroupDAO();
 
-// ジャンルを取得
-    $genreSelectDAO = new GenreSelectDAO();
-    $gameGenre = $genreSelectDAO->get_Game_SubGenre();
-    $musicGenre = $genreSelectDAO->get_Music_SubGenre();
-    $sportsGenre = $genreSelectDAO->get_Sports_SubGenre();
-    $studyGenre = $genreSelectDAO->get_Study_SubGenre();
+
+    // ジャンルを取得
+$allSubGenres = $genreSelectDAO->getAllSubGenres();
+
+// ジャンルを大ジャンルごとにまとめる
+$groupedGenres = [];
+foreach ($allSubGenres as $genre) {
+    $mainGenreID = $genre['MainGenreID'];
+    $mainGenreName = $genre['MainGenreName'];
+    
+    if (!isset($groupedGenres[$mainGenreID])) {
+        $groupedGenres[$mainGenreID] = [
+            'MainGenreName' => $mainGenreName,
+            'SubGenres' => []
+        ];
+    }
+    $groupedGenres[$mainGenreID]['SubGenres'][] = [
+        'SubGenreID' => $genre['SubGenreID'],
+        'SubGenreName' => $genre['SubGenreName']
+    ];
+}
 
 
 // グループ情報を取得
@@ -52,7 +67,10 @@ if (isset($_SESSION['userInfo']) ) {
     <?php foreach ($groupInfo as $var): ?>
       <li>
         <a href="groupDetail.php?GroupID=<?= urlencode($var->GroupID) ?>">
-          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
+        グループ名：<?= htmlspecialchars($var->GroupName) ?><br>
+        所属人数：<?= htmlspecialchars($var->MemberInfo) ?><br>
+        最終更新日：<?= htmlspecialchars($var->LastUpdated) ?><br>
+        ジャンル：<?= htmlspecialchars($var->Genre) ?>
         </a>
       </li>
       <?php endforeach; ?>
@@ -61,65 +79,26 @@ if (isset($_SESSION['userInfo']) ) {
 </nav>
 <!-- グループ作成ボタン -->
     <button id="GroupSakusei" onclick="location.href='groupCreate.php'">グループ作成</button>
-<!-- ジャンル選択 -->
+
+
+
 <form action="search.php" method="GET">
     <div class="genreSelect">
-        <details class="accordion-004">
-<!-- ゲームジャンル -->
-            <summary>ゲーム</summary>
-            <label>
-                <input type="checkbox" class="select-all" data-target="game-checkboxes">
-                すべて選択
-            </label>
-            <?php foreach ($gameGenre as $genre): ?>
+        <?php foreach ($groupedGenres as $mainGenre): ?>
+            <details class="accordion-004">
+                <summary><?= htmlspecialchars($mainGenre['MainGenreName']) ?></summary>
                 <label>
-                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="game-checkboxes">
-                    <?= $genre[1]?>
+                    <input type="checkbox" class="select-all" data-target="genre-<?= htmlspecialchars($mainGenre['MainGenreName']) ?>-checkboxes">
+                    すべて選択
                 </label>
-            <?php endforeach; ?>
-        </details>
-        <details class="accordion-004">
-<!-- 音楽ジャンル -->
-            <summary>音楽</summary>
-            <label>
-                <input type="checkbox" class="select-all" data-target="music-checkboxes">
-                すべて選択
-            </label>
-            <?php foreach ($musicGenre as $genre): ?>
-                <label>
-                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="music-checkboxes">
-                    <?= $genre[1] ?>
-                </label>
-            <?php endforeach; ?>
-        </details>
-        <details class="accordion-004"> 
-<!-- スポーツジャンル -->
-            <summary>スポーツ</summary>
-            <label>
-                <input type="checkbox" class="select-all" data-target="sports-checkboxes">
-                すべて選択
-            </label>
-            <?php foreach ($sportsGenre as $genre): ?>
-                <label>
-                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="sports-checkboxes">
-                    <?= $genre[1] ?>
-                </label>
-            <?php endforeach; ?>
+                <?php foreach ($mainGenre['SubGenres'] as $subGenre): ?>
+                    <label>
+                        <input type="checkbox" name="genre[]" value="<?= htmlspecialchars($subGenre['SubGenreID']) ?>" class="genre-<?= htmlspecialchars($mainGenre['MainGenreName']) ?>-checkboxes">
+                        <?= htmlspecialchars($subGenre['SubGenreName']) ?>
+                    </label>
+                <?php endforeach; ?>
             </details>
-        <details class="accordion-004">
-<!-- 勉強ジャンル -->
-            <summary>勉強</summary>
-            <label>
-                <input type="checkbox" class="select-all" data-target="study-checkboxes">
-                すべて選択
-            </label>
-            <?php foreach ($studyGenre as $genre): ?>
-                <label>
-                    <input type="checkbox" name="genre[]" value="<?= $genre[0] ?>" class="study-checkboxes">
-                    <?= $genre[1] ?>
-                </label>
-            <?php endforeach; ?>
-        </details>
+        <?php endforeach; ?>
     </div>
     <button type="submit" id="Search">検索</button>
 </form>

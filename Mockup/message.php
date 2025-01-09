@@ -42,7 +42,7 @@
     // POSTリクエストが送信された場合（メッセージ送信処理）
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (isset($_POST['message'])) {
-            $message = $_POST['message']; // テキストボックスからメッセージを取得
+            $message = htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8'); // テキストボックスからメッセージを取得
             $userId = $_SESSION['userInfo']; // セッションからユーザーIDを取得
 
             // メッセージをデータベースに挿入
@@ -96,9 +96,10 @@
                 <li>
                     <!-- グループ情報（名前、メンバー数、最終更新日、ジャンル） -->
                     <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
-                        <?= $var->GroupName ?>（<?= $var->MemberInfo ?>）<br>
-                        最終更新日：<?= $var->LastUpdated ?><br>
-                        ジャンル：<?= $var->Genre ?>
+                        グループ名：<?= htmlspecialchars($var->GroupName) ?><br>
+                        所属人数 ：<?= htmlspecialchars($var->MemberInfo) ?><br>
+                        最終更新日：<?= htmlspecialchars($var->LastUpdated) ?><br>
+                        ジャンル：<?= htmlspecialchars($var->Genre) ?>
                     </a>
                     <!-- グループ編集ボタン（管理者のみ表示） -->
                     <?php if ($loggedInUser->UserID == $var->GroupAdminID): ?>
@@ -125,7 +126,7 @@
     <!-- メッセージ送信用フォーム -->
     <div class="send">
         <form id="chatMessage" method="POST">
-            <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
+            <input type="text" id="message" name="message" placeholder="メッセージを入力してください" maxlength="200" required>
             <input type="submit" value="Send" id="send">
         </form>
     </div>

@@ -18,7 +18,7 @@ if (isset($_SESSION['userInfo']) ) {
 ?>
 
 <header>
-    <a href="home.php"><img src="jecMatching/Jec.jpg" width="450px" alt="JEC Logo"></a>
+    <a href="home.php"><img src="jecMatching/Jec.jpg" width="450px" alt="JEC Logo" id="JecIMG"></a>
     <link rel="stylesheet" href="CSSUser/Header.css">
         <!-- CSS適応 -->
     <link rel="stylesheet" href="CSSUser/Header.css">
@@ -36,5 +36,5 @@ if (isset($_SESSION['userInfo']) ) {
     <a href="edit.php"><input type="button" value="編集" id="edit"></a>
     <a href="admin.html"><input type="button" value="管理者画面" id="admin"></a>
     <a href="logoutTEST.php"><input type="button" value="ログアウト" id="logout"></a>
-    <hr>
 </header>
+<hr>

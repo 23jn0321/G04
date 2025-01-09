@@ -88,14 +88,14 @@
             <td>ニックネーム</td>
             <td>
                 <!-- 現在のニックネームを初期値として表示 -->
-                <input type="text" required name="nickName" class="input" value="<?= $userName[0]['UserName'] ?>" autofocus>
+                <input type="text" required name="nickName" class="input" value="<?= $userName[0]['UserName'] ?>" maxlength="20" autofocus>
             </td>
         </tr>
         <tr>
             <td>ひとことコメント</td>
             <td>
                 <!-- 現在のコメントを初期値として表示 -->
-                <textarea class="input" name="comment" id="my" rows="4" cols="30" autofocus><?= $userName[0]['ProfileComment'] ?></textarea>
+                <textarea class="input" name="comment" id="my" rows="4" cols="30" maxlength="50" autofocus><?= $userName[0]['ProfileComment'] ?></textarea>
             </td>
         </tr>
         <tr>
