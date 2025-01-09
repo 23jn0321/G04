@@ -103,6 +103,27 @@ class GenreSelectDAO
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-    
+
+
+    public function getAllSubGenres()
+    {
+        $dbh = DAO::get_db_connect();
+
+        $sql = "
+            SELECT 
+                sg.SubGenreID, 
+                sg.SubGenreName, 
+                sg.MainGenreID, 
+                mg.MainGenreName
+            FROM SubGenre sg
+            INNER JOIN MainGenre mg ON sg.MainGenreID = mg.MainGenreID
+            ORDER BY sg.MainGenreID, sg.SubGenreID";
+
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+
+        $subGenres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $subGenres;
+    } 
 }    
 ?>

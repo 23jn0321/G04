@@ -23,7 +23,7 @@ if (isset($_SESSION['userInfo']) ) {
 
 
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <meta charset="utf-8">
 

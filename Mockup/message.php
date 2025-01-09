@@ -42,7 +42,7 @@
     // POSTリクエストが送信された場合（メッセージ送信処理）
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (isset($_POST['message'])) {
-            $message = $_POST['message']; // テキストボックスからメッセージを取得
+            $message = htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8'); // テキストボックスからメッセージを取得
             $userId = $_SESSION['userInfo']; // セッションからユーザーIDを取得
 
             // メッセージをデータベースに挿入
@@ -126,7 +126,7 @@
     <!-- メッセージ送信用フォーム -->
     <div class="send">
         <form id="chatMessage" method="POST">
-            <input type="text" id="message" name="message" placeholder="メッセージを入力してください" required>
+            <input type="text" id="message" name="message" placeholder="メッセージを入力してください" maxlength="200" required>
             <input type="submit" value="Send" id="send">
         </form>
     </div>

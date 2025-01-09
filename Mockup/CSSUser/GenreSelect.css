@@ -152,15 +152,13 @@ html,body {
 --------------------------------------*/
 #GroupSakusei{
     padding: 10px 10px 10px 10px;
-    transform: translate(200px, 750px);
+    transform: translate(30px, 20px);
 }
 /*-------------------------------------
         　　  "検索"ボタン
 --------------------------------------*/
 #Search{
     padding: 11px 37px 10px 37px;
-    position: fixed; /* ボタンを画面内で固定 */
-    left: 1050px;
-    top: 887px; /* 必要に応じて調整 */
+    float: left;
+    margin-top: -300px ;
 }
-
