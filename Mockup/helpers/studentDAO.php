@@ -36,29 +36,29 @@ class StudentDAO
         $sql = "SELECT * FROM Gakusei WHERE GakusekiNo = :gakusekiNo";
 
         $sql2 = "SELECT * FROM GakuseiUser WHERE GakusekiNo = :gakuseiNo";
-        
+
         $stmt = $dbh->prepare($sql);
 
         $stmt2 = $dbh->prepare($sql2);
-       
+
         //SQLに変数の値を当てはめる
-        $stmt->bindValue(':gakusekiNo',$gakusekiNo,PDO::PARAM_STR);
-        $stmt2->bindValue(':gakuseiNo',$gakusekiNo,PDO::PARAM_STR);
-       
+        $stmt->bindValue(':gakusekiNo', $gakusekiNo, PDO::PARAM_STR);
+        $stmt2->bindValue(':gakuseiNo', $gakusekiNo, PDO::PARAM_STR);
+
         //SQLを実行する
         $stmt->execute();
         $stmt2->execute();
-       
-        
+
+
         //1件分のデータをStudentクラスのオブジェクトとして取得する
         $student = $stmt->fetchObject('Student');
         $user = $stmt2->fetchObject("User");
-       
+
 
         //会員データが取得できたとき
-        if($student !== false){ 
+        if ($student !== false) {
             //パスワードが一致するか検証
-            if($password == $student->GooglePass){
+            if ($password == $student->GooglePass) {
                 //会員データを返す
                 return $user;
             }
@@ -102,24 +102,62 @@ class StudentDAO
         //学籍番号が一致する会員データを取得する
 
         $sql = "SELECT * FROM GakuseiUser WHERE UserID = :userid";
-        
+
         $stmt = $dbh->prepare($sql);
 
         //SQLに変数の値を当てはめる
-        $stmt->bindValue(':userid',$userID,PDO::PARAM_INT);
-       
+        $stmt->bindValue(':userid', $userID, PDO::PARAM_INT);
+
         //SQLを実行する
         $stmt->execute();
-       
-        
+
+
         //1件分のデータをStudentクラスのオブジェクトとして取得する
         $user = $stmt->fetchAll();
         //会員データが取得できたとき
-        if($user !== false){ 
-                return $user;
+        if ($user !== false) {
+            return $user;
         }
         return false;
     }
+    public function get_freezeUser()
+    {
+        //DBに接続する
+        $dbh = DAO::get_db_connect();
 
+        //学籍番号が一致する会員データを取得する
+
+        $sql = "SELECT * FROM GakuseiUser WHERE UserFreezeFlag = 1";
+
+        $stmt = $dbh->prepare($sql);
+
+        //SQLを実行する
+        $stmt->execute();
+
+        // 複数件のデータを取得する
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // データが取得できた場合に返す
+        if (!empty($users)) {
+            return $users;
+        }
+        return false;
+    }
+    public function unfreezeUser(string $userID)
+    {
+        //DBに接続する
+        $dbh = DAO::get_db_connect();
+
+        //学籍番号が一致する会員データを取得する
+
+        $sql = "UPDATE GakuseiUser SET UserFreezeFlag = 0 WHERE UserID = :userid";
+
+        $stmt = $dbh->prepare($sql);
+
+        //SQLに変数の値を当てはめる
+        $stmt->bindValue(':userid', $userID, PDO::PARAM_INT);
+
+        //SQLを実行する
+        $stmt->execute();
+    }
 }
-?>
