@@ -59,7 +59,7 @@ class subGenreDAO
     {
         $dbh = DAO::get_db_connect();
 
-        $sql = "SELECT * FROM SubGenre";
+        $sql = "SELECT * FROM SubGenre where GenreDeleteFlag = 0";
 
         $stmt = $dbh->query($sql);
 
@@ -85,6 +85,34 @@ class subGenreDAO
 
         $stmt->bindValue(':mainGenreID', $mainGenreID, PDO::PARAM_INT);
         $stmt->bindValue(':subGenreName', $subGenreName, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+    public function getSubGenreID(string $subGenreName)
+    {
+        $dbh = DAO::get_db_connect();
+
+        $sql = "SELECT SubGenreID FROM SubGenre WHERE SubGenreName = :subGenreName";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':subGenreName', $subGenreName, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        $subGenreID = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $subGenreID['SubGenreID'];
+    }
+    public function delete_SubGenre(int $subGenreID)
+    {
+        $dbh = DAO::get_db_connect();
+
+        $sql = "UPDATE SubGenre SET GenreDeleteFlag = 1 WHERE SubGenreID = :subGenreID";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':subGenreID', $subGenreID, PDO::PARAM_INT);
 
         $stmt->execute();
     }
