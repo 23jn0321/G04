@@ -160,4 +160,21 @@ class StudentDAO
         //SQLを実行する
         $stmt->execute();
     }
+    public function freezeUser(String $userID, String $freezeReason){
+        //DBに接続する
+        $dbh = DAO::get_db_connect();
+
+        //学籍番号が一致する会員データを取得する
+
+        $sql = "UPDATE GakuseiUser SET UserFreezeFlag = 1, FreezeReason=:freezeReason WHERE UserID = :userid";
+
+        $stmt = $dbh->prepare($sql);
+
+        //SQLに変数の値を当てはめる
+        $stmt->bindValue(':userid', $userID, PDO::PARAM_INT);
+        $stmt->bindValue(':freezeReason', $freezeReason, PDO::PARAM_STR);
+
+        //SQLを実行する
+        $stmt->execute();
+    }
 }
