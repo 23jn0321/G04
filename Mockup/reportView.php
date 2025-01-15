@@ -88,7 +88,6 @@ function showUserDetails(user) {
       userDetailsContainer.innerHTML = `<p>データ取得中にエラーが発生しました。</p>`;
     });
 }
-
 function freezeUser(button) {
   const userID = button.getAttribute("data-user-id");
   const reportCategory = button.getAttribute("data-report-category");
