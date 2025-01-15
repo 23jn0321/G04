@@ -89,7 +89,6 @@ function showUserDetails(user) {
     });
 }
 
-
 function freezeUser(button) {
   const userID = button.getAttribute("data-user-id");
   const reportCategory = button.getAttribute("data-report-category");
