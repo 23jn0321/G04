@@ -4,7 +4,7 @@ require_once 'helpers/StudentDAO.php';
 $studentDAO = new StudentDAO();
 $students = $studentDAO->get_freezeUser();  // 複数の凍結ユーザー情報を取得
 
-var_dump($students);
+//var_dump($students);
 ?>
 
 <!DOCTYPE html>

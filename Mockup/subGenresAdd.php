@@ -182,20 +182,34 @@ if (isset($_GET['newSubGenreName'])) {
 
         const genreName = document.getElementById('genreName').value;
         const subGenreNames = [];
+        const newSubGenreNames = [];
+        const newSubGenreInputs = document.querySelectorAll('input[name="newSubGenreName[]"]');
+        const newSubGenreCount = newSubGenreInputs.length;
         const textInputs = document.querySelectorAll('input[type="text"]');
         const textInputCount = textInputs.length;
+        //念のためすべてのサブジャンルを取得
         for (let i = 0; i < textInputCount; i++) {
             const subGenre = textInputs[i].value;
             if (subGenre) {
                 subGenreNames.push(subGenre);
+                console.log(subGenre);
             }
         }
-        if (subGenreNames.length === 0) {
+        //新しいサブジャンルを取得
+        for (let i = 0; i < newSubGenreCount; i++) {
+            const newSubGenre = newSubGenreInputs[i].value;
+            if (newSubGenre) {
+                newSubGenreNames.push(newSubGenre);
+                console.log(newSubGenre);
+                console.log(newSubGenreNames);
+            }
+        }
+        if (newSubGenreNames.length === 0) {
             showAlert("サブジャンル名を入力してください！");
             return;
         }
         Swal.fire({
-            html: `<h1>大ジャンル: <b>${genreName}</h1></b><br><h2>中ジャンル: <b>${subGenreNames.join(', ')}</h2></b><br>これで追加しますか？`,
+            html: `<h1>ジャンル名: <b>${genreName}</b></h1><br><h2>新たに追加されるサブジャンル: <br><b>${newSubGenreNames.join('<br>')}</b></h2><br>これで追加しますか？<br>※空文字列のサブジャンルは追加されません`,
             icon: 'info',
             showCancelButton: true,
             confirmButtonText: 'OK',
@@ -223,6 +237,26 @@ if (isset($_GET['newSubGenreName'])) {
             }
         });
     }
+    
+  function showAlert(message) {
+    var existingAlert = document.querySelector(".alert-fixed");
+    if (existingAlert) {
+      existingAlert.remove();
+    }
+    // アラート用のdivを作成
+    var alertDiv = document.createElement("div");
+    alertDiv.className = "alert alert-primary alert-fixed"; // Bootstrapのアラートクラス
+    alertDiv.role = "alert"; // アラートとしての役割を設定
+    alertDiv.textContent = message; // メッセージを設定
+
+    // アラートをページに追加（フォームの前に追加）
+    document.body.insertBefore(alertDiv, document.body.firstChild);
+
+    // 3秒後にアラートを非表示にする
+    setTimeout(function() {
+      alertDiv.style.display = "none";
+    }, 3000);
+  }
 </script>
 
 <body>
