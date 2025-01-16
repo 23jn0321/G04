@@ -1,5 +1,6 @@
 <?php
 require_once 'helpers/GenreDAO.php';
+require_once 'helpers/GroupDAO.php';
 
 $genreDAO = new GenreDAO();
 $genres = $genreDAO->get_Genre();
@@ -22,6 +23,22 @@ foreach ($genres as $genre) {
         'mainGenreName' => $genre->mainGenreName,
         'subGenreNames' => $subGenreNames
     ];
+}
+if (isset($_GET['sourceGenre']) && isset($_GET['targetGenre'])) {
+    $sourceGenre = $_GET['sourceGenre'];
+    $targetGenre = $_GET['targetGenre'];
+    $genreName = $_GET['genreName'];
+    $subGenreDAO = new subGenreDAO();
+    //統合元ジャンル、統合先ジャンルのIDを取得
+    $sourceSubGenreID = $subGenreDAO->getSubGenreID($sourceGenre);
+    $targetSubGenreID = $subGenreDAO->getSubGenreID($targetGenre);
+    //echo "sourceSubGenreID: " . htmlspecialchars($sourceSubGenreID, ENT_QUOTES, 'UTF-8') . "<br>";
+    //echo "targetSubGenreID: " . htmlspecialchars($targetSubGenreID, ENT_QUOTES, 'UTF-8') . "<br>";
+    //統合元ジャンルのdeleteflagをtrueに変更
+    $subGenreDAO->delete_SubGenre($sourceSubGenreID);
+    //統合元ジャンルに関連するグループの中ジャンルを統合先ジャンルに変更
+    $GroupDAO = new GroupDAO();
+    $GroupDAO->update_subGenreID($sourceSubGenreID, $targetSubGenreID);
 }
 //配列表示.
 //echo '<pre>';
@@ -46,9 +63,18 @@ foreach ($genres as $genre) {
         const genreName = document.getElementById('genreName').value;
         const sourceGenre = document.getElementById('sourceGenre').value;
         const targetGenre = document.getElementById('targetGenre').value;
-
-        Swal.fire({
-            html: `<h2>以下のジャンルを統合します</h2>
+        console.log("統合元ジャンル:" + sourceGenre);
+        console.log("統合先ジャンル:" + targetGenre);
+        if (sourceGenre == "選択してください" || targetGenre == "選択してください") {
+            Swal.fire("エラー", "統合元ジャンルと統合先ジャンルを選択してください。", "error");
+            return;
+        }
+        if (targetGenre == sourceGenre) {
+            Swal.fire("エラー", "統合元ジャンルと統合先ジャンルが同じです。", "error");
+            return;
+        } else {
+            Swal.fire({
+                html: `<h2>以下のジャンルを統合します</h2>
                 <p>
                 <strong>大ジャンル:</strong> ${genreName}<br>
                 <strong>統合元の中ジャンル:</strong> ${sourceGenre}<br>
@@ -56,23 +82,24 @@ foreach ($genres as $genre) {
                 </p>
                 <p>この操作を実行すると、${sourceGenre} に関連するすべてのデータが ${targetGenre} に統合されます。</p>
                 <p><strong>本当に実行してよろしいですか？</strong></p>`,
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: 'OK',
-            reverseButtons: true
-        }).then((result) => {
-            console.log(result);
-            if (result.isConfirmed) {
-                Swal.fire("ジャンルを追加しました", {
-                    icon: "success",
-                });
-                document.querySelector("form").submit(); // ここで実際にフォーム送信を行う
-            } else {
-                Swal.fire("ジャンル追加がキャンセルされました。", {
-                    icon: "info",
-                });
-            }
-        });
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                reverseButtons: true
+            }).then((result) => {
+                console.log(result);
+                if (result.isConfirmed) {
+                    Swal.fire("ジャンルを追加しました", {
+                        icon: "success",
+                    });
+                    document.querySelector("form").submit(); // ここで実際にフォーム送信を行う
+                } else {
+                    Swal.fire("ジャンル追加がキャンセルされました。", {
+                        icon: "info",
+                    });
+                }
+            });
+        }
     }
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -88,8 +115,8 @@ foreach ($genres as $genre) {
 
         // 「ゲーム」を選んだときのサブジャンルを表示
         const selectedGenre = genreSelect.value;
-        sourceGenreSelect.innerHTML = '<option value="" disabled selected hidden>選択してください</option>';
-        targetGenreSelect.innerHTML = '<option value="" disabled selected hidden>選択してください</option>';
+        sourceGenreSelect.innerHTML = '<option value="選択してください" disabled selected hidden>選択してください</option>';
+        targetGenreSelect.innerHTML = '<option value="選択してください" disabled selected hidden>選択してください</option>';
 
         if (selectedGenre) {
             const selectedGenreData = genre.find(g => g.mainGenreName === selectedGenre);
@@ -157,7 +184,7 @@ foreach ($genres as $genre) {
         <hr>
     </header>
 
-    <form onsubmit="margeGenre(event)">
+    <form onsubmit="margeGenre(event)" method="GET" action="">
         <div class="form-group">
             <label for="genreName">大ジャンル名</label>
             <br>

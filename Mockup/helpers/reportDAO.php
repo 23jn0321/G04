@@ -73,7 +73,7 @@
 }
         public function getReportedUsers() {
             $dbh = DAO::get_db_connect();
-            $sql = "SELECT gu.UserID, gu.GakusekiNo, gu.UserName, tr.ReportCategory
+            $sql = "SELECT gu.UserID, gu.GakusekiNo, gu.UserName, gu.UserFreezeFlag, tr.ReportCategory
                         FROM GakuseiUser gu INNER JOIN Report tr 
                             ON gu.UserID = tr.ReportUserID;";
             $stmt = $dbh->prepare($sql);

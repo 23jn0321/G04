@@ -1,8 +1,16 @@
 <?php
 require_once 'helpers/ReportDAO.php';
+require_once 'helpers/studentDAO.php';
+if (isset($_GET['freezeUserID'])) {
+  $userIDToFreeze = $_GET['freezeUserID'];
+  $reportCategory = $_GET['reportCategory'];
+  $studentDAO = new StudentDAO();
+  $studentDAO->freezeUser($userIDToFreeze, $reportCategory);
+} 
 
 $reportDAO = new ReportDAO();
 $reportedUsers = $reportDAO->getReportedUsers();
+
 ?>
 
 <!DOCTYPE html>
@@ -19,16 +27,19 @@ $reportedUsers = $reportDAO->getReportedUsers();
   <hr>
 </header>
 <div class="content">
-  <ul>
-    <?php foreach ($reportedUsers as $user): ?>
+<ul>
+  <?php foreach ($reportedUsers as $user): ?>
+    <?php if ($user->UserFreezeFlag != 1): ?> <!-- UserFreezeFlag が 1 でない場合に表示 -->
       <li onclick="showUserDetails(<?= htmlspecialchars(json_encode($user)) ?>)">
         <div class="user-info">
           <p><?= $user->GakusekiNo ?> <?= $user->UserName ?><br><?= $user->ReportCategory ?></p>
-          <button class="freeze-btn" data-user-id="<?= $user->UserID ?>" onclick="freezeUser(this)">凍結</button>
+          <button class="freeze-btn" data-user-id="<?= $user->UserID ?>" data-report-category="<?= $user->ReportCategory ?>" onclick="freezeUser(this)">凍結</button>
         </div>
       </li>
-    <?php endforeach; ?>
-  </ul>
+    <?php endif; ?>
+  <?php endforeach; ?>
+</ul>
+
   <div class="box">
     <div id="userDetails"></div>
   </div>
@@ -80,11 +91,12 @@ function showUserDetails(user) {
       userDetailsContainer.innerHTML = `<p>データ取得中にエラーが発生しました。</p>`;
     });
 }
-
-
 function freezeUser(button) {
   const userID = button.getAttribute("data-user-id");
-  alert(`ユーザーID: ${userID} を凍結します`);
+  const reportCategory = button.getAttribute("data-report-category");
+
+  // GETリクエストで同じページに遷移
+  window.location.href = `reportView.php?freezeUserID=${userID}&reportCategory=${encodeURIComponent(reportCategory)}`;
 }
 </script>
 </body>

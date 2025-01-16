@@ -17,9 +17,9 @@ class GroupDAO
   {
     //DBに接続
     $dbh = DAO::get_db_connect();
-		
-              //DBからグループ内容を取得くするSQL
-              $sql = "SELECT					
+
+    //DBからグループ内容を取得くするSQL
+    $sql = "SELECT					
                       g.GroupID, 
                       g.GroupName, 
                       g.GroupAdminID, -- GroupAdminIDを追加
@@ -47,8 +47,8 @@ class GroupDAO
                       END ASC,
                       MAX(cm.SendTime) DESC";
 
-              
-             
+
+
     //
     $stmt = $dbh->prepare($sql);
 
@@ -84,7 +84,7 @@ class GroupDAO
                 WHERE 
                     g.GroupID = :groupID
                     AND g.GroupDeleteFlag = 0";
-                    
+
 
     $stmt = $dbh->prepare($sql);
 
@@ -96,16 +96,16 @@ class GroupDAO
     return $result;
   }
 
-  public function groupInfoUpdate(int $groupID,string $newGroupName,string $newGroupDetail)
+  public function groupInfoUpdate(int $groupID, string $newGroupName, string $newGroupDetail)
   {
-      $dbh = DAO::get_db_connect();
-      $sql = "UPDATE ChatGroup SET GroupName = :newGroupName, GroupDetail = :newGroupDetail WHERE GroupID = :groupID";
-      $stmt = $dbh->prepare($sql);
-      $stmt->bindValue(":newGroupName", $newGroupName, PDO::PARAM_STR);
-      $stmt->bindValue(":newGroupDetail", $newGroupDetail, PDO::PARAM_STR);
-      $stmt->bindValue("groupID", $groupID, PDO::PARAM_INT);
+    $dbh = DAO::get_db_connect();
+    $sql = "UPDATE ChatGroup SET GroupName = :newGroupName, GroupDetail = :newGroupDetail WHERE GroupID = :groupID";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(":newGroupName", $newGroupName, PDO::PARAM_STR);
+    $stmt->bindValue(":newGroupDetail", $newGroupDetail, PDO::PARAM_STR);
+    $stmt->bindValue("groupID", $groupID, PDO::PARAM_INT);
 
-      $stmt->execute();
+    $stmt->execute();
   }
   public function deleteGroup(int $groupID)
   {
@@ -115,11 +115,15 @@ class GroupDAO
     $stmt->bindValue(":groupID", $groupID, PDO::PARAM_INT);
     $stmt->execute();
   }
-
-
-
-
-
+  public function update_subGenreID(int $subGenreID, int $newSubGenreID)
+  {
+    $dbh = DAO::get_db_connect();
+    $sql = "UPDATE ChatGroup SET SubGenreID = :newSubGenreID WHERE SubGenreID = :subGenreID";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(":newSubGenreID", $newSubGenreID, PDO::PARAM_INT);
+    $stmt->bindValue(":subGenreID", $subGenreID, PDO::PARAM_INT);
+    $stmt->execute();
+  }
 }
 class NewGroupDAO
 {
