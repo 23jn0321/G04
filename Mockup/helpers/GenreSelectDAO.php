@@ -1,129 +1,90 @@
 <?php
+require_once 'DAO.php';
+
 class GenreSelectDAO
 {
-    public function get_Game_SubGenre()
+    // 特定のメインジャンルIDに関連するサブジャンルを取得
+    public function getSubGenresByMainGenreID($mainGenreId)
     {
         $dbh = DAO::get_db_connect();
-
-        $sql = "SELECT SubGenreID, SubGenreName FROM SubGenre WHERE MainGenreID = 1";
-
+        $sql = "SELECT SubGenreID, SubGenreName FROM SubGenre WHERE MainGenreID = :mainGenreID AND GenreDeleteFlag = 0";
         $stmt = $dbh->prepare($sql);
-
+        $stmt->bindParam(':mainGenreID', $mainGenreId, PDO::PARAM_INT);
         $stmt->execute();
-
-  
-        $subGenre = $stmt->fetchAll();
-
-        return $subGenre;
-
-
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function get_Music_SubGenre()
+
+    // 全メインジャンルを取得
+    public function getAllMainGenres()
     {
         $dbh = DAO::get_db_connect();
-
-        $sql = "SELECT SubGenreID, SubGenreName FROM SubGenre WHERE MainGenreID = 2";
-
+        $sql = "SELECT MainGenreID, MainGenreName FROM MainGenre";
         $stmt = $dbh->prepare($sql);
-
         $stmt->execute();
-
-        $subGenre = $stmt->fetchAll();
-
-        return $subGenre;
-    }
-    public function get_Sports_SubGenre()
-    {
-        $dbh = DAO::get_db_connect();
-
-        $sql = "SELECT SubGenreID, SubGenreName FROM SubGenre WHERE MainGenreID = 3";
-
-        $stmt = $dbh->prepare($sql);
-
-        $stmt->execute();
-
-        $subGenre = $stmt->fetchAll();
-
-        return $subGenre;
-    }
-    public function get_Study_SubGenre()
-    {
-        $dbh = DAO::get_db_connect();
-
-        $sql = "SELECT SubGenreID, SubGenreName FROM SubGenre WHERE MainGenreID = 4";
-
-        $stmt = $dbh->prepare($sql);
-
-        $stmt->execute();
-
-        $subGenre = $stmt->fetchAll();
-
-        return $subGenre;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getGroupsByGenres($genreIDs, $userID) {
-        // プレースホルダーをジャンル数に合わせて生成
-        $dbh = DAO::get_db_connect();
-        $placeholders = implode(',', array_fill(0, count($genreIDs), '?'));
-        $sql = "
+    public function getGroupsByGenres($selectedGenres, $userId)
+{
+    $dbh = DAO::get_db_connect();
+
+    // プレースホルダーを動的に作成
+    $placeholders = implode(',', array_fill(0, count($selectedGenres), '?'));
+
+    $sql = "
         SELECT 
             g.GroupID, 
             g.GroupName, 
-            COUNT(DISTINCT gm.UserID) AS MemberCount,
-            g.MaxMember AS MaxMember,
-            COALESCE(FORMAT(MAX(cm.SendTime), 'MM/dd'), '情報なし') AS LastChatTime,
-            mg.MainGenreName AS MainGenre, 
-            sg.SubGenreName AS SubGenre
+            g.MaxMember, 
+            ISNULL(COUNT(m.UserID), 0) AS MemberCount, 
+            ma.MainGenreName, 
+            su.SubGenreName, 
+            MAX(cm.SendTime) AS LastUpdatedTime
         FROM ChatGroup g
-        LEFT JOIN GroupMember gm ON g.GroupID = gm.GroupID
+        LEFT JOIN GroupMember m ON g.GroupID = m.GroupID
+        LEFT JOIN MainGenre ma ON g.MainGenreID = ma.MainGenreID
+        LEFT JOIN SubGenre su ON g.SubGenreID = su.SubGenreID
         LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID
-        LEFT JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
-        LEFT JOIN MainGenre mg ON sg.MainGenreID = mg.MainGenreID
-        WHERE sg.SubGenreID IN ($placeholders)
-          AND g.GroupID NOT IN (
-              SELECT GroupID
-              FROM GroupMember
-              WHERE UserID = ?
+        WHERE g.GroupDeleteFlag = 0
+          AND g.SubGenreID IN ($placeholders)
+          AND NOT EXISTS (
+              SELECT 1
+              FROM GroupMember gm
+              WHERE gm.GroupID = g.GroupID
+                AND gm.UserID = ?
           )
         GROUP BY 
-            g.GroupID, g.GroupName, mg.MainGenreName, sg.SubGenreName, g.MaxMember
-        HAVING 
-            COUNT(DISTINCT gm.UserID) < g.MaxMember
-        ORDER BY 
-            CASE 
-                WHEN MAX(cm.SendTime) IS NULL THEN 0 
-                ELSE 1
-            END ASC,
-            MAX(cm.SendTime) DESC";
-    
-        // パラメータを結合（ジャンルIDとユーザーID）
-        $params = array_merge($genreIDs, [$userID]);
-    
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+            g.GroupID, 
+            g.GroupName, 
+            g.MaxMember, 
+            ma.MainGenreName, 
+            su.SubGenreName
+        ORDER BY LastUpdatedTime DESC;
+    ";
+
+    $stmt = $dbh->prepare($sql);
+
+    // パラメータをバインド
+    $index = 1;
+    foreach ($selectedGenres as $genre) {
+        $stmt->bindValue($index++, $genre, PDO::PARAM_INT);
+    }
+    $stmt->bindValue($index, $userId, PDO::PARAM_INT);
+
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // PHPでNULLのLastUpdatedTimeを "N/A" に置き換え
+    foreach ($results as &$result) {
+        if ($result['LastUpdatedTime'] === null) {
+            $result['LastUpdatedTime'] = "N/A";
+        }
     }
 
+    return $results;
+}
 
-    public function getAllSubGenres()
-    {
-        $dbh = DAO::get_db_connect();
 
-        $sql = "
-            SELECT 
-                sg.SubGenreID, 
-                sg.SubGenreName, 
-                sg.MainGenreID, 
-                mg.MainGenreName
-            FROM SubGenre sg
-            INNER JOIN MainGenre mg ON sg.MainGenreID = mg.MainGenreID
-            ORDER BY sg.MainGenreID, sg.SubGenreID";
 
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute();
-
-        $subGenres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $subGenres;
-    } 
-}    
+}
 ?>

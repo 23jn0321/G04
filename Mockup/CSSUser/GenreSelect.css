@@ -160,5 +160,62 @@ html,body {
 #Search{
     padding: 11px 37px 10px 37px;
     float: left;
-    margin-top: -300px ;
+    margin-top: 100px;
 }
+
+.box {
+    width: 30%;
+    height: 70%;
+    float: left;
+    margin: 20px;
+    padding: 20px;
+    margin-top: 55px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+#Genres{
+    font-size: 20px;
+}
+
+#mainGenres{
+    width: 20%;
+    height: 70%;
+    float: left;
+    margin: 20px;
+    padding: 20px;
+    margin-top: 55px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+.genre-button {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    width: 140px;
+    text-align: center;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.genre-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.genre-button:active {
+    background-color: #003d7a;
+}
+
+
+
+
