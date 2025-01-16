@@ -27,16 +27,19 @@ $reportedUsers = $reportDAO->getReportedUsers();
   <hr>
 </header>
 <div class="content">
-  <ul>
-    <?php foreach ($reportedUsers as $user): ?>
+<ul>
+  <?php foreach ($reportedUsers as $user): ?>
+    <?php if ($user->UserFreezeFlag != 1): ?> <!-- UserFreezeFlag が 1 でない場合に表示 -->
       <li onclick="showUserDetails(<?= htmlspecialchars(json_encode($user)) ?>)">
         <div class="user-info">
           <p><?= $user->GakusekiNo ?> <?= $user->UserName ?><br><?= $user->ReportCategory ?></p>
           <button class="freeze-btn" data-user-id="<?= $user->UserID ?>" data-report-category="<?= $user->ReportCategory ?>" onclick="freezeUser(this)">凍結</button>
         </div>
       </li>
-    <?php endforeach; ?>
-  </ul>
+    <?php endif; ?>
+  <?php endforeach; ?>
+</ul>
+
   <div class="box">
     <div id="userDetails"></div>
   </div>
