@@ -251,7 +251,7 @@ if (isset($_GET['newSubGenreName'])) {
     </div>
 
     <div id="subGenreContainer">
-        <form onsubmit="SubGenresAdd(event)" method="GET" action="">
+        <form onsubmit="subGenresAdd(event)" method="GET" action="">
             <input type="hidden" id="hiddenLabelDiv" name="selectedOptionId" value="">
             <label for="subGenreName">中ジャンル名</label>
             <input type="text" id="subGenreName1" name="subGenreName1">
