@@ -5,6 +5,12 @@ $studentDAO = new StudentDAO();
 $students = $studentDAO->get_freezeUser();  // 複数の凍結ユーザー情報を取得
 
 //var_dump($students);
+if (isset($_GET['userId'])) {
+    $userId = $_GET['userId'];
+    $studentDAO->unfreezeUser($userId);  // 凍結解除
+    header('Location: freezeUser.php');  // ページをリロードしてGETリクエストを送信
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +49,7 @@ $students = $studentDAO->get_freezeUser();  // 複数の凍結ユーザー情報
                     document.getElementById('freezeUserInfo' + (i + 1)).style.display = 'inline'; // テキストボックスを表示
                     document.getElementById('unfreezeButton' + (i + 1)).style.display = 'inline'; // ボタンを表示
                     // ボタンにuserIdをデータ属性として設定
-                    document.getElementById('unfreezeButton' + (i + 1)).setAttribute('data-userid', students[i].userId);
+                    document.getElementById('unfreezeButton' + (i + 1)).setAttribute('data-userid', students[i].UserID);
                 }
             } else {
                 // 凍結者がいない場合、メッセージを表示
@@ -53,52 +59,27 @@ $students = $studentDAO->get_freezeUser();  // 複数の凍結ユーザー情報
 
         // 凍結解除ボタンがクリックされた時に呼ばれる関数
         function confirmUnfreeze(userIndex) {
-            const userId = document.getElementById('unfreezeButton' + userIndex).getAttribute('data-userid');
+        const userId = document.getElementById('unfreezeButton' + userIndex).getAttribute('data-userid');
 
-            Swal.fire({
-                html: `本当にユーザーID: ${userId} を凍結解除しますか？`,
-                showCancelButton: true,
-                confirmButtonText: 'OK',
-                reverseButtons: true,
-                icon: 'info'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // AJAXリクエストで凍結解除をPHPに送信
-                    fetch('unfreezeUser.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: `userId=${userId}`
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire(`ユーザーID: ${userId} の凍結が解除されました。`, {
-                                    icon: "success",
-                                }).then(() => {
-                                    document.getElementById('unfreezeButton' + userIndex).disabled = true;
-                                    document.getElementById('freezeUserInfo' + userIndex).value = "凍結解除済み";
-                                });
-                            } else {
-                                Swal.fire("エラーが発生しました。", {
-                                    icon: "error",
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            Swal.fire("エラーが発生しました。", {
-                                icon: "error",
-                            });
-                        });
-                } else {
-                    // キャンセルボタンが押された時
-                    Swal.fire("凍結解除がキャンセルされました。", {
-                        icon: "info",
-                    });
-                }
+    Swal.fire({
+        html: `本当にユーザーID: ${userId} を凍結解除しますか？`,
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        reverseButtons: true,
+        icon: 'info'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // URLのクエリパラメータにuserIdを追加して同じページにGETリクエストを送信
+            window.location.href = `?userId=${userId}`;  // ページをリロードしてGETリクエストを送信
+        } else {
+            // キャンセルボタンが押された時
+            Swal.fire("凍結解除がキャンセルされました。", {
+                icon: "info",
             });
         }
+    });
+}
+
     </script>
 
     <!-- 凍結者がいない場合のメッセージ -->
