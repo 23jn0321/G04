@@ -174,7 +174,10 @@ class StudentDAO
         $stmt->bindValue(':userid', $userID, PDO::PARAM_INT);
         $stmt->bindValue(':freezeReason', $freezeReason, PDO::PARAM_STR);
 
-        //SQLを実行する
-        $stmt->execute();
+        try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 }

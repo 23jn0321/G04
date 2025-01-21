@@ -206,7 +206,7 @@ if (isset($_GET['newSubGenreName'])) {
         }
         if (newSubGenreNames.length === 0) {
             showAlert("サブジャンル名を入力してください！");
-            return;
+            return;v
         }
         Swal.fire({
             html: `<h1>ジャンル名: <b>${genreName}</b></h1><br><h2>新たに追加されるサブジャンル: <br><b>${newSubGenreNames.join('<br>')}</b></h2><br>これで追加しますか？<br>※空文字列のサブジャンルは追加されません`,

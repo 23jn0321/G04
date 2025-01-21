@@ -57,12 +57,16 @@ if (isset($_GET['userId'])) {
             }
         });
 
-        // 凍結解除ボタンがクリックされた時に呼ばれる関数
-        function confirmUnfreeze(userIndex) {
-        const userId = document.getElementById('unfreezeButton' + userIndex).getAttribute('data-userid');
+    // 凍結解除ボタンがクリックされた時に呼ばれる関数
+    function confirmUnfreeze(userIndex) {
+    const userId = document.getElementById('unfreezeButton' + userIndex).getAttribute('data-userid');
+    const tmpUserName = document.getElementById('freezeUserInfo' + userIndex).value;
+    
+    // ユーザーネームを取り出す（"凍結ユーザー:"の後の部分を抽出）
+    const userName = tmpUserName.split(' ')[1];  // 例: "凍結ユーザー: ゆきもん" から "ゆきもん" を取り出す
 
     Swal.fire({
-        html: `本当にユーザーID: ${userId} を凍結解除しますか？`,
+        html: `本当にユーザーネーム: <strong>${userName}</strong> ユーザーID: <strong>${userId}</strong> を凍結解除しますか？`,
         showCancelButton: true,
         confirmButtonText: 'OK',
         reverseButtons: true,
@@ -79,6 +83,7 @@ if (isset($_GET['userId'])) {
         }
     });
 }
+
 
     </script>
 
