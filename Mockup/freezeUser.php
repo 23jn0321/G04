@@ -66,7 +66,7 @@ if (isset($_GET['userId'])) {
     const userName = tmpUserName.split(' ')[1];  // 例: "凍結ユーザー: ゆきもん" から "ゆきもん" を取り出す
 
     Swal.fire({
-        html: `本当にユーザーネーム: <strong>${userName}</strong> ユーザーID: <strong>${userId}</strong> を凍結解除しますか？`,
+        html: `本当にユーザーネーム: <strong>${userName}</strong> ユーザーID: <strong>${userId}</strong><br> を凍結解除しますか？`,
         showCancelButton: true,
         confirmButtonText: 'OK',
         reverseButtons: true,
