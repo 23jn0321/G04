@@ -6,6 +6,9 @@ if (isset($_GET['freezeUserID'])) {
   $reportCategory = $_GET['reportCategory'];
   $studentDAO = new StudentDAO();
   $studentDAO->freezeUser($userIDToFreeze, $reportCategory);
+  //varcharの文字数が短く入らない通報理由があるため、文字数を確認
+  //echo "文字数: " . mb_strlen($_GET['reportCategory'], 'UTF-8');
+  //echo "バイト数: " . strlen($_GET['reportCategory']);
 } 
 
 $reportDAO = new ReportDAO();
