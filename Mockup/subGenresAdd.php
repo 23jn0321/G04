@@ -34,6 +34,7 @@ if (isset($_GET['newSubGenreName'])) {
         //echo htmlspecialchars($subGenre, ENT_QUOTES, 'UTF-8') . "<br>";
         $subGenreDAO->insert_SubGenre($genreID, $subGenre);
     }
+
 }
 
 
@@ -178,65 +179,60 @@ if (isset($_GET['newSubGenreName'])) {
     });
 
     function subGenresAdd(event) {
-        event.preventDefault()
+    event.preventDefault();
+    const genreName = document.getElementById('genreName').value;
+    const subGenreNames = [];
+    const newSubGenreNames = [];
+    const newSubGenreInputs = document.querySelectorAll('input[name="newSubGenreName[]"]');
+    const newSubGenreCount = newSubGenreInputs.length;
+    const textInputs = document.querySelectorAll('input[type="text"]');
+    const textInputCount = textInputs.length;
 
-        const genreName = document.getElementById('genreName').value;
-        const subGenreNames = [];
-        const newSubGenreNames = [];
-        const newSubGenreInputs = document.querySelectorAll('input[name="newSubGenreName[]"]');
-        const newSubGenreCount = newSubGenreInputs.length;
-        const textInputs = document.querySelectorAll('input[type="text"]');
-        const textInputCount = textInputs.length;
-        //念のためすべてのサブジャンルを取得
-        for (let i = 0; i < textInputCount; i++) {
-            const subGenre = textInputs[i].value;
-            if (subGenre) {
-                subGenreNames.push(subGenre);
-                console.log(subGenre);
-            }
+    // サブジャンル名を取得
+    for (let i = 0; i < textInputCount; i++) {
+        const subGenre = textInputs[i].value;
+        if (subGenre) {
+            subGenreNames.push(subGenre);
         }
-        //新しいサブジャンルを取得
-        for (let i = 0; i < newSubGenreCount; i++) {
-            const newSubGenre = newSubGenreInputs[i].value;
-            if (newSubGenre) {
-                newSubGenreNames.push(newSubGenre);
-                console.log(newSubGenre);
-                console.log(newSubGenreNames);
-            }
-        }
-        if (newSubGenreNames.length === 0) {
-            showAlert("サブジャンル名を入力してください！");
-            return;v
-        }
-        Swal.fire({
-            html: `<h1>ジャンル名: <b>${genreName}</b></h1><br><h2>新たに追加されるサブジャンル: <br><b>${newSubGenreNames.join('<br>')}</b></h2><br>これで追加しますか？<br>※空文字列のサブジャンルは追加されません`,
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: 'OK',
-            reverseButtons: true,
-            icon: 'info'
-        }).then((result) => {
-            console.log(result);
-            if (result.isConfirmed) {
-                // OKボタンが押された時
-                const genreData = genres.find(genre => genre.mainGenreName === genreName);
-                if (genreData) {
-                    const existingInputs = document.querySelectorAll('input[type="text"]');
-                    console.log(existingInputs.length);
-                    console.log(document.getElementById('subGenreName' + i).value);
-                }
-                Swal.fire("ジャンルを追加しました", {
-                    icon: "success",
-                });
-                document.querySelector("form").submit(); // ここで実際にフォーム送信を行う
-            } else {
-                // キャンセルボタンが押された時
-                Swal.fire("ジャンル追加がキャンセルされました。", {
-                    icon: "info",
-                });
-            }
-        });
     }
+
+    // 新しいサブジャンル名を取得
+    for (let i = 0; i < newSubGenreCount; i++) {
+        const newSubGenre = newSubGenreInputs[i].value;
+        if (newSubGenre) {
+            newSubGenreNames.push(newSubGenre);
+        }
+    }
+
+    if (newSubGenreNames.length === 0) {
+        showAlert("サブジャンル名を入力してください！");
+        return;
+    }
+
+    // 確認ダイアログを表示
+    Swal.fire({
+        html: `<h1>ジャンル名: <b>${genreName}</b></h1><br><h2>新たに追加されるサブジャンル: <br><b>${newSubGenreNames.join('<br>')}</b></h2><br>これで追加しますか？<br>※空文字列のサブジャンルは追加されません`,
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        reverseButtons: true,
+        icon: 'info'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // OKボタンがクリックされた場合
+            Swal.fire("ジャンルを追加しました", {
+                icon: "success",
+            });
+            document.querySelector("form").submit(); // フォームを送信
+        } else {
+            // キャンセルボタンがクリックされた場合
+            Swal.fire("ジャンル追加がキャンセルされました。", {
+                icon: "info",
+            });
+        }
+    });
+}
+
     
   function showAlert(message) {
     var existingAlert = document.querySelector(".alert-fixed");
