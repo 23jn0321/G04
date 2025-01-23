@@ -31,21 +31,24 @@ class GenreSelectDAO
     // プレースホルダーを動的に作成
     $placeholders = implode(',', array_fill(0, count($selectedGenres), '?'));
 
-    $sql = "
-        SELECT 
-            g.GroupID, 
-            g.GroupName, 
-            g.MaxMember, 
-            ISNULL(COUNT(m.UserID), 0) AS MemberCount, 
-            ma.MainGenreName, 
-            su.SubGenreName, 
-            MAX(cm.SendTime) AS LastUpdatedTime
-        FROM ChatGroup g
-        LEFT JOIN GroupMember m ON g.GroupID = m.GroupID
-        LEFT JOIN MainGenre ma ON g.MainGenreID = ma.MainGenreID
-        LEFT JOIN SubGenre su ON g.SubGenreID = su.SubGenreID
-        LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID
-        WHERE g.GroupDeleteFlag = 0
+    $sql = "SELECT					
+                      g.GroupID, 
+                      g.GroupName, 
+                      CONCAT(
+                          (SELECT COUNT(DISTINCT gm_sub.UserID) 
+                          FROM GroupMember gm_sub 
+                          WHERE gm_sub.GroupID = g.GroupID), 
+                          ' / ', 
+                          g.MaxMember
+                      ) AS MemberInfo, 
+                      MAX(cm.SendTime) AS  LastUpdatedTime, 
+                      CONCAT(mg.MainGenreName, ' / ', sg.SubGenreName) AS Genre 
+                  FROM GroupMember gm
+                      INNER JOIN ChatGroup g ON gm.GroupID = g.GroupID
+                      INNER JOIN MainGenre mg ON g.MainGenreID = mg.MainGenreID 
+                      INNER JOIN SubGenre sg ON g.SubGenreID = sg.SubGenreID
+                      LEFT JOIN ChatMessage cm ON g.GroupID = cm.GroupID 
+    WHERE g.GroupDeleteFlag = 0
           AND g.SubGenreID IN ($placeholders)
           AND NOT EXISTS (
               SELECT 1
@@ -53,13 +56,19 @@ class GenreSelectDAO
               WHERE gm.GroupID = g.GroupID
                 AND gm.UserID = ?
           )
-        GROUP BY 
-            g.GroupID, 
-            g.GroupName, 
-            g.MaxMember, 
-            ma.MainGenreName, 
-            su.SubGenreName
-        ORDER BY LastUpdatedTime DESC;
+GROUP BY 
+    g.GroupID, g.GroupName, g.MaxMember, mg.MainGenreName, sg.SubGenreName
+HAVING 
+    (SELECT COUNT(DISTINCT gm_sub.UserID) 
+     FROM GroupMember gm_sub 
+     WHERE gm_sub.GroupID = g.GroupID) < g.MaxMember -- メンバー数が最大人数未満
+                      
+                  ORDER BY 
+                      CASE 
+                          WHEN MAX(cm.SendTime) IS NULL THEN 0 
+                          ELSE 1
+                      END ASC,
+                      MAX(cm.SendTime) DESC;
     ";
 
     $stmt = $dbh->prepare($sql);
@@ -77,7 +86,10 @@ class GenreSelectDAO
     // PHPでNULLのLastUpdatedTimeを "N/A" に置き換え
     foreach ($results as &$result) {
         if ($result['LastUpdatedTime'] === null) {
-            $result['LastUpdatedTime'] = "N/A";
+            $result['LastUpdatedTime'] = "情報なし";
+        }else {
+            $datetime = new DateTime($result['LastUpdatedTime']);
+            $result['LastUpdatedTime'] = $datetime->format('m/d');
         }
     }
 

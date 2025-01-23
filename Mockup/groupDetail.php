@@ -65,13 +65,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!--ヘッダー-->
 <header>
   <!-- CSS適応 -->
-  <link rel="stylesheet" href="CSSUser/GroupDetailBefor.css">
+  <link rel="stylesheet" href="CSSUser/GroupDetail.css">
 </header>
   <div class="grouplist">
       <p id="group">所属グループ一覧</p>
   </div>
 
-  <button id="back" onclick="location.href='genreSelect.php'">ジャンル選択に戻る</button>
+  <button id="back" 
+        onclick="location.href='genreSelect.php'" 
+        style="<?= $isJoined ? 'display: none;' : '' ?>">
+  ジャンル選択に戻る
+</button>
 
 <script src="./jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -133,25 +137,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <div>
 <nav class="group">
-  <ul>
-  <?php if (empty($groupInfo)): ?>
-         <li>
-            所属グループがありません。<br>
-            グループに参加しましょう！
-          </li>
-          <?php else: ?>
-    <?php foreach ($groupInfo as $var): ?>
-      <li>
-        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
-          <?= $var->GroupName ?>（<?= $var->MemberInfo ?>）<br>最終更新日：<?= $var->LastUpdated ?><br>ジャンル：<?= $var->Genre ?>
-        </a>
-        <?php if ($loggedInUser->UserID == $var->GroupAdminID) : ?>
-          <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
-        <?php endif; ?>
+<ul>
+<?php if (empty($groupInfo)): ?>
+     <li>
+        所属グループがありません。<br>
+        グループに参加しましょう！
       </li>
-    <?php endforeach; ?>
+<?php else: ?>
+<?php foreach ($groupInfo as $var): ?>
+  <li>
+    <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+      グループ名：<?= htmlspecialchars($var->GroupName) ?><br>
+      所属人数 ：<?= htmlspecialchars($var->MemberInfo) ?><br>
+      最終更新日：<?= htmlspecialchars($var->LastUpdated) ?><br>
+      ジャンル：<?= htmlspecialchars($var->Genre) ?>
+  </a>
+    <?php if ($loggedInUser->UserID == $var->GroupAdminID) : ?>
+      <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
     <?php endif; ?>
-  </ul>
+  </li>
+<?php endforeach; ?>
+<?php endif; ?>
+</ul>
 </nav>
 </div>
 <div>

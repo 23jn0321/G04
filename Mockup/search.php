@@ -44,10 +44,10 @@ if (!empty($selectedGenres)) {
             <li>
                 <div>
                     <a href="groupDetail.php?GroupID=<?= htmlspecialchars($group['GroupID']) ?>">
-                        グループ名：<?= htmlspecialchars($group['GroupName']) ?>
-                        <br>参加人数：(<?= htmlspecialchars($group['MemberCount']) ?>/<?= htmlspecialchars($group['MaxMember']) ?>)
-                        <br>最終更新日: <?= $group['LastUpdatedTime'] ? htmlspecialchars($group['LastUpdatedTime']) : '更新履歴なし' ?>
-                        <br>ジャンル: <?= htmlspecialchars($group['MainGenreName']) ?> / <?= htmlspecialchars($group['SubGenreName']) ?><br>
+                    グループ名：<?= htmlspecialchars($group['GroupName']) ?><br>
+                    所属人数 ：<?= htmlspecialchars($group['MemberInfo']) ?><br>
+                    最終更新日：<?= htmlspecialchars($group['LastUpdatedTime']) ?><br>
+                    ジャンル：<?= htmlspecialchars($group['Genre']) ?>
                     </div>
                 </a>
             </li>
