@@ -158,9 +158,10 @@ html,body {
         　　  "検索"ボタン
 --------------------------------------*/
 #Search{
-    padding: 11px 37px 10px 37px;
-    float: left;
-    margin-top: 100px;
+    padding: 10px 30px 10px 30px;
+    position: fixed; /* 中ジャンルリスト内で絶対位置 */
+    bottom: 10%; /* 親要素の底部から10px */
+    left: 80%; /* 水平方向中央 */
 }
 
 .box {
@@ -174,8 +175,11 @@ html,body {
     border: 1px solid #dee2e6;
     border-radius: 8px;
     margin-right: 20px;
+    position: relative;
 }
-
+#subGenres {
+    position: relative; /* 親要素に基づいた相対位置 */
+}
 #Genres{
     font-size: 20px;
 }
@@ -215,6 +219,28 @@ html,body {
 .genre-button:active {
     background-color: #003d7a;
 }
+
+/* サブジャンルリストのレイアウト調整 */
+
+/* 各サブジャンル項目 (ラベル) のデザイン */
+#subGenreList label {
+    display: flex; /* チェックボックスと文字を横並びに配置 */
+    align-items: center; /* 縦方向の中央揃え */
+    font-size: 15px; /* フォントサイズを20pxに設定 */
+}
+
+/* チェックボックスサイズ調整 */
+#subGenreList input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px; /* チェックボックスと文字間の余白 */
+    margin-top: 10px;
+    transform: scale(1.5); /* チェックボックスを拡大 */
+}
+.subGenreGroup.group-2{
+transform: translate(200px,-253px);
+}
+
 
 
 

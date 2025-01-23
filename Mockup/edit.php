@@ -101,7 +101,7 @@
         <tr>
             <td>
                 <!-- フォームの送信ボタン -->
-                <button type="submit" id="submitButton">送信</button>
+                <button type="submit" id="submitButton">編集確定</button>
             </td>
             <td></td>
         </tr>

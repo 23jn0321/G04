@@ -42,5 +42,7 @@ class messageDAO {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    
 }
 ?>

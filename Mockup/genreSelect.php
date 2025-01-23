@@ -59,16 +59,16 @@ $mainGenres = $genreSelectDAO->getAllMainGenres();
             </div>
 
             <div class="box">
-                <div id="subGenres">
-                    <h2>中ジャンル</h2>
+            <div id="subGenres">
+                <h2>中ジャンル</h2>
                     <form id="subGenreForm" method="GET" action="search.php">
-                        <div id="subGenreList">大ジャンルを選択してください。</div>
-                        <button type="submit" id="Search">検索</button>
-                    </form>
-                </div>
+                        <div id="subGenreList">
+                            大ジャンルを選択してください。
+                        </div>
+                    <button type="submit" id="Search">検索</button>
+                </form>
             </div>
         </div>
-        <button type="button" id="selectAll">すべて選択</button>
 
         <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -92,50 +92,61 @@ document.addEventListener("DOMContentLoaded", function () {
                     return response.json();
                 })
                 .then(data => {
-                    subGenreList.innerHTML = "";
-                    if (data.error) {
-                        subGenreList.innerHTML = data.error;
-                        return;
-                    }
-                    if (data.length === 0) {
-                        subGenreList.innerHTML = "中ジャンルが見つかりません。";
-                        return;
-                    }
+    subGenreList.innerHTML = "";
 
-                    // サブジャンルリストを生成
-                    data.forEach(subGenre => {
-                        const checkbox = document.createElement("input");
-                        checkbox.type = "checkbox";
-                        checkbox.name = `genre[${genreId}][]`; // 大ジャンルごとにグループ化
-                        checkbox.value = subGenre.SubGenreID;
+    if (data.error) {
+        subGenreList.innerHTML = data.error;
+        return;
+    }
 
-                        // 以前選択されていたらチェックを復元
-                        if (selectedSubGenres.has(genreId) && selectedSubGenres.get(genreId).has(subGenre.SubGenreID)) {
-                            checkbox.checked = true;
-                        }
+    if (data.length === 0) {
+        subGenreList.innerHTML = "中ジャンルが見つかりません。";
+        return;
+    }
 
-                        // チェック状態の更新
-                        checkbox.addEventListener("change", function () {
-                            if (!selectedSubGenres.has(genreId)) {
-                                selectedSubGenres.set(genreId, new Set());
-                            }
+    // サブジャンルリストを生成
+    data.forEach((subGenre, index) => {
+        const wrapperDiv = document.createElement("div");
 
-                            const subGenreSet = selectedSubGenres.get(genreId);
-                            if (this.checked) {
-                                subGenreSet.add(subGenre.SubGenreID);
-                            } else {
-                                subGenreSet.delete(subGenre.SubGenreID);
-                            }
-                        });
+        // 9件ごとに異なるクラスを割り当て
+        const groupIndex = Math.floor(index / 9) + 1; // 1から始まるグループ番号
+        wrapperDiv.className = `subGenreGroup group-${groupIndex}`;
 
-                        const label = document.createElement("label");
-                        label.textContent = subGenre.SubGenreName;
-                        label.prepend(checkbox);
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = `genre[${genreId}][]`;
+        checkbox.value = subGenre.SubGenreID;
 
-                        subGenreList.appendChild(label);
-                        subGenreList.appendChild(document.createElement("br"));
-                    });
-                });
+        // チェック状態の復元
+        if (selectedSubGenres.has(genreId) && selectedSubGenres.get(genreId).has(subGenre.SubGenreID)) {
+            checkbox.checked = true;
+        }
+
+        // チェック状態の更新
+        checkbox.addEventListener("change", function () {
+            if (!selectedSubGenres.has(genreId)) {
+                selectedSubGenres.set(genreId, new Set());
+            }
+
+            const subGenreSet = selectedSubGenres.get(genreId);
+            if (this.checked) {
+                subGenreSet.add(subGenre.SubGenreID);
+            } else {
+                subGenreSet.delete(subGenre.SubGenreID);
+            }
+        });
+
+        const label = document.createElement("label");
+        label.textContent = subGenre.SubGenreName;
+        label.prepend(checkbox);
+
+        wrapperDiv.appendChild(label);
+
+        subGenreList.appendChild(wrapperDiv);
+    });
+});
+
+
         });
     });
 

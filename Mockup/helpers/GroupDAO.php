@@ -12,6 +12,20 @@ class ChatGroup
 
 class GroupDAO
 {
+  public function get_My_AdminGroup($GroupID)
+  {
+      $dbh = DAO::get_db_connect();
+
+      $sql = "SELECT GroupAdminID FROM ChatGroup WHERE GroupID = :GroupID";
+
+      $stmt = $dbh->prepare($sql);
+      $stmt->bindValue(':GroupID', $GroupID, PDO::PARAM_INT);
+
+      $stmt->execute();
+
+      $result = $stmt->fetch(PDO::FETCH_ASSOC);
+      return $result;
+  }
   //DBからグループ内容(グループID、グループ名、グループ人数、最終更新日、大ジャンル、中ジャンル、学籍番号)を取得するメソッド
   public function getGroup($UserID)
   {
@@ -182,4 +196,6 @@ ORDER BY
     }
     return $data;
   }
+
+
 }

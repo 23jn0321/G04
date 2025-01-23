@@ -593,8 +593,9 @@
 }
 
 
-
-
+body{
+    overflow-x: hidden;
+}
 
 
 #maingenreNamelavel {
@@ -614,15 +615,14 @@
 
 #subGenreNamelavel {
     position: absolute;
-    left: 450px;
+    left: 530px;
     top: 375px;
     font-size: 20px;
 }
 
 #subGenreName {
     position: absolute;
-    position: absolute;
-    left: 620px;
+    left: 720px;
     top: 370px;
     font-size: 20px;
 }
