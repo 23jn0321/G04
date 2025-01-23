@@ -42,7 +42,7 @@
                 //セッション変数に会員データを保存する
                  $_SESSION['userInfo'] = $userInfo;
 
-                //index.phpに移動
+                //home.phpに移動
                 header('Location: home.php');
                 exit;
             }//else if($admin !== false){
@@ -54,7 +54,7 @@
            // }
             //会員データが取り出せなかった時
             else{
-                $errs[] = '学籍番号またはパスワードに誤りがあります。';
+                $errs[] = 'ログインできませんでした。';
             }
         }
     }
