@@ -20,12 +20,8 @@ error_log("Received genres: " . print_r($selectedGenres, true));
 
 if (!empty($selectedGenres)) {  
     $groups = $genreSelectDAO->getGroupsByGenres($selectedGenres, $loggedInUser->UserID);
+    $genres = $genreSelectDAO->get_Select_Genres($selectedGenres);
 }
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +32,15 @@ if (!empty($selectedGenres)) {
     <title>検索結果</title>
 </head>
 <body>
+
+<?php if(!empty($genres)) : ?>
+    <h2>選択した中ジャンル</h2>
+    <?php foreach ($genres as $genre): ?>
+        <a id="Genres"><?= htmlspecialchars($genre['SubGenreName']) ?>　</a>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p>ジャンルが選ばれていません。</p>
+<?php endif; ?>
     <h1>検索結果</h1>
     <nav class="group">
     <?php if (!empty($groups)): ?>
@@ -57,6 +62,7 @@ if (!empty($selectedGenres)) {
     <p>該当するグループはありません。</p>
 <?php endif; ?>
     </nav>
+<input type="button" onclick="location.href='GenreSelect.php'" id="returnGenreSelect" value="ジャンルを変更">
 
 
 
