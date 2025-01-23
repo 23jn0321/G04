@@ -8,7 +8,7 @@ if (isset($_GET['genreName']) && isset($_GET['subGenreName'])) {
 
   $mainGenreID = $genreDAO->insert_Genre($genreName);  //メインジャンルを挿入
   // サブジャンルを挿入
-  echo $mainGenreID;
+  //echo $mainGenreID;
   $subGenreDAO = new SubGenreDAO();
   foreach ($subGenreNames as $subGenreName) {
     //echo $subGenreName;  // サブジャンル名を表示
@@ -106,6 +106,7 @@ if (isset($_GET['genreName']) && isset($_GET['subGenreName'])) {
           icon: "success",
         });
         document.querySelector("form").submit(); // ここで実際にフォーム送信を行う
+        header('Location: "genresAdd.php"');
 
       } else {
         // キャンセルボタンが押された時
