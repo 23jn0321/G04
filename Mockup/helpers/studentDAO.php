@@ -35,7 +35,7 @@ class StudentDAO
         //学籍番号が一致する会員データを取得する
         $sql = "SELECT * FROM Gakusei WHERE GakusekiNo = :gakusekiNo";
 
-        $sql2 = "SELECT * FROM GakuseiUser WHERE GakusekiNo = :gakuseiNo";
+        $sql2 = "SELECT * FROM GakuseiUser WHERE GakusekiNo = :gakuseiNo AND UserFreezeFlag = 0";
 
         $stmt = $dbh->prepare($sql);
 
@@ -151,14 +151,18 @@ class StudentDAO
         //学籍番号が一致する会員データを取得する
 
         $sql = "UPDATE GakuseiUser SET UserFreezeFlag = 0 WHERE UserID = :userid";
+        $sql2 = "DELETE FROM Report WHERE :userid = TargetUserID";
 
         $stmt = $dbh->prepare($sql);
+        $stmt2 = $dbh->prepare($sql2);
 
         //SQLに変数の値を当てはめる
         $stmt->bindValue(':userid', $userID, PDO::PARAM_INT);
+        $stmt2->bindValue(':userid', $userID, PDO::PARAM_INT);
 
         //SQLを実行する
         $stmt->execute();
+        $stmt2->execute();
     }
     public function freezeUser(String $userID, String $freezeReason){
         //DBに接続する

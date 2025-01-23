@@ -96,7 +96,28 @@ HAVING
     return $results;
 }
 
+public function get_Select_Genres($selectedGenres)
+{
+    $dbh = DAO::get_db_connect();
 
+    // プレースホルダーを動的に作成
+    $placeholders = implode(',', array_fill(0, count($selectedGenres), '?'));
+
+    $sql = "SELECT SubGenreName FROM SubGenre WHERE GenreDeleteFlag = 0 AND SubGenreID IN ($placeholders);";
+
+    $stmt = $dbh->prepare($sql);
+
+    // パラメータをバインド
+    $index = 1;
+    foreach ($selectedGenres as $genre) {
+        $stmt->bindValue($index++, $genre, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $results;
+}
 
 }
 ?>

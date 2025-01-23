@@ -75,7 +75,7 @@
             $dbh = DAO::get_db_connect();
             $sql = "SELECT gu.UserID, gu.GakusekiNo, gu.UserName, gu.UserFreezeFlag, tr.ReportCategory
                         FROM GakuseiUser gu INNER JOIN Report tr 
-                            ON gu.UserID = tr.ReportUserID;";
+                            ON gu.UserID = tr.targetUserID;";
             $stmt = $dbh->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
