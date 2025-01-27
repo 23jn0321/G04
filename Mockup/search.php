@@ -59,12 +59,14 @@ if (!empty($selectedGenres)) {
         <?php endforeach; ?>
     </ul>
 <?php else: ?>
-    <p>該当するグループはありません。</p>
+    <ul>
+        <liH>
+            グループがありません<br>
+            ジャンルを変更しましょう。
+        </liH>
+    </ul>
 <?php endif; ?>
     </nav>
-<input type="button" onclick="location.href='GenreSelect.php'" id="returnGenreSelect" value="ジャンルを変更">
-
-
-
+    <button onclick="location.href='GenreSelect.php'" id="returnGenreSelect">ジャンルを変更</button>
 </body>
 </html>

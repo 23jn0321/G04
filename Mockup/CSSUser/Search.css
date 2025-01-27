@@ -5,7 +5,18 @@
     transform: scale(1.05);
 
 }
-
+.group ul liH{
+    text-align: center;
+    list-style: none;
+    border: solid 1px;
+    width: 1800px;
+    list-style: none;
+    border: solid 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
 .group ul {
     overflow-y: auto;
     overflow-x: hidden;

@@ -24,9 +24,6 @@ li {
     text-align: left;
     margin-left: 55px;
     margin-top: 24px;
-    font-family: "Hachi Maru Pop", serif;
-    font-weight: 400;
-    font-style: normal;
 }
 
 .JoinGroup p {
@@ -120,7 +117,7 @@ li {
 .MachingButton {
     padding: 30px 300px 30px 300px;
     float: left;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-left: 300px;
 }
 
@@ -133,7 +130,9 @@ body {
     overflow: hidden;
 }
 
-/* From Uiverse.io by eduardo-amaro-maciel */
+/*-------------------------------------
+                注意事項
+--------------------------------------*/
 
 #JecMatching {
     font-size: 50px;
@@ -161,4 +160,8 @@ body {
 #bottom {
     margin-bottom: 200px;
     margin-left: 1075px;
+}
+#red{
+    color: rgb(212, 3, 3);
+    margin-left: 1000px;
 }

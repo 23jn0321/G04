@@ -73,11 +73,12 @@ $groupInfo = $groupDAO->getGroup($loggedInUser->UserID);
 <h2 id="kinsi2">以下は禁止行為となります</h2>
 <h1 id="bottom">　　　　↓　　　　</h1>
 <div class="kinsi">
-  <p>・禁止行為</p>
+  <p>・他ユーザーへのなりすまし行為</p>
   <p>・不適切なコンテンツの共有</p>
   <p>・ハラスメントや暴言</p>
   <p>・不適切な勧誘や宣伝</p>
 </div>
+<p id="red">※上記の行為をした場合、アカウントが凍結される恐れがあります。</p>
 
 
 

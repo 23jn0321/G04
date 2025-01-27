@@ -109,7 +109,8 @@ liH {
   width: 60%;
   height: 602px;
   /* チャットルームの幅を指定 */
-  background: #aff9c5;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
   /* チャットルームの背景を灰色 */
   padding: 10px;
   /* 余白を10pxキープ */
@@ -171,7 +172,7 @@ liH {
 }
 
 .chat.me .mes {
-  background: #f0eda9;
+  background: #bff0a9;
   /* 背景色 */
   cursor: pointer;
 }

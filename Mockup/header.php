@@ -34,7 +34,6 @@ if (isset($_SESSION['userInfo']) ) {
 
 
     <a href="edit.php"><input type="button" value="プロフィール編集" id="edit"></a>
-    <a href="admin.html"><input type="button" value="管理者画面" id="admin"></a>
     <a href="logoutTEST.php"><input type="button" value="ログアウト" id="logout"></a>
 </header>
 <hr>

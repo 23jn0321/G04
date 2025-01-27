@@ -56,21 +56,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteGroup'])) {
 <p>
     <!-- グループ表示 -->
     <nav class="group">
-    <ul>
-    <?php foreach ($groupInfo as $var): ?>
+  <ul>
+    <?php if (empty($groupInfo)): ?>
       <li>
-        <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
-          <?= $var->GroupName?>（<?= $var->MemberInfo?>）<br>最終更新日：<?=$var->LastUpdated?><br>ジャンル：<?= $var->Genre ?>
-        </a>
-       
-        <?php if($loggedInUser->UserID == $var->GroupAdminID) : ?>
-         <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
-          <?php endif; ?>
+        所属グループがありません。<br>
+        グループに参加しましょう！
       </li>
+    <?php else: ?>
+      <?php foreach ($groupInfo as $var): ?>
+        <li>
+          <a href="message.php?GroupID=<?= urlencode($var->GroupID) ?>">
+            グループ名：<?= htmlspecialchars($var->GroupName) ?><br>
+            所属人数 ：<?= htmlspecialchars($var->MemberInfo) ?><br>
+            最終更新日：<?= htmlspecialchars($var->LastUpdated) ?><br>
+            ジャンル：<?= htmlspecialchars($var->Genre) ?>
+          </a>
+          <?php if ($loggedInUser->UserID == $var->GroupAdminID) : ?>
+            <input type="button" onclick="location.href='groupEdit.php?GroupID=<?= urlencode($var->GroupID) ?>'" id="groupEditR" value="グループ編集">
+          <?php endif; ?>
+        </li>
       <?php endforeach; ?>
-    </ul>
-</a>
-</nav>  
+    <?php endif; ?>
+  </ul>
+</nav>
 <!-- グループ編集 -->
  <form id="myForm" action="" method="POST">
  <div class="groupEdit">
