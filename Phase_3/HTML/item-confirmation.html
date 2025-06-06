@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>購入画面</title>
+	<style>
+		.error-message {
+			color: red;
+			display: inline-block;
+			margin-left: 10px;
+			/* テキストボックスとの間隔 */
+			font-size: 14px;
+		}
+
+		/* モーダルのスタイル */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1000;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 300px;
+			background: white;
+			padding: 20px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+			text-align: center;
+		}
+
+		.modal-buttons {
+			margin-top: 20px;
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.modal button {
+			padding: 10px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<form action="process_order.php" method="POST">
+			<h2>購入画面</h2>
+
+			<h3>商品情報</h3>
+			<p>商品名: スマートフォン</p>
+			<p>価格: ¥50,000</p>
+			<p>数量: <span id="product-quantity">1</span></p>
+			<p>合計: ¥50,000</p>
+
+			<h3>配送情報</h3>
+			<p>住所: <span id="user-address">東京都渋谷区〇〇〇</span></p>
+			<p>郵便番号: <span id="user-postal">123-4567</span></p>
+			<label>配送方法:
+				<select id="shipping-method" name="shipping-method" onchange="toggleDeliveryDate()">
+					<option value="standard">通常発送</option>
+					<option value="scheduled">着日指定発送（翌々日以降）</option>
+				</select>
+			</label>
+
+			<!-- 着日指定のドロップダウン（デフォルトで非表示） -->
+			<label id="delivery-date-label" style="display:none;">配送希望日時:
+				<select name="delivery-date">
+					<option value="2025-06-07-10">6月7日 10:00</option>
+					<option value="2025-06-07-14">6月7日 14:00</option>
+					<option value="2025-06-07-18">6月7日 18:00</option>
+					<option value="2025-06-08-10">6月8日 10:00</option>
+					<option value="2025-06-08-14">6月8日 14:00</option>
+					<option value="2025-06-08-18">6月8日 18:00</option>
+				</select>
+			</label>
+
+			<h3>支払方法</h3>
+			<label>支払方法:
+				<select id="payment-method" name="payment-method" onchange="toggleCreditCardFields()">
+					<option value="cash">現金払い</option>
+					<option value="credit">クレジットカード</option>
+				</select>
+			</label>
+
+			<div id="credit-card-fields" style="display: none;">
+				<label>カード番号:</label>
+				<label>0000 0000 0000 0000</label>
+				<!--<span class="error-message">カードが登録されていません</span> -->
+			</div>
+
+			<h3>注文の確認</h3>
+			<button type="submit">購入する</button>
+	</main>
+	</form>
+
+	<!-- モーダルウィンドウ -->
+	<div id="purchase-modal" class="modal">
+		<h2>購入の確認</h2>
+		<p>この商品を購入しますか？</p>
+		<div class="modal-buttons">
+			<button id="confirm-purchase">確定</button>
+			<button id="cancel-purchase">キャンセル</button>
+		</div>
+	</div>
+
+	<script>
+		function toggleDeliveryDate() {
+			var shippingMethod = document.getElementById("shipping-method").value;
+			var deliveryDateLabel = document.getElementById("delivery-date-label");
+
+			if (shippingMethod === "scheduled") {
+				deliveryDateLabel.style.display = "block";
+			} else {
+				deliveryDateLabel.style.display = "none";
+			}
+		}
+
+		function toggleCreditCardFields() {
+			var paymentMethod = document.getElementById("payment-method").value;
+			var creditCardFields = document.getElementById("credit-card-fields");
+
+			if (paymentMethod === "credit") {
+				creditCardFields.style.display = "block";
+			} else {
+				creditCardFields.style.display = "none";
+			}
+		}
+
+		document.querySelector("button[type='submit']").addEventListener("click", function (event) {
+			event.preventDefault(); // フォーム送信を防ぐ
+			document.getElementById("purchase-modal").style.display = "block"; // モーダルを表示
+		});
+
+		document.getElementById("confirm-purchase").addEventListener("click", function () {
+			document.querySelector("form").submit(); // 購入確定でフォーム送信
+		});
+
+		document.getElementById("cancel-purchase").addEventListener("click", function () {
+			document.getElementById("purchase-modal").style.display = "none"; // キャンセルでモーダル非表示
+		});
+	</script>
+</body>
+
+</html>

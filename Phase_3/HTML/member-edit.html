@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Page Title</title>
+	<style>
+		main {
+			display: flex;
+		}
+
+		.main-menu li {
+
+			display: flex;
+float: right;
+margin: 10px;
+margin-top: -20px;
+		}
+
+		nav {
+			margin-left: auto;
+		}
+	</style>
+	<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div id="wrapper">
+	
+		<main>
+			<div id="form-area">
+				<form th:action="@{/regist}" th:object="${employeeForm}" method="post">
+					<!--
+					<div class="form-row">
+						<th:block th:each="error : ${#fields.detailedErrors()}">
+							<span th:text=" ${error.message}" class=" errors"></span>
+							<br>
+						</th:block>
+					</div>
+    -->
+					<h1>会員情報変更画面</h1>
+					<div class="form-row">
+						<div class="title"><label for="name">名前</label></div>
+						<div class="content">
+							<input th:field="*{name}" value="" size="25" placeholder="名前">
+							<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errors"></span>
+						</div>
+					</div>
+
+
+
+					<div class="form-row">
+						<div class="title"><label for="birthYear">生年月日</label></div>
+						<div class="content">
+							<select th:field="*{birthYear}">
+								<option th:each="years : ${listYears}" th:value="${years.data}"
+									th:text="${years.label}">
+								</option>
+							</select>&nbsp;年
+							<select th:field="*{birthMonth}">
+								<option th:each="months : ${listMonths}" th:value="${months.data}"
+									th:text="${months.label}">
+								</option>
+							</select>&nbsp;月
+							<select th:field="*{birthDay}">
+								<option th:each="days : ${listDays}" th:value="${days.data}" th:text="${days.label}">
+								</option>
+							</select>&nbsp;日
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="title"><label for="zip">郵便番号</label></div>
+						<div class="content">
+							<input th:field="*{zip}" size="8" placeholder="郵便番号">
+							<span th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}" class="errors"></span>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="title"><label for="address">住所</label></div>
+						<div class="content">
+							<input th:field="*{address}" size="50" placeholder="住所">
+							<span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="errors"></span>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="title"><label for="phone">電話番号</label></div>
+						<div class="content">
+							<input th:field="*{Phone}" size="15" placeholder="ハイフンなし">
+							<span th:if="${#fields.hasErrors('Phone')}" th:errors="*{Phone}" class="errors"></span>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="title"><label for="mail">メールアドレス</label></div>
+						<div class="content">
+							<input th:field="*{mail}" size="25" placeholder="メールアドレス">
+							<span th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" class="errors"></span>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="title"><label for="mail">パスワード</label></div>
+						<div class="content">
+							<input th:field="*{mail}" size="25" placeholder="パスワード">
+							<span th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" class="errors"></span>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="title"><label for="mail">確認用パスワード</label></div>
+						<div class="content">
+							<input th:field="*{mail}" size="25" placeholder="確認用パスワード">
+							<span th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" class="errors"></span>
+						</div>
+					</div>
+
+
+					<div class="form-row">
+						<div class="title"><label for="creditcardnumber">クレジットカード番号</label></div>
+						<div class="content">
+							<input th:field="*{creditcardnumber}" size="20" placeholder="クレジットカード番号">
+							<span th:if="${#fields.hasErrors('zip')}" th:errors="*{creditcardnumber}"
+								class="errors"></span>
+						</div>
+					</div>
+
+
+					<div class="form-row">
+						<input type="submit" value="登録" class="btn">
+					</div>
+				</form>
+			</div>
+		</main>
+		<footer></footer>
+	</div>
+</body>
+
+</html>

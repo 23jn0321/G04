@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Page Title</title>
+	<style>
+		main {
+			display: flex;
+		}
+
+		.main-menu li {
+			margin-left: auto;
+			display: inline-block;
+			margin: 50px;
+		}
+
+		nav {
+			margin-left: auto;
+			margin-top: 30px;
+		}
+	</style>
+	<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+		<div th:fragment="header_area" th:remove="tag">
+		<h1>
+			<span th:text="${headline }"></span>
+		</h1>
+		<div id="wrapper">
+			<header>
+
+			</header>
+			<main>
+
+				<a href="">
+					<img src="logo_SS.png" width="300" height="150" alt="ロゴの名前">
+				</a>
+				<nav>
+					<ul class="main-menu">
+
+						<li><a href="about.html">会員登録</a></li>
+						<li><a href="services.html">ログイン</a></li>
+							<li><a href="about.html">カート</a></li>
+						<li><a href="services.html">注文履歴</a></li>
+					</ul>
+				</nav>
+			</main>
+			<footer></footer>
+		</div>
+		<h1>ホーム画面</h1>
+</body>
+
+</html>
+
+

@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>KEN Interior Shop　ホーム/検索</title>
+<!--	<link href="/css/common.css" rel="stylesheet" type="text/css">-->
+<!--	<link href="/css/jdbc.css" rel="stylesheet" type="text/css">-->
+</head>
+<body>
+	<div id="wrapper">
+		<header th:insert="~{header :: header_area}"></header>
+		<main>
+			<div id="form-area">
+				<form th:if="${!=null}" th:action="@{/home}" th:object="${}" method="post">
+					<h2>ホーム/検索</h2>
+					<div class="form-row">
+						商品名を入力してください。
+					</div>
+					<div class="form-row">
+						<label for="itemName">
+						<select th:field="*{}" id="">
+							<option value="chair"></option>
+							<option value="chair">椅子</option>
+							<option value="desk">机</option>
+							<option value="closet">クローゼット</option>
+						</select>
+						<input th:field="*{}" value="" id="itemName" name="itemName">
+						<input type="submit" value="検索" name="item" class="btn">
+				</label></div>
+					
+					<span class="errors"></span>
+				</form>
+
+				
+
+				<div id="result-area" >
+					<div th:if="!${#.isEmpty()}">
+						<table border="3">
+							<tr>
+								<th>商品名</th>
+								<th>画像(仮)</th>
+								<th>値段</th>
+								
+							</tr>
+							<th:block th:each=" : ${}">
+								<tr>
+									<td th:text="${}" class="item_name" ><a href="@{/home}">○○椅子(仮)</a></td>
+									<td th:text="${}" class="item_image"></td>
+									<td th:text="${}" class="price">￥4000</td>
+								</tr>
+							
+							</th:block>
+							
+						</table>
+					</div>
+<!--					<a href="">ログイン</a>-->
+<!--					<a href="">ログアウト</a>-->
+<!--					<a href="">カート</a>-->
+					
+				</div>
+			</div>
+		</main>
+<!--		<footer>-->
+<!--		<div class="copyright">-->
+<!--			<small>&copy; KENスクール</small>-->
+<!--		</div>-->
+<!--	</footer>-->
+	</div>
+</body>
+</html>
