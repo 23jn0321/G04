@@ -1,0 +1,190 @@
+CREATE TABLE users (
+    user_id     INT AUTO_INCREMENT PRIMARY KEY,
+    user_name   VARCHAR(200) NOT NULL,
+    email       VARCHAR(200) NOT NULL UNIQUE,
+    password    VARCHAR(20) NOT NULL,
+    birth       DATE NOT NULL,
+    zip         INT NOT NULL,
+    address     VARCHAR(200) NOT NULL,
+    tel         INT NOT NULL,
+    point       INT DEFAULT 0,
+    card        VARCHAR(16),
+    active      TINYINT(1) DEFAULT 0 NOT NULL
+);
+
+CREATE TABLE admins (
+    admin_id        INT PRIMARY KEY AUTO_INCREMENT,
+    admin_name      VARCHAR(20) NOT NULL,
+    admin_password  VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE items (
+    item_id      INT PRIMARY KEY AUTO_INCREMENT,
+    category_id  INT NOT NULL,
+    price        INT NOT NULL,
+    item_name    VARCHAR(200) NOT NULL,
+    item_text    VARCHAR(200) NOT NULL,
+    item_img     VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE categorys (
+    category_id    INT PRIMARY KEY AUTO_INCREMENT,
+    category_name  VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE orders (
+    order_id         INT PRIMARY KEY AUTO_INCREMENT,
+    user_id          INT NOT NULL,
+    shopping_option  VARCHAR(20) NOT NULL,
+    shopping_status  TINYINT(1) NOT NULL,
+    order_date       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    plan_date        DATE,
+　　order_pay        VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE order_items (
+    order_item_id    INT PRIMARY KEY AUTO_INCREMENT,
+    item_id          INT NOT NULL,
+    order_id         INT NOT NULL,
+    discount         TINYINT(1) NOT NULL,
+    amount           INT NOT NULL,
+    shopping_status  TINYINT(1) NOT NULL DEFAULT 0,
+    order_history TINYINT(1) NOT NULL DEFAULT 0,
+    order_purchase TINYINT(1) NOT NULL DEFAULT
+);
+
+会員テーブル　users
+会員ID		user_id		INT				
+名前		user_name	VARCHAR(200)				
+メールアドレス	email		VARCHAR(200)				
+パスワード	password	VARCHAR(20)				
+生年月日	birth		DATE				
+郵便番号	zip		INT				
+住所		address		VARCHAR(200)				
+電話番号	tel		INT				
+ポイント	point		INT				
+カード番号	card		VARCHAR(16)				
+退会フラグ	active		TINYINT(1) デフォルトは0、退会している場合は1			
+
+管理者テーブル admins
+管理者ID		admin_id	INT				
+管理者名		admin_name	VARCHAR(20)				
+管理者パスワード	admin_password	VARCHAR(20)				
+
+商品テーブル items
+商品ID		item_id		INT				
+カテゴリーID	category_id	INT				
+値段		price		INT				
+商品名		item_name	VARCHAR(200)				
+商品説明	item_text	VARCHAR(200)
+商品画像  	item_img        VARCHAR(200)				
+
+注文テーブル　orders
+注文ID		order_id		INT				
+会員ID		user_id			INT				
+発送指定	shopping_option		VARCHAR(20)				
+発送状況	shopping_status		TINYINT(1)				
+注文日時	order_date		DATE				
+発送予定日時	plan_date		DATE				
+
+カテゴリーテーブル categorys
+カテゴリーID	category_id	INT				
+カテゴリー名	category_name	VARCHAR(20)				
+
+購入商品テーブル　order_items
+購入商品ID	order_item_id	INT				
+商品ID		item_id		INT				
+注文ID		order_id	INT				
+割引		discount	TINYINT(1)				
+個数		amount		INT	
+発送状況確認 shopping_status TINYINT(1) 
+購入履歴（キャンセル用）order_history 	TINYINT(1) 
+購入表示（非表示用) order_purchase 	TINYINT(1) 
+
+
+
+
+☆Javaクラス
+service
+　・MemberService ➡ 会員テーブル
+　・ItemsService ➡商品テーブル
+　・OrdersService　➡注文テーブル
+  ・OrderItemsService ➡購入商品テーブル
+　・AdminsService ➡ 管理者テーブル
+　・CategorysService ➡カテゴリーテーブル
+entity
+  ・MemberEntity
+　・ItemsEntity
+　・OrdersEntity
+  ・OrderItemsEntity
+　・AdminsEntity
+　・CategorysEntity
+mapper
+  ・MemberMapper
+　・ItemsMapper
+　・OrdersMapper
+  ・OrderItemsMapper
+　・AdminsMapper
+　・CategorysMapper
+・Items_CategorysMapper ➡商品テーブルとカテゴリーテーブルから抜き出したデータ割り振る
+・Orders_MemberMapper ➡注文テーブルと会員テーブルから抜き出したデータを
+・OrderItems_Items_Orders_MembersMapper ➡購入商品テーブルと商品テーブルと注文テーブルと会員テーブルから抜き出したデータを割り振る
+repository
+・MemberRepository
+　・ItemsRepository
+　・OrdersRepository
+  ・Order_itemRepository
+　・AdminsRepository
+　・CategorysRepository
+
+exception
+　・CustomExceptionHandler
+　・SessionTimeoutException
+validation
+　・ValidGroup1
+・ValidGroup2
+　・ValidGroupOrder
+controller
+　・HomeController➡商品検索					吉岡
+　・MemberController➡会員登録・更新・退会・ログイン		市川
+　・ItemController➡商品詳細・表示				斎藤
+・PurchaseController➡購入処理 				菊池
+　・OrderController➡注文履歴管理				浮田　
+　・AdminController➡管理者ログイン・会員情報照会・注文情報照会	井盛　
+Form
+　・ShopHomeForm➡検索			吉岡○
+　・MemberRegistrationForm➡会員登録		市川○
+・MemberLoginForm➡会員ログイン		市川○
+　・ItemHitoryForm ➡ 注文履歴			浮田
+　・ItemDetailForm➡商品詳細			斎藤		
+　・ItemConfirmationForm➡購入処理		菊池○
+　・AdminLoginForm➡管理者ログイン		井盛○
+　・AdminMemberList ➡会員情報照会		井盛
+　・AdminOrderList ➡注文情報照会		井盛
+☆HTML
+　・ホーム画面➡shop-home.html
+　・ヘッダー➡shop-header.html
+　・商品詳細画面➡item-detail.html
+　・カート画面➡item-cart.html
+　・購入確認画面➡item-confirmation.html
+　・購入完了画面➡item-complete.html
+　・注文履歴画面➡item-history.html
+　・会員情報登録画面➡member-registration.html
+　・会員ログイン画面➡member-login.html
+　・会員情報変更画面➡member-edit.html
+　・会員退会画面➡member-delete.html
+　・会員退会完了画面➡member-withdraw-complete.html
+　・会員情報画面➡member-info.html
+　・管理者ログイン画面➡admin-login.html
+　・管理者ホーム画面➡admin-home.html
+　・会員情報照会画面➡admin-member-list.html
+　・購入商品情報照会画面➡admin-order-list.html
+☆CSS
+　・画面全体共有➡common.css
+
+ItemDetailForm
+item_name					private					-					String									
+item_price					private					-					String									
+order_amount					private					-					String									
+item_img					private					-					String									
+item_text					private					-					String									

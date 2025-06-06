@@ -1,0 +1,47 @@
+会員テーブル　users
+会員ID		user_id		INT				
+名前		user_name	VARCHAR(200)				
+メールアドレス	email		VARCHAR(200)				
+パスワード	password	VARCHAR(20)				
+生年月日	birth		DATE				
+郵便番号	zip		INT				
+住所		address		VARCHAR(200)				
+電話番号	tel		INT				
+ポイント	point		INT				
+カード番号	card		VARCHAR(16)				
+退会フラグ	active		TINYINT(1) デフォルトは0、退会している場合は1			
+
+管理者テーブル admins
+管理者ID		admin_id	INT				
+管理者名		admin_name	VARCHAR(20)				
+管理者パスワード	admin_password	VARCHAR(20)				
+
+商品テーブル items
+商品ID		item_id		INT				
+カテゴリーID	category_id	INT				
+値段		price		INT				
+商品名		item_name	VARCHAR(200)				
+商品説明	item_text	VARCHAR(200)
+商品画像  	item_img        VARCHAR(200)				
+
+注文テーブル　orders
+注文ID		order_id		INT				
+会員ID		user_id			INT				
+発送指定	shopping_option		VARCHAR(20)				
+発送状況	shopping_status		TINYINT(1)				
+注文日時	order_date		DATE				
+発送予定日時	plan_date		DATE				
+
+カテゴリーテーブル categorys	
+カテゴリーID	category_id	INT				
+カテゴリー名	category_name	VARCHAR(20)				
+
+購入商品テーブル　order_items
+購入商品ID	order_item_id	INT				
+商品ID		item_id		INT				
+注文ID		order_id	INT				
+割引		discount	TINYINT(1)				
+個数		amount		INT	
+発送状況 	shopping_status TINYINT(1)
+購入履歴	order_history	TINYINT(1)
+購入表示	order_purchase	TINYINT(1)
